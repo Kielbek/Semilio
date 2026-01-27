@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: semilio
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/semiliodb
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: similio.com@gmail.com
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
+
+app:
+  security:
+    jwt:
+      access-token-expiration: 900000
+      refresh-token-expiration: 604800000
+  cors:
+    allowed-origin: http://192.168.1.17:4200/
+
+cloud:
+  aws:
+    credentials:
+      access-key:
+      secret-key:
+    region: eu-north-1
+
+aws:
+  bucket:
+    name: semilio-app-storage
+
+
+twilio:
+  account-sid:
+  auth-token:
+  phone-number: +14177427057
+
+
+server:
+  address: 0.0.0.0
+  port: 8080
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
+        messaging: DEBUG
+        web.socket: DEBUG
