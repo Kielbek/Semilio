@@ -1,6 +1,7 @@
 package com.example.semilio.chat;
 
-import com.example.semilio.chat.response.ChatResponse;
+import com.example.semilio.chat.response.ChatDetailResponse;
+import com.example.semilio.chat.response.ChatListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,20 +17,26 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    @PostMapping
-    public ResponseEntity<String> createChat(
-            Authentication principal,
-            @RequestParam(name = "receiver-id") String receiverId
-    ) {
-        final String chatId = chatService.createChat(principal, receiverId);
-
-        return ResponseEntity.ok(chatId);
-    }
-
     @GetMapping
-    public ResponseEntity<Page<ChatResponse>> getChatsByReceiver(
+    public ResponseEntity<Page<ChatListResponse>> getChatsByReceiver(
             Authentication principal,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseEntity.ok(chatService.getChatsByReceiverId(principal, pageable));
+    }
+
+    @GetMapping("/{chatId}")
+    public ResponseEntity<ChatDetailResponse> getChatsById(
+            @PathVariable String chatId,
+            Authentication principal
+            ) {
+        return ResponseEntity.ok(chatService.getChatsById(chatId, principal));
+    }
+
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<ChatDetailResponse> getChatsByProductId(
+            @PathVariable String productId,
+            Authentication principal
+    ) {
+        return ResponseEntity.ok(chatService.getChatsByProductId(productId, principal));
     }
 }

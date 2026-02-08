@@ -1,5 +1,6 @@
 package com.example.semilio.product.request;
 
+import com.example.semilio.product.Color;
 import com.example.semilio.product.Condition;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
@@ -28,7 +30,7 @@ public class ProductRequestDTO {
 
     @NotNull(message = "Price is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
-    private BigDecimal price;
+    private BigDecimal amount;
 
     @Size(max = 50, message = "Size must be at most 50 characters")
     private String size;
@@ -43,5 +45,7 @@ public class ProductRequestDTO {
     private String brand;
 
     @NotNull(message = "Color is required")
-    private String color;
+    private Color color;
+
+    private List<String> remainingImages;
 }

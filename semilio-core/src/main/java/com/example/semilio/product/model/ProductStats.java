@@ -1,4 +1,4 @@
-package com.example.semilio.product;
+package com.example.semilio.product.model;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

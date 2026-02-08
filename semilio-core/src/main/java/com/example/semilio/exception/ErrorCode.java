@@ -11,7 +11,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 @Getter
 public enum ErrorCode {
 
-
+    ACCESS_DENIED("ACCESS_DENIED", "You are not a participant", HttpStatus.FORBIDDEN),
     EMAIL_ALREADY_EXISTS("ERR_EMAIL_EXISTS", "Email already exists", CONFLICT),
     PHONE_ALREADY_EXISTS("ERR_PHONE_EXISTS", "An account with this phone number already exists", CONFLICT),
     PASSWORD_MISMATCH("ERR_PASSWORD_MISMATCH", "The password and confirmation do not match", BAD_REQUEST),
@@ -19,7 +19,6 @@ public enum ErrorCode {
     ERR_SENDING_ACTIVATION_EMAIL("ERR_SENDING_ACTIVATION_EMAIL",
             "An error occurred while sending the activation email",
             HttpStatus.INTERNAL_SERVER_ERROR),
-
     ERR_USER_DISABLED("ERR_USER_DISABLED",
             "User account is disabled, please activate your account or contact the administrator",
             UNAUTHORIZED),
@@ -39,6 +38,14 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND("PRODUCT_NOT_FOUND", "The product with this id does not exist", NOT_FOUND),
     FORBIDDEN_ACTION("FORBIDDEN_ACTION", "You do not have permission to modify or delete this product", HttpStatus.FORBIDDEN),
     NICKNAME_ALREADY_EXISTS("NICKNAME_ALREADY_EXISTS", "Ta nazwa użytkownika jest już zajęta", HttpStatus.CONFLICT),
+    CHAT_ACCESS_DENIED("CHAT_ACCESS_DENIED", "You are not a participant of this chat", HttpStatus.FORBIDDEN),
+    CHAT_NOT_FOUND("CHAT_NOT_FOUND", "Chat not found!", HttpStatus.NOT_FOUND),
+    INVALID_CHAT_REQUEST("INVALID_CHAT_REQUEST", "ChatId or ProductId must be provided", HttpStatus.BAD_REQUEST),
+    INVALID_FILE_TYPE("ERR_INVALID_FILE_TYPE", "The selected file must be an image (JPG, PNG, WEBP)", HttpStatus.BAD_REQUEST),
+    FILE_TOO_LARGE("ERR_FILE_TOO_LARGE", "The image is too large, maximum size is 15MB", HttpStatus.BAD_REQUEST),
+    FILE_EMPTY("ERR_FILE_EMPTY", "Cannot send an empty file", HttpStatus.BAD_REQUEST),
+    FILE_UPLOAD_ERROR("ERR_FILE_UPLOAD", "An error occurred while uploading the file", HttpStatus.INTERNAL_SERVER_ERROR),
+    CATEGORY_NOT_FOUND("CATEGORY_NOT_FOUND", "Category not found", NOT_FOUND),
     ERROR("ERROR", "Error", CONFLICT),
     ;
 

@@ -1,6 +1,6 @@
 package com.example.semilio.product;
 
-public enum ProductStatus {
+public enum Status {
     ACTIVE,
     HIDDEN,
     SOLD

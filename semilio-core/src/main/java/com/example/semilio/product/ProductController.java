@@ -32,7 +32,7 @@ public class ProductController {
     public ResponseEntity<ProductCardResponse> create(
             @RequestPart("dto") @Valid ProductRequestDTO dto,
             @RequestPart("images") List<MultipartFile> images,
-            final Authentication principal
+            Authentication principal
     ) {
 
         ProductCardResponse createdProduct = productService.createProduct(dto, images, principal);
@@ -41,22 +41,31 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductSummaryDTO> update(
-            @PathVariable Long id,
-            @Valid @RequestBody ProductRequestDTO dto) {
+            @PathVariable String id,
+            @Valid @RequestPart("dto") ProductRequestDTO dto,
+            @RequestPart("newFiles") List<MultipartFile> newFiles,
+            Authentication principal
+    ) {
 
-        ProductSummaryDTO updatedProduct = productService.updateProduct(id, dto);
+        ProductSummaryDTO updatedProduct = productService.updateProduct(id, dto, newFiles, principal);
         return ResponseEntity.ok(updatedProduct);
     }
 
     @GetMapping("/public/{id}")
-    public ResponseEntity<ProductDetailDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<ProductDetailDTO> getById(@PathVariable String id) {
         ProductDetailDTO product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    @GetMapping("/public/items/{slug}")
+    public ResponseEntity<ProductDetailDTO> getBySlug(@PathVariable String slug) {
+        ProductDetailDTO product = productService.getProductBySlug(slug);
         return ResponseEntity.ok(product);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
-            @PathVariable Long id,
+            @PathVariable String id,
             Authentication principal
             ){
         productService.deleteProduct(id, principal);
@@ -65,7 +74,7 @@ public class ProductController {
 
     @PatchMapping("/{id}/visibility")
     public ResponseEntity<Void> toggleVisibility(
-            @PathVariable Long id,
+            @PathVariable String id,
             Authentication principal
             ) {
         productService.changeVisibility(id, principal);
@@ -115,7 +124,7 @@ public class ProductController {
 
     @PatchMapping("/public/{id}/view")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void incrementView(@PathVariable Long id) {
+    public void incrementView(@PathVariable String id) {
         productService.addViewAsync(id);
     }
 }

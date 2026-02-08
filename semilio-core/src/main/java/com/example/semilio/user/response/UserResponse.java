@@ -1,5 +1,6 @@
 package com.example.semilio.user.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,5 +33,6 @@ public class UserResponse {
     private boolean phoneVerified;
     private String profilePictureUrl;
     private List<String> roles;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private LocalDateTime createdDate;
 }

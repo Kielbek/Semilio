@@ -1,101 +1,82 @@
 package com.example.semilio.product;
 
 import com.example.semilio.comon.dictionary.DictionaryService;
+import com.example.semilio.image.ImageMapper;
+import com.example.semilio.image.ImageResponse;
+import com.example.semilio.product.model.Price;
+import com.example.semilio.product.model.Product;
+import com.example.semilio.product.model.ProductStats;
 import com.example.semilio.product.request.ProductRequestDTO;
-import com.example.semilio.product.response.ProductCardResponse;
-import com.example.semilio.product.response.ProductDetailDTO;
-import com.example.semilio.product.response.ProductSummaryDTO;
-import com.example.semilio.product.response.SellerInfoRequest;
+import com.example.semilio.product.response.*;
 import com.example.semilio.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class ProductMapper {
+
     private final DictionaryService dictionaryService;
+    private final ImageMapper imageMapper;
 
     public ProductSummaryDTO toSummaryDTO(Product product) {
-        if (product == null) {
-            return null;
-        }
+        if (product == null) return null;
 
-        ProductSummaryDTO dto = new ProductSummaryDTO();
-        dto.setId(product.getId());
-        dto.setTitle(product.getTitle());
-        dto.setPrice(product.getPrice());
-        dto.setCondition(product.getCondition());
-        dto.setMainImageUrl(product.getMainImageUrl());
-
-        if (product.getCategory() != null) {
-            dto.setCategoryName(product.getCategory().getName());
-        }
-
-        return dto;
+        return ProductSummaryDTO.builder()
+                .id(product.getId())
+                .title(product.getTitle())
+                .price(mapToPriceResponse(product.getPrice()))
+                .condition(product.getCondition())
+                .mainImage(imageMapper.imageTOImageResponse(product.getMainImage()))
+                .categoryName(product.getCategory() != null ? product.getCategory().getName() : null)
+                .build();
     }
 
     public ProductDetailDTO toDetailDTO(Product product) {
-        if (product == null) {
-            return null;
-        }
+        if (product == null) return null;
 
-        ProductDetailDTO dto = new ProductDetailDTO();
-        dto.setId(product.getId());
-        dto.setTitle(product.getTitle());
-        dto.setDescription(product.getDescription());
-        dto.setPrice(product.getPrice());
-        dto.setCondition(product.getCondition());
-        dto.setColor(product.getColor());
-        dto.setBrand(product.getBrand());
-        dto.setSize(product.getSize());
-        dto.setCreatedAt(product.getCreatedDate());
-        dto.setImageUrls(product.getImageUrls());
-        dto.setStatus(product.getStatus());
+        List<ImageResponse> imageResponses = product.getImages().stream()
+                .map(imageMapper::imageTOImageResponse)
+                .toList();
 
-        if (product.getCategory() != null) {
-            dto.setCategoryId(product.getCategory().getId());
-        }
-
-        if (product.getStats() != null) {
-            dto.setViews(product.getStats().getViews());
-            dto.setLikes(product.getStats().getLikes());
-        }
-
-        dto.setSeller(mapToSellerInfoRequest(product.getSeller()));
-
-        return dto;
-    }
-
-    private SellerInfoRequest mapToSellerInfoRequest(User seller) {
-        String lang = seller.getPreferredLanguage() != null ? seller.getPreferredLanguage() : "pl";
-        String translatedCountry = dictionaryService.getCountryNameByCode(seller.getCountry(), lang);
-
-        return SellerInfoRequest.builder()
-                .id(seller.getId())
-                .nickName(seller.getNickName())
-                .profilePictureUrl(seller.getProfilePictureUrl())
-                .countryName(translatedCountry)
+        return ProductDetailDTO.builder()
+                .id(product.getId())
+                .title(product.getTitle())
+                .slug(product.getSlug())
+                .description(product.getDescription())
+                .price(mapToPriceResponse(product.getPrice()))
+                .condition(product.getCondition())
+                .color(product.getColor())
+                .brand(product.getBrand())
+                .size(product.getSize())
+                .createdAt(product.getCreatedDate())
+                .images(imageResponses)
+                .status(product.getStatus())
+                .categoryId(product.getCategory() != null ? product.getCategory().getId() : null)
+                .stats(mapToProductStatsResponse(product.getStats()))
+                .seller(mapToSellerInfoResponse(product.getSeller()))
                 .build();
-
     }
 
     public Product toEntity(ProductRequestDTO dto) {
-        if (dto == null) {
-            return null;
-        }
+        if (dto == null) return null;
 
-        Product product = new Product();
-        product.setTitle(dto.getTitle());
-        product.setDescription(dto.getDescription());
-        product.setPrice(dto.getPrice());
-        product.setCondition(dto.getCondition());
-        product.setColor(dto.getColor());
-        product.setBrand(dto.getBrand());
-        product.setSize(dto.getSize());
-        product.setStatus(ProductStatus.ACTIVE);
-
-
-        return product;
+        return Product.builder()
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .price(Price.builder()
+                        .amount(dto.getAmount())
+                        .currencyCode("PLN")
+                        .build())
+                .condition(dto.getCondition())
+                .color(dto.getColor())
+                .brand(dto.getBrand())
+                .size(dto.getSize())
+                .status(Status.ACTIVE)
+                .build();
     }
 
     public ProductCardResponse toProductCardResponse(Product product) {
@@ -103,19 +84,52 @@ public class ProductMapper {
     }
 
     public ProductCardResponse toProductCardResponse(Product product, boolean isLikedByCurrentUser) {
-        if (product == null) {
-            return null;
-        }
+        if (product == null) return null;
 
         return ProductCardResponse.builder()
                 .id(product.getId())
                 .title(product.getTitle())
-                .price(product.getPrice())
-                .mainImageUrl(product.getMainImageUrl())
-                .stats(product.getStats())
+                .slug(product.getSlug())
+                .price(mapToPriceResponse(product.getPrice()))
+                .mainImage(imageMapper.imageTOImageResponse(product.getMainImage()))
+                .stats(mapToProductStatsResponse(product.getStats()))
+                .condition(product.getCondition())
+                .size(product.getSize())
                 .status(product.getStatus())
                 .isLikedByCurrentUser(isLikedByCurrentUser)
                 .build();
+    }
 
+
+    private SellerInfoResponse mapToSellerInfoResponse(User seller) {
+        if (seller == null) return null;
+
+        String lang = Optional.ofNullable(seller.getPreferredLanguage()).orElse("pl");
+        String translatedCountry = dictionaryService.getCountryNameByCode(seller.getCountry(), lang);
+
+        return SellerInfoResponse.builder()
+                .id(seller.getId())
+                .nickName(seller.getNickName())
+                .profilePictureUrl(seller.getProfilePictureUrl())
+                .countryName(translatedCountry)
+                .build();
+    }
+
+    public PriceResponse mapToPriceResponse(Price price) {
+        if (price == null) return null;
+
+        return PriceResponse.builder()
+                .amount(price.getAmount())
+                .currencyCode(price.getCurrencyCode())
+                .build();
+    }
+
+    private ProductStatsResponse mapToProductStatsResponse(ProductStats stats) {
+        if (stats == null) return null;
+
+        return ProductStatsResponse.builder()
+                .views(stats.getViews())
+                .likes(stats.getLikes())
+                .build();
     }
 }

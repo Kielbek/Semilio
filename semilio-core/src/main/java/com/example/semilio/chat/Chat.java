@@ -2,8 +2,7 @@ package com.example.semilio.chat;
 
 import com.example.semilio.message.Message;
 import com.example.semilio.message.MessageState;
-import com.example.semilio.message.MessageType;
-import com.example.semilio.product.Product;
+import com.example.semilio.product.model.Product;
 import com.example.semilio.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,12 +41,18 @@ public class Chat {
     @ManyToOne
     @JoinColumn(name = "recipient_id")
     private User recipient;
-    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
     @OrderBy("createdDate DESC")
     private List<Message> messages;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Column(name = "last_message_content")
+    private String lastMessageContent;
+
+    @Column(name = "last_message_date")
+    private LocalDateTime lastMessageDate;
 
     @CreatedDate
     @Column(name = "created_date", updatable = false, nullable = false)
@@ -58,45 +63,11 @@ public class Chat {
     private LocalDateTime lastModifiedDate;
 
     @Transient
-    public String getChatName(String senderId) {
-        if (recipient.getId().equals(senderId)) {
-            return sender.getFirstName() + " " + sender.getLastName();
-        }
-        return recipient.getFirstName() + " " + recipient.getLastName();
-    }
-    @Transient
-    public String getTargetChatName(String senderId) {
-        if (sender.getId().equals(senderId)) {
-            return sender.getFirstName() + " " + sender.getLastName();
-        }
-        return recipient.getFirstName() + " " + recipient.getLastName();
-    }
-
-    @Transient
     public long getUnreadMessages(String senderId) {
         return this.messages
                 .stream()
                 .filter(m -> m.getReceiverId().equals(senderId))
                 .filter(m -> MessageState.SENT == m.getState())
                 .count();
-    }
-
-    @Transient
-    public String getLastMessage() {
-        if (messages != null && !messages.isEmpty()) {
-            if (messages.get(0).getType() != MessageType.TEXT) {
-                return "Attachment";
-            }
-            return messages.get(0).getContent();
-        }
-        return null;
-    }
-
-    @Transient
-    public LocalDateTime getLastMessageTime() {
-        if (messages != null && !messages.isEmpty()) {
-            return messages.get(0).getCreatedDate();
-        }
-        return null;
     }
 }

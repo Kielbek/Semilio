@@ -10,9 +10,21 @@ import java.util.Optional;
 
 public interface ChatRepository extends JpaRepository<Chat, String> {
 
-    @Query(name = ChatConstants.FIND_CHAT_BY_SENDER_ID)
-    Page<Chat> findChatsBySenderId(@Param("senderId") String senderId, Pageable pageable);
+    @Query("""
+    SELECT c FROM Chat c 
+    WHERE c.sender.id = :userId OR c.recipient.id = :userId 
+    ORDER BY c.lastMessageDate DESC NULLS LAST
+""")
+    Page<Chat> findAllChatsOrderByLastMessage(@Param("userId") String userId, Pageable pageable);
 
-    @Query(name = ChatConstants.FIND_CHAT_BY_SENDER_ID_AND_RECEIVER)
-    Optional<Chat> findChatByReceiverAndSender(@Param("senderId") String id, @Param("recipientId") String recipientId);
+    Optional<Chat> findBySenderIdAndProductId(String senderId, String productId);
+
+    @Query("""
+        SELECT c FROM Chat c 
+        LEFT JOIN FETCH c.sender 
+        LEFT JOIN FETCH c.recipient 
+        LEFT JOIN FETCH c.product 
+        WHERE c.id = :id
+    """)
+    Optional<Chat> findByIdWithDetails(@Param("id") String id);
 }

@@ -1,11 +1,8 @@
 package com.example.semilio.message.request;
 
-import com.example.semilio.message.MessageType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Getter
 @Setter
@@ -14,9 +11,11 @@ import lombok.Setter;
 @Builder
 public class MessageRequest {
 
-    private String content;
-    private String senderId;
-    private String receiverId;
-    private MessageType type;
     private String chatId;
+
+    private String productId;
+
+    @NotBlank(message = "Message content cannot be empty")
+    @Size(max = 250, message = "Message cannot exceed 250 characters")
+    private String content;
 }

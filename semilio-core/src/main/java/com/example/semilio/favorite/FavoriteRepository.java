@@ -13,9 +13,9 @@ import java.util.Set;
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite, String> {
 
-    boolean existsByUserIdAndProductId(String userId, Long productId);
+    boolean existsByUserIdAndProductId(String userId, String productId);
 
-    void deleteByUserIdAndProductId(String userId, Long productId);
+    void deleteByUserIdAndProductId(String userId, String productId);
 
     @Query("""
         SELECT f FROM Favorite f 
@@ -26,8 +26,8 @@ public interface FavoriteRepository extends JpaRepository<Favorite, String> {
     Page<Favorite> findAllByUserId(@Param("userId") String userId, Pageable pageable);
 
     @Query("SELECT f.product.id FROM Favorite f WHERE f.user.id = :userId AND f.product.id IN :productIds")
-    Set<Long> findLikedProductIds(
+    Set<String> findLikedProductIds(
             @Param("userId") String userId,
-            @Param("productIds") List<Long> productIds
+            @Param("productIds") List<String> productIds
     );
 }

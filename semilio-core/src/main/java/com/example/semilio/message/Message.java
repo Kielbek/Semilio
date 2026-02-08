@@ -1,26 +1,16 @@
 package com.example.semilio.message;
 
 import com.example.semilio.chat.Chat;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import com.example.semilio.image.Image;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -35,6 +25,7 @@ import java.time.LocalDateTime;
 @NamedQuery(name = MessageConstants.SET_MESSAGES_TO_SEEN_BY_CHAT,
         query = "UPDATE Message SET state = :newState WHERE chat.id = :chatId"
 )
+@EntityListeners(AuditingEntityListener.class)
 public class Message {
 
     @Id
@@ -43,6 +34,9 @@ public class Message {
     private Long id;
     @Column(columnDefinition = "TEXT")
     private String content;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
+    private Image mediaFile;
     @Enumerated(EnumType.STRING)
     private MessageState state;
     @Enumerated(EnumType.STRING)

@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerInfoRequest {
-    private String id;
-    private String nickName;
-    private String profilePictureUrl;
-    private String countryName;
+public class PriceResponse {
+    private BigDecimal amount;
+    private String currencyCode;
 }

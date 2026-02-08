@@ -16,7 +16,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class
+SecurityConfig {
 
     private static final String[] PUBLIC_URLS = {
             "/api/v1/auth/**",
@@ -25,6 +26,7 @@ public class SecurityConfig {
             "/configuration/ui",
             "/configuration/security",
             "/ws/**",
+            "/error"
     };
     private final JwtFilter jwtFilter;
 

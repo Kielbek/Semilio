@@ -1,5 +1,6 @@
 package com.example.semilio.user.impl;
 
+import com.example.semilio.comon.validation.FileValidator;
 import com.example.semilio.exception.BusinessException;
 import com.example.semilio.exception.ErrorCode;
 import com.example.semilio.service.S3Service;
@@ -36,6 +37,8 @@ public class UserServiceImpl implements UserService {
     private final SecurityService securityService;
     private final UserMapper userMapper;
     private final S3Service s3Service;
+    private final FileValidator fileValidator;
+
 
     @Override
     @Transactional(readOnly = true)
@@ -54,6 +57,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateProfileInfo(final ProfileUpdateRequest request, final MultipartFile profileImage, final Authentication principal) {
+        this.fileValidator.validateImage(profileImage);
+
         final User user = this.securityService.getCurrentUser(principal);
 
         updateNicknameIfChanged(user, request.getNickName());

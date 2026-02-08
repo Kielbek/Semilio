@@ -3,7 +3,7 @@ package com.example.semilio.favorite.impl;
 import com.example.semilio.favorite.Favorite;
 import com.example.semilio.favorite.FavoriteRepository;
 import com.example.semilio.favorite.FavoriteService;
-import com.example.semilio.product.Product;
+import com.example.semilio.product.model.Product;
 import com.example.semilio.product.ProductMapper;
 import com.example.semilio.product.ProductRepository;
 import com.example.semilio.product.response.ProductCardResponse;
@@ -32,7 +32,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     @Transactional
-    public void toggleFavorite(Long productId, Authentication principal) {
+    public void toggleFavorite(String productId, Authentication principal) {
         String userId = securityService.getCurrentUserId(principal);
 
         if (favoriteRepository.existsByUserIdAndProductId(userId, productId)) {

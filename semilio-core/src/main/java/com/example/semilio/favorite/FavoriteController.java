@@ -19,7 +19,7 @@ public class FavoriteController {
 
     @PostMapping("/{productId}")
     public ResponseEntity<Void> toggleFavorite(
-            @PathVariable Long productId,
+            @PathVariable String productId,
             Authentication principal
     ) {
         favoriteService.toggleFavorite(productId, principal);

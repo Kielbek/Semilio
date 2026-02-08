@@ -5,13 +5,16 @@ import com.example.semilio.category.CategoryRepository;
 import com.example.semilio.exception.BusinessException;
 import com.example.semilio.exception.ErrorCode;
 import com.example.semilio.favorite.FavoriteRepository;
+import com.example.semilio.image.Image;
+import com.example.semilio.image.ImageService;
 import com.example.semilio.product.*;
+import com.example.semilio.product.model.Product;
+import com.example.semilio.product.model.ProductStats;
 import com.example.semilio.product.request.ProductRequestDTO;
 import com.example.semilio.product.request.ProductSearchCriteriaRequest;
 import com.example.semilio.product.response.ProductCardResponse;
 import com.example.semilio.product.response.ProductDetailDTO;
 import com.example.semilio.product.response.ProductSummaryDTO;
-import com.example.semilio.service.S3Service;
 import com.example.semilio.service.SecurityService;
 import com.example.semilio.user.User;
 import lombok.RequiredArgsConstructor;
@@ -38,12 +41,16 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ProductMapper mapper;
-    private final S3Service s3Service;
+    private final ImageService imageService;
     private final SecurityService securityService;
     private final FavoriteRepository favoriteRepository;
 
+    private final String S3_FOLDER_NAME = "products";
+
     @Override
-    public ProductCardResponse createProduct(ProductRequestDTO dto, List<MultipartFile> images, Authentication principal) {
+    public ProductCardResponse createProduct(ProductRequestDTO dto,
+                                             List<MultipartFile> images,
+                                             Authentication principal) {
         User currentUser = securityService.getCurrentUser(principal);
 
         var category = categoryRepository.findById(dto.getCategoryId())
@@ -54,11 +61,8 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(category);
         product.setStats(new ProductStats(0, 0, 0));
 
-        if (images != null && !images.isEmpty()) {
-            var imageUrls = s3Service.uploadImages(images, "products/" + currentUser.getId());
-            product.setImageUrls(imageUrls);
-            product.setMainImageUrl(imageUrls.get(0));
-        }
+        List<Image> saveImage = imageService.createImages(images, "products" );
+        product.setImages(saveImage);
 
         var saved = productRepository.save(product);
         var summaryDTO = mapper.toProductCardResponse(saved);
@@ -70,39 +74,65 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductSummaryDTO updateProduct(Long productId, ProductRequestDTO dto) {
-        var existing = getProduct(productId);
+    public ProductSummaryDTO updateProduct(String productId,
+                                           ProductRequestDTO dto,
+                                           List<MultipartFile> newFiles,
+                                           Authentication principal) {
 
-        if (dto.getCategoryId() != null) {
-            Category category = categoryRepository.findById(dto.getCategoryId())
-                    .orElseThrow(() -> new BusinessException(ErrorCode.ERROR));
-            existing.setCategory(category);
+        var existing = getProduct(productId);
+        User currentUser = securityService.getCurrentUser(principal);
+
+        if (!existing.getSeller().getId().equals(currentUser.getId())) {
+            throw new BusinessException(ErrorCode.ACCESS_DENIED);
         }
 
+        updateProductFields(existing, dto);
+
+        List<Image> updatedImages = imageService.updateImages(
+                existing.getImages(),
+                dto.getRemainingImages(),
+                newFiles,
+                "products"
+        );
+
+        existing.getImages().clear();
+
+
+        existing.getImages().addAll(updatedImages);
+
+        var saved = productRepository.save(existing);
+        log.info("Updated product: id={}, title='{}'", saved.getId(), saved.getTitle());
+
+        return mapper.toSummaryDTO(saved);
+    }
+
+    private void updateProductFields(Product existing, ProductRequestDTO dto) {
+        if (dto.getCategoryId() != null) {
+            Category category = categoryRepository.findById(dto.getCategoryId())
+                    .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
+            existing.setCategory(category);
+        }
         existing.setTitle(dto.getTitle());
         existing.setDescription(dto.getDescription());
-        existing.setPrice(dto.getPrice());
+        if (existing.getPrice() != null) {
+            existing.getPrice().setAmount(dto.getAmount());
+        }
         existing.setSize(dto.getSize());
         existing.setCondition(dto.getCondition());
-
-        var updated = productRepository.save(existing);
-        var summaryDTO = mapper.toSummaryDTO(updated);
-
-        log.info("Updated product: id={}, title='{}'", updated.getId(), updated.getTitle());
-
-        return summaryDTO;
+        existing.setBrand(dto.getBrand());
+        existing.setColor(dto.getColor());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ProductDetailDTO getProductById(Long productId) {
+    public ProductDetailDTO getProductById(String productId) {
         var product = getProduct(productId);
         return mapper.toDetailDTO(product);
     }
 
     @Override
     @Transactional
-    public void deleteProduct(Long productId, Authentication principal) {
+    public void deleteProduct(String productId, Authentication principal) {
         var existing = getProduct(productId);
 
         String currentUserId = securityService.getCurrentUserId(principal);
@@ -116,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         try {
-            existing.getImageUrls().forEach(s3Service::deleteFile);
+            imageService.deleteImages(existing.getImages());
         } catch (Exception e) {
             log.error("Failed to clean up S3 files for product {}: {}", productId, e.getMessage());
         }
@@ -139,7 +169,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void changeVisibility(Long productId, Authentication principal) {
+    public void changeVisibility(String productId, Authentication principal) {
         var product = getProduct(productId);
 
         String currentUserId = securityService.getCurrentUserId(principal);
@@ -148,10 +178,10 @@ public class ProductServiceImpl implements ProductService {
             throw new BusinessException(ErrorCode.FORBIDDEN_ACTION);
         }
 
-        if (product.getStatus() == ProductStatus.ACTIVE) {
-            product.setStatus(ProductStatus.HIDDEN);
-        } else if (product.getStatus() == ProductStatus.HIDDEN) {
-            product.setStatus(ProductStatus.ACTIVE);
+        if (product.getStatus() == Status.ACTIVE) {
+            product.setStatus(Status.HIDDEN);
+        } else if (product.getStatus() == Status.HIDDEN) {
+            product.setStatus(Status.ACTIVE);
         }
 
         productRepository.save(product);
@@ -180,35 +210,43 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductCardResponse> getSellerProducts(Authentication principal, String sellerId, Pageable pageable) {
-        Page<Product> products = productRepository.findAllBySellerIdAndStatus(sellerId, ProductStatus.ACTIVE, pageable);
+        Page<Product> products = productRepository.findAllBySellerIdAndStatus(sellerId, Status.ACTIVE, pageable);
 
         return enrichWithLikes(products, principal);
     }
 
     @Async
-    public void addViewAsync(Long productId) {
+    public void addViewAsync(String productId) {
         productRepository.incrementViews(productId);
     }
 
-    private Product getProduct(Long productId) {
+    @Override
+    public ProductDetailDTO getProductBySlug(String slug) {
+        var product = productRepository.findBySlugWithDetails(slug)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        return mapper.toDetailDTO(product);
+    }
+
+    private Product getProduct(String productId) {
         return  productRepository.findById(productId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
     }
 
     private Page<ProductCardResponse> enrichWithLikes(Page<Product> productsPage, Authentication principal) {
-        Set<Long> likedProductIds = new HashSet<>();
+        Set<String> likedProductIds = new HashSet<>();
 
         if (principal != null && !productsPage.isEmpty()) {
             String userId = securityService.getCurrentUserId(principal);
 
-            List<Long> visibleIds = productsPage.getContent().stream()
+            List<String> visibleIds = productsPage.getContent().stream()
                     .map(Product::getId)
                     .toList();
 
             likedProductIds = favoriteRepository.findLikedProductIds(userId, visibleIds);
         }
 
-        Set<Long> finalLikedIds = likedProductIds;
+        Set<String> finalLikedIds = likedProductIds;
 
         return productsPage.map(product ->
                 mapper.toProductCardResponse(product, finalLikedIds.contains(product.getId()))

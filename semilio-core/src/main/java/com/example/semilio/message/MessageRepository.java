@@ -1,5 +1,8 @@
 package com.example.semilio.message;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,10 +12,12 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    @Query(name = MessageConstants.FIND_MESSAGES_BY_CHAT_ID)
-    List<Message> findMessagesByChatId(@Param("chatId") String chatId);
+    Page<Message> findByChatId(String chatId, Pageable pageable);
 
-    @Query(name = MessageConstants.SET_MESSAGES_TO_SEEN_BY_CHAT)
-    @Modifying
-    void setMessagesToSeenByChatId(@Param("chatId") String chatId, @Param("newState") MessageState state);
+//    @Modifying
+//    @Query("UPDATE Message m SET m.state = 'READ' " +
+//            "WHERE m.chatId = :chatId " +
+//            "AND m.receiverId = :userId " +
+//            "AND m.state = 'SENT'")
+//    void markChatAsRead(@Param("chatId") String chatId, @Param("userId") String userId);
 }

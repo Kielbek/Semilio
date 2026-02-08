@@ -1,5 +1,6 @@
 package com.example.semilio.product;
 
+import com.example.semilio.product.model.Product;
 import com.example.semilio.product.request.ProductSearchCriteriaRequest;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -43,7 +44,7 @@ public class ProductSpecifications {
             }
 
             // Zawsze tylko aktywne produkty
-            predicates.add(cb.equal(root.get("status"), ProductStatus.ACTIVE));
+            predicates.add(cb.equal(root.get("status"), Status.ACTIVE));
 
             return cb.and(predicates.toArray(new Predicate[0]));
         };

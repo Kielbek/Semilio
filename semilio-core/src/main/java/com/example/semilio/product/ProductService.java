@@ -16,23 +16,37 @@ import java.util.List;
 @Service
 public interface ProductService {
 
-    ProductCardResponse createProduct(ProductRequestDTO productDTO, List<MultipartFile> images, Authentication principal);
+    ProductCardResponse createProduct(ProductRequestDTO productDTO,
+                                      List<MultipartFile> images,
+                                      Authentication principal);
 
-    ProductSummaryDTO updateProduct(Long productId, ProductRequestDTO productDTO);
+    ProductSummaryDTO updateProduct(String productId,
+                                    ProductRequestDTO productDTO,
+                                    List<MultipartFile> newFiles,
+                                    Authentication principal);
 
-    ProductDetailDTO getProductById(Long productId);
+    ProductDetailDTO getProductById(String productId);
 
-    void deleteProduct(Long productId, Authentication principal);
+    void deleteProduct(String productId, Authentication principal);
 
-    Page<ProductCardResponse> getUserProducts(Authentication principal, Pageable pageable);
+    Page<ProductCardResponse> getUserProducts(Authentication principal,
+                                              Pageable pageable);
 
-    void changeVisibility(Long productId, Authentication principal);
+    void changeVisibility(String productId, Authentication principal);
 
-    Page<ProductCardResponse> getFeaturedProducts(Authentication principal, String effectiveSeed, Pageable pageable);
+    Page<ProductCardResponse> getFeaturedProducts(Authentication principal,
+                                                  String effectiveSeed,
+                                                  Pageable pageable);
 
-    Page<ProductCardResponse> search(ProductSearchCriteriaRequest criteria, Pageable pageable, Authentication auth);
+    Page<ProductCardResponse> search(ProductSearchCriteriaRequest criteria,
+                                     Pageable pageable,
+                                     Authentication auth);
 
-    Page<ProductCardResponse> getSellerProducts(Authentication principal, String sellerId, Pageable pageable);
+    Page<ProductCardResponse> getSellerProducts(Authentication principal,
+                                                String sellerId,
+                                                Pageable pageable);
 
-    void addViewAsync(Long productId);
+    void addViewAsync(String productId);
+
+    ProductDetailDTO getProductBySlug(String slug);
 }
