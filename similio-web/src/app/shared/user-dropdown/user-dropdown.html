@@ -1,0 +1,72 @@
+<div class="relative inline-block text-left">
+  <button
+    (click)="toggle()"
+    class="flex items-center font-semibold text-white hover:text-gray-200 transition-colors focus:outline-none group cursor-pointer"
+    type="button"
+  >
+    <lucide-icon name="user" class="w-6 h-6"></lucide-icon>
+    <span class="ml-2 hidden lg:inline">Twoje konto</span>
+    <lucide-icon
+      name="chevron-down"
+      class="w-4 h-4 transition-transform duration-200"
+      [ngClass]="{'rotate-180': isOpen()}"
+    ></lucide-icon>
+  </button>
+
+  @if (isOpen()) {
+    <div class="absolute right-0 mt-3 w-60 bg-white rounded-sm shadow-xl z-[60] overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-gray-100 text-[#002f34]">
+
+      <div class="p-4 flex items-center gap-3 border-b border-gray-100 bg-gray-50/50">
+        <app-user-avatar
+          [imageUrl]="user.profilePictureUrl"
+          [name]="user.nickName"
+          sizeClass="w-14 h-14 text-xl">
+        </app-user-avatar>
+
+        <div class="flex flex-col overflow-hidden text-left">
+          <span class="font-bold text-base leading-tight truncate">{{ user.nickName }}</span>
+        </div>
+      </div>
+
+      <div class="py-2 text-left">
+        <div class="px-4 py-2">
+          <h3 class="text-[#7f9799] font-bold text-[11px] mb-2 uppercase tracking-widest">Twoje konto</h3>
+          <ul class="space-y-0.5">
+            <li>
+              <a [routerLink]="['/', paths.SEGMENTS.PROFILE, currentId]" (click)="close()" class="block py-2 hover:bg-gray-50 hover:text-[#002f34] text-gray-700 text-sm px-2 -mx-2 transition-colors rounded">Ogłoszenia</a>
+            </li>
+            <li>
+              <a [routerLink]="paths.LINKS.CHAT" (click)="close()" class="block py-2 hover:bg-gray-50 hover:text-[#002f34] text-gray-700 text-sm px-2 -mx-2 transition-colors rounded">Czat</a>
+            </li>
+            <li>
+              <a [routerLink]="paths.LINKS.SETTINGS.ROOT" (click)="close()" class="block py-2 hover:bg-gray-50 hover:text-[#002f34] text-gray-700 text-sm px-2 -mx-2 transition-colors rounded">Ustawienia</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="border-t border-gray-100 my-2"></div>
+
+        <div class="px-4 py-2">
+          <h3 class="text-[#7f9799] font-bold text-[11px] mb-2 uppercase tracking-widest">Obserwowane</h3>
+          <ul class="space-y-0.5">
+            <li>
+              <a [routerLink]="paths.LINKS.PRODUCT.FAVORITE" (click)="close()" class="flex items-center justify-between py-2 hover:bg-gray-50 hover:text-[#002f34] text-gray-700 text-sm px-2 -mx-2 transition-colors rounded">
+                <span>Ogłoszenia</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-100 p-2 bg-gray-50/30">
+        <button
+          (click)="onLogout()"
+          class="w-full text-left px-4 py-2.5 text-gray-600 font-medium hover:bg-red-50 hover:text-red-600 transition-colors rounded-sm flex items-center gap-2 text-sm cursor-pointer"
+        >
+          <lucide-icon name="log-out" class="w-4 h-4"></lucide-icon>
+          Wyloguj
+        </button>
+      </div>
+    </div>
+  }
+</div>

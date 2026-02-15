@@ -26,7 +26,7 @@ spring:
     host: smtp.gmail.com
     port: 465
     username: similio.com@gmail.com
-    password:
+    password: 
     properties:
       mail:
         smtp:
@@ -47,7 +47,8 @@ app:
       access-token-expiration: 900000
       refresh-token-expiration: 604800000
   cors:
-    allowed-origin: http://192.168.1.17:4200/
+    allowed-origin: http://192.168.0.111:4200/
+  frontendUrl: http://192.168.0.111:4200/
 
 cloud:
   aws:

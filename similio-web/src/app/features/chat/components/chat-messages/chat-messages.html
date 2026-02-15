@@ -1,0 +1,51 @@
+<div class="flex flex-col w-full px-4 mb-4 group">
+  <div
+    class="flex flex-col max-w-[85%] md:max-w-[70%] min-w-0 relative"
+    [ngClass]="isCurrentUser ? 'ml-auto items-end' : 'mr-auto items-start'"
+  >
+    <div
+      class="transition-all duration-200 shadow-sm border border-black/[0.04] overflow-hidden"
+      [ngClass]="{
+        'bg-[#d9e4ff] text-[#002f34] rounded-2xl rounded-tr-none': isCurrentUser,
+        'bg-[#f2f4f5] text-[#002f34] rounded-2xl rounded-tl-none': !isCurrentUser,
+        'p-1': isImageMessage && !message.content,
+        'p-2': !isImageMessage || message.content
+      }"
+    >
+      <div class="flex items-end gap-2">
+        @if (isImageMessage && message.mediaFile; as file) {
+          <div
+            class="relative w-full bg-gray-200 rounded-xl overflow-hidden"
+            [style.aspect-ratio]="file.width + ' / ' + file.height"
+            [style.max-width.px]="320"
+          >
+            <img
+              [src]="file.url"
+              alt="Załącznik"
+              loading="lazy"
+            />
+          </div>
+        }
+
+        @if (message.content) {
+          <p class="whitespace-pre-wrap leading-snug text-[15px] [word-break:break-word] [overflow-wrap:anywhere] break-words px-1 py-0.5 min-w-[2rem]">
+            {{ message.content }}
+          </p>
+        }
+
+        @if (isCurrentUser) {
+          <span class="text-blue-600 shrink-0 flex items-center mb-0.5 opacity-90 select-none">
+            <lucide-icon name="check-check" size="16"></lucide-icon>
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="flex items-center gap-1 mt-1 px-1 select-none">
+      <span class="text-[11px] text-gray-400 font-medium tracking-tight">
+        {{ message.createdAt | date:'HH:mm' }}
+      </span>
+    </div>
+
+  </div>
+</div>

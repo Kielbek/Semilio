@@ -1,0 +1,83 @@
+<div class="relative w-full text-left font-sans">
+  <label class="text-[11px] font-medium text-[#002f34] uppercase tracking-wider mb-2 block">
+    {{ label }}
+  </label>
+
+  <div (click)="toggle()"
+       class="w-full bg-[#f2f4f5] border-b-2 cursor-pointer rounded-t-md px-4 py-3 flex justify-between items-center min-h-[48px] transition-all duration-200"
+       [class.border-[#002f34]]="isOpen"
+       [class.border-transparent]="!isOpen">
+
+    <div class="flex items-center gap-3">
+      @if (selectedOption?.color) {
+        <div class="w-4 h-4 rounded-full border border-gray-300"
+             [style.background]="selectedOption?.color">
+        </div>
+      }
+
+      <span class="text-sm font-light text-[#002f34]" [class.text-gray-400]="!selectedOption">
+        {{ selectedOption ? selectedOption.label : placeholder }}
+      </span>
+    </div>
+
+    <lucide-icon name="chevron-down"
+                 class="w-4 h-4 text-[#002f34] transition-transform duration-300 ease-in-out"
+                 [class.rotate-180]="isOpen">
+    </lucide-icon>
+  </div>
+
+  @if (isOpen) {
+    <div class="z-[1001] fixed inset-0 w-full h-screen bg-white flex flex-col
+                md:absolute md:inset-auto md:top-full md:mt-1 md:h-auto md:max-h-[400px] md:rounded-md md:shadow-[0_4px_20px_rgba(0,0,0,0.15)] md:border md:border-gray-100 animate-in fade-in duration-200">
+
+      <div class="flex items-center gap-3 p-4 border-b border-gray-100 md:hidden shrink-0 bg-white sticky top-0 z-10 shadow-sm">
+        <button (click)="toggle()" class="flex items-center justify-center p-1 -ml-1 text-[#002f34] active:bg-gray-100 rounded-full transition-colors cursor-pointer">
+          <lucide-icon name="arrow-left" class="w-6 h-6"></lucide-icon>
+        </button>
+        <h2 class="font-bold text-[#002f34] text-lg tracking-wide">{{ label }}</h2>
+      </div>
+
+      <div class="flex-1 overflow-y-auto overflow-x-hidden pb-10 md:pb-0">
+        @for (opt of options; track opt.value) {
+          <div (click)="select(opt)"
+               class="group flex items-center justify-between px-6 py-4 md:px-4 md:py-3 cursor-pointer border-b border-gray-50 last:border-none hover:bg-[#f9fafa] transition-colors"
+               [class.bg-[#f2fcfb]]="selectedOption?.value === opt.value">
+
+            <div class="flex items-center gap-4 flex-1">
+              @if (opt.color) {
+                <div class="w-10 h-10 md:w-8 md:h-8 rounded-full border border-gray-200 shrink-0 shadow-sm"
+                     [style.background]="opt.color">
+                </div>
+              }
+
+              <div class="flex flex-col pr-2">
+                <span class="text-[15px] md:text-sm font-semibold text-[#002f34] leading-tight group-hover:text-[#002f34]">
+                  {{ opt.label }}
+                </span>
+                @if (opt.description) {
+                  <p class="text-sm md:text-xs text-gray-500 font-light mt-1 leading-snug">
+                    {{ opt.description }}
+                  </p>
+                }
+              </div>
+            </div>
+
+            <div class="shrink-0 ml-3">
+              <div class="w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-200"
+                   [class.border-[#002f34]]="selectedOption?.value === opt.value"
+                   [class.bg-[#002f34]]="selectedOption?.value === opt.value"
+                   [class.border-gray-300]="selectedOption?.value !== opt.value"
+                   [class.group-hover:border-[#002f34]]="selectedOption?.value !== opt.value">
+
+                @if (selectedOption?.value === opt.value) {
+                  <lucide-icon name="check" class="w-4 h-4 text-white animate-in zoom-in duration-200"></lucide-icon>
+                }
+              </div>
+            </div>
+
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

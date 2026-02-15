@@ -1,0 +1,202 @@
+<div class="pb-4 px-4 md:px-8 lg:px-16 xl:pb-8 xl:px-24">
+  <h2
+    class="text-xl font-semibold text-color-my ml-1 mb-1 sm:mb-4 flex items-center justify-between"
+  >
+    Filtry
+    <button
+      class="sm:hidden p-2 rounded-md bg-gray-100 text-gray-700"
+      (click)="toggleFilters()"
+      aria-controls="mobile-filters"
+      type="button"
+    >
+      @if (!showMoreFilters) {
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-down-icon lucide-chevron-down"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      } @else {
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-chevron-up-icon lucide-chevron-up"
+        >
+          <path d="m18 15-6-6-6 6" />
+        </svg>
+      }
+    </button>
+  </h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <div class="flex flex-col order-1 lg:order-none">
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1"
+        >Sortowanie</label
+      >
+      <select
+        class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        [(ngModel)]="filters.sort"
+        (change)="updateFilters()"
+      >
+        <option value="">Wybrane dla Ciebie</option>
+        <option value="najnowsze">Najnowsze</option>
+        <option value="cena-asc">Cena rosnąco</option>
+        <option value="cena-desc">Cena malejąco</option>
+      </select>
+    </div>
+
+    <div
+      class="hidden sm:flex sm:flex-col col-span-full sm:col-span-2 lg:col-span-1"
+    >
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1"
+        >Kategoria</label
+      >
+      <select
+        class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        [(ngModel)]="filters.category"
+        (change)="updateFilters()"
+      >
+        <option value="">Wszystkie</option>
+        <option value="ubrania">Ubrania</option>
+        <option value="buty">Buty</option>
+        <option value="akcesoria">Akcesoria</option>
+      </select>
+    </div>
+
+    <div class="hidden sm:flex sm:flex-col">
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1">Marka</label>
+      <select
+        class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        [(ngModel)]="filters.brand"
+        (change)="updateFilters()"
+      >
+        <option value="">Wszystkie</option>
+        <option value="nike">Nike</option>
+        <option value="adidas">Adidas</option>
+        <option value="puma">Puma</option>
+        <option value="zara">Zara</option>
+        <option value="hm">H&M</option>
+        <option value="inna">Inna</option>
+      </select>
+    </div>
+
+    <div class="hidden sm:flex sm:flex-col">
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1">Stan</label>
+      <select
+        class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        [(ngModel)]="filters.condition"
+        (change)="updateFilters()"
+      >
+        <option value="">Wszystkie</option>
+        <option value="nowe">Nowe</option>
+        <option value="uzywane">Używane</option>
+      </select>
+    </div>
+
+    <div class="hidden sm:flex sm:flex-col">
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1">Cena</label>
+      <div class="flex gap-2">
+        <input
+          type="number"
+          placeholder="Od"
+          [(ngModel)]="filters.priceFrom"
+          (change)="updateFilters()"
+          class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        />
+        <input
+          type="number"
+          placeholder="Do"
+          [(ngModel)]="filters.priceTo"
+          (change)="updateFilters()"
+          class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="mobile-filters"
+    class="sm:hidden overflow-hidden transition-all duration-300 ease-in-out"
+    [ngClass]="showMoreFilters ? 'max-h-96 mt-4' : 'max-h-0'"
+  >
+    <div class="flex flex-col mb-3">
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1"
+        >Kategoria</label
+      >
+      <select
+        class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        [(ngModel)]="filters.category"
+        (change)="updateFilters()"
+      >
+        <option value="">Wszystkie</option>
+        <option value="ubrania">Ubrania</option>
+        <option value="buty">Buty</option>
+        <option value="akcesoria">Akcesoria</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col mb-3">
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1">Marka</label>
+      <select
+        class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        [(ngModel)]="filters.brand"
+        (change)="updateFilters()"
+      >
+        <option value="">Wszystkie</option>
+        <option value="nike">Nike</option>
+        <option value="adidas">Adidas</option>
+        <option value="puma">Puma</option>
+        <option value="zara">Zara</option>
+        <option value="hm">H&M</option>
+        <option value="inna">Inna</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col mb-3">
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1">Stan</label>
+      <select
+        class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        [(ngModel)]="filters.condition"
+        (change)="updateFilters()"
+      >
+        <option value="">Wszystkie</option>
+        <option value="nowe">Nowe</option>
+        <option value="uzywane">Używane</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col mb-3">
+      <label class="pl-1 text-sm font-medium text-gray-600 mb-1">Cena</label>
+      <div class="flex gap-2">
+        <input
+          type="number"
+          placeholder="Od"
+          [(ngModel)]="filters.priceFrom"
+          (change)="updateFilters()"
+          class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        />
+        <input
+          type="number"
+          placeholder="Do"
+          [(ngModel)]="filters.priceTo"
+          (change)="updateFilters()"
+          class="w-full h-11 rounded-md bg-white px-4 text-gray-700"
+        />
+      </div>
+    </div>
+  </div>
+</div>

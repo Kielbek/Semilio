@@ -1,0 +1,24 @@
+<app-list
+  [fetchDataFn]="favoritesSource"
+  [itemTemplate]="myCardTemplate"
+  cacheKey="my-favorites">
+  <app-empty-state
+    emptyState
+    title="Brak ulubionych"
+    description="Kliknij serduszko przy ogłoszeniu, aby zachować je na później."
+    icon='heart'
+  >
+    <a action routerLink="/" class="px-6 py-2 bg-[#002f34] text-white rounded-md">
+      Przeglądaj ogłoszenia
+    </a>
+  </app-empty-state>
+</app-list>
+
+<ng-template #myCardTemplate let-p>
+
+  <app-card
+    [product]="p"
+  >
+  </app-card>
+
+</ng-template>

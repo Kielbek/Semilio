@@ -1,0 +1,75 @@
+<div class="flex items-center justify-center p-4 font-sans animate-in fade-in duration-500">
+  <div class="w-full max-w-md bg-white p-2">
+
+    <div class="flex items-center gap-5 mb-8 text-left">
+      <div class="h-14 w-14 flex items-center shrink-0">
+        <img src="logo.png" class="h-full w-full object-contain" alt="Logo">
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-[#002f34]">Zaloguj się</h1>
+        <p class="text-gray-500 mt-1 text-sm font-light">
+          Zaloguj się do swojego konta Semilio
+        </p>
+      </div>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="mb-6 p-4 bg-red-50 border border-red-100 rounded-md flex items-start gap-3 animate-in slide-in-from-top-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-sm text-red-800 font-medium">{{ errorMessage() }}</p>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-6">
+
+      <app-input-field
+        label="E-mail"
+        type="email"
+        [control]="getControl('email')">
+      </app-input-field>
+
+      <div class="space-y-1">
+        <div class="flex justify-end">
+          <button
+            type="button"
+            class="text-xs text-gray-400 hover:text-[#002f34] cursor-pointer transition-colors focus:outline-none"
+            (click)="forgotPasswordClick.emit()">
+            Zapomniałeś hasła?
+          </button>
+        </div>
+
+        <app-input-field
+          label="Hasło"
+          type="password"
+          [control]="getControl('password')">
+        </app-input-field>
+      </div>
+
+      <app-button
+        type="submit"
+        [disabled]="isLoading() || form.invalid"
+        [fullWidth]="true"
+        extraClass="py-4"
+        [isLoading]="isLoading()"
+      >
+        Zaloguj się
+      </app-button>
+
+    </form>
+
+    <div class="mt-10 pt-6 border-t border-gray-100 text-center text-sm">
+      <p class="text-gray-500 font-light">
+        Nie masz konta?
+        <button
+          type="button"
+          class="text-[#002f34] font-bold underline ml-1 cursor-pointer hover:text-black transition-colors"
+          (click)="registerClick.emit()">
+          Zarejestruj się
+        </button>
+      </p>
+    </div>
+
+  </div>
+</div>

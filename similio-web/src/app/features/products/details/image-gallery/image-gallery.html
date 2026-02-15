@@ -1,0 +1,38 @@
+<div class="relative p-1.5 group max-w-full flex items-center justify-center bg-black/5 rounded-md overflow-hidden">
+
+  <img
+    [src]="selectedImage?.url"
+    alt="Pełny widok zdjęcia"
+    class="max-w-full max-h-[80vh] object-contain shadow-lg transition-all"
+  />
+
+  @if (images.length > 1) {
+    <div class="absolute inset-0 flex items-center justify-between px-4 pointer-events-none">
+
+      <button
+        (click)="prevImage()"
+        class="btn-circle left-3 pointer-events-auto shadow-xl hover:scale-110 active:scale-95 transition-all"
+        aria-label="Poprzednie zdjęcie"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+
+      <button
+        (click)="nextImage()"
+        class="btn-circle right-3 pointer-events-auto shadow-xl hover:scale-110 active:scale-95 transition-all"
+        aria-label="Następne zdjęcie"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
+
+    </div>
+
+    <div class="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-medium backdrop-blur-md border border-white/10">
+      {{ selectedIndex + 1 }} / {{ images.length }}
+    </div>
+  }
+</div>

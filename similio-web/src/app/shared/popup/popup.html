@@ -1,0 +1,36 @@
+@if (isOpen) {
+  <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+    <div
+      class="bg-white rounded-md max-w-md w-full relative
+             max-h-[98vh] flex flex-col"
+    >
+      <button
+        class="absolute text-black text-3xl px-3 py-1 cursor-pointer
+               aspect-[1] top-3 right-3 z-50"
+        (click)="onClose()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-x"
+        >
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+
+      <div class="text-gray-800 overflow-y-auto">
+        <ng-content></ng-content>
+      </div>
+    </div>
+
+  </div>
+}

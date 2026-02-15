@@ -1,0 +1,22 @@
+<div
+  [class]="sizeClass"
+  class="rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 shrink-0 overflow-hidden relative select-none">
+
+  @if (showImage) {
+
+    <img
+      [src]="currentImageUrl"
+      (error)="onImageError()"
+      class="w-full h-full object-cover animate-in fade-in duration-300"
+      loading="lazy"
+      alt="Avatar">
+
+  } @else {
+
+    <span class="font-bold text-gray-400 uppercase text-xl">
+          {{ calculatedInitials }}
+        </span>
+
+  }
+
+</div>

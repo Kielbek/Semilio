@@ -1,0 +1,90 @@
+<div class="relative rounded-sm">
+
+  <a [routerLink]="[path.LINKS.PRODUCT.DETAILS, product.slug]"
+     class="block relative aspect-[3/4] bg-gray-100 overflow-hidden rounded-t-lg">
+
+    @if (!isImageLoaded()) {
+      <div class="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
+        <app-spinner></app-spinner>
+      </div>
+    }
+
+    <img
+      [src]="product.mainImage.url"
+      [alt]="product.title"
+      (load)="isImageLoaded.set(true)"
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      [class.opacity-0]="!isImageLoaded()"
+      [class.opacity-100]="isImageLoaded()"
+      loading="lazy"
+    />
+
+        @if (product.status === Status.SOLD) {
+          <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <span class="text-white text-xs font-bold uppercase tracking-widest border border-white px-2 py-1">Sprzedane</span>
+          </div>
+        } @else if (product.status === Status.HIDDEN) {
+          <div class="absolute inset-0 bg-gray-900/60 flex items-center justify-center">
+            <span class="text-white text-xs font-bold uppercase tracking-widest">Ukryte</span>
+          </div>
+        }
+  </a>
+
+  <div class="absolute top-2 right-2 z-20">
+    <div class="relative">
+      <button
+        (click)="toggleMenu($event)"
+        class="w-8 h-8 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm text-gray-600 hover:text-[#002f34] hover:bg-white transition-all focus:outline-none cursor-pointer"
+        [disabled]="isProcessing()"
+      >
+        @if (isProcessing()) {
+          <div class="w-4 h-4 border-2 border-gray-300 border-t-[#002f34] rounded-full animate-spin"></div>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+          </svg>
+        }
+      </button>
+
+      @if (isMenuOpen()) {
+        <div class="absolute right-0 top-full mt-1 w-36 bg-white rounded shadow-lg border border-gray-100 py-1 z-30 animate-in fade-in zoom-in-95 duration-100">
+          <button (click)="handleAction('edit')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors">
+            Edytuj
+          </button>
+          <button (click)="handleAction('hide')" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors">
+            {{ product.status === Status.HIDDEN' ? 'Pokaż' : 'Ukryj' }}
+          </button>
+          <div class="border-t border-gray-100 my-1"></div>
+          <button (click)="handleAction('delete')" class="w-full text-left px-4 py-2 text-sm text-red-600 font-medium hover:bg-red-50 cursor-pointer transition-colors">
+            Usuń
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="p-1">
+    <div class="mb-1">
+      <h3 class="text-sm font-medium text-gray-900 truncate" [title]="product.title">
+        {{ product.title }}
+      </h3>
+      <p class="mt-1 text-[12px] text-gray-500">
+        {{ product.price.amount | number:'1.2-2' }} {{ product.price.currencyCode }}
+      </p>
+    </div>
+
+    <div class="border-t border-gray-100 pt-1 text-[11px] text-gray-500">
+
+      <div class="flex items-center gap-1">
+        <span>Polubienia</span>
+        <span>{{ product.stats.likes || 0 }}</span>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <span>Wyświetlenia</span>
+        <span>{{ product.stats.views || 0 }}</span>
+      </div>
+
+    </div>
+  </div>
+</div>

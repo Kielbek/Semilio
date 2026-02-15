@@ -1,0 +1,29 @@
+<ng-template #contentRef>
+  <ng-content></ng-content>
+</ng-template>
+
+@if (href) {
+  <a
+    [routerLink]="href"
+    [class]="buttonClasses"
+  >
+    <ng-container *ngTemplateOutlet="contentRef"></ng-container>
+  </a>
+}
+@else {
+  <button
+    [type]="type"
+    [disabled]="disabled || isLoading"
+    [class]="buttonClasses + ' relative'"
+  >
+    <span [class.opacity-0]="isLoading">
+      <ng-container *ngTemplateOutlet="contentRef"></ng-container>
+    </span>
+
+    @if (isLoading) {
+      <div class="absolute inset-0 flex items-center justify-center">
+        <app-spinner></app-spinner>
+      </div>
+    }
+  </button>
+}

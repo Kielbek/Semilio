@@ -1,0 +1,21 @@
+<nav class="text-sm text-gray-600 mb-4">
+  <ol class="ml-2 flex flex-wrap items-center gap-1">
+    <li>
+      <a class="hover:underline" routerLink="/">Strona główna</a>
+      <span class="text-gray-400 mx-1">/</span>
+    </li>
+
+    @for (cat of path; track cat.id; let last = $last) {
+      <li>
+        @if (!last) {
+          <a class="hover:underline" [routerLink]="['/category', cat.id]">{{ cat.name }}</a>
+          <span class="text-gray-400 mx-1">/</span>
+        } @else {
+          <span aria-current="page" class="font-medium text-gray-900">
+        {{ cat.name }}
+      </span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

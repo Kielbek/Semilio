@@ -1,0 +1,146 @@
+<div class="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8 font-sans text-slate-800">
+
+  <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12">
+
+    <div class="hidden lg:block lg:col-span-1 space-y-8">
+
+      <div>
+        <h2 class="text-xl font-bold text-slate-900 mb-6">Centrum Pomocy</h2>
+        <a routerLink="/" class="text-slate-500 hover:text-[#002f3f] transition block mb-4">Strona główna</a>
+      </div>
+
+      <nav class="space-y-1">
+
+        <div class="group">
+          <span class="block font-bold text-[#002f3f] mb-3">Przeglądaj tematy</span>
+          <ul class="space-y-3 border-l-2 border-slate-100 ml-1 pl-4">
+            <li><a routerLink="/help/selling" class="text-slate-600 hover:text-[#002f3f] font-medium block">Sprzedawanie</a></li>
+            <li><a routerLink="/help/buying" class="text-slate-600 hover:text-[#002f3f] font-medium block">Kupowanie</a></li>
+            <li><a routerLink="/help/safety" class="text-slate-600 hover:text-[#002f3f] font-medium block">Bezpieczeństwo</a></li>
+            <li><a routerLink="/legal/terms" class="text-slate-600 hover:text-[#002f3f] font-medium block">Regulamin i Prawne</a></li>
+          </ul>
+        </div>
+
+        <div class="pt-4">
+          <a routerLink="/login" class="block font-medium text-slate-600 hover:text-[#002f3f]">Moje Konto</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="lg:col-span-3">
+
+      <div class="relative mb-10">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input type="text"
+               class="block w-full pl-12 pr-4 py-3 bg-slate-100 border-none rounded-lg text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-[#002f3f] transition"
+               placeholder="Jak możemy Ci pomóc? (np. jak usunąć konto)...">
+      </div>
+
+      <h1 class="text-3xl font-bold text-[#002f3f] mb-8">Witaj w pomocy Semilio</h1>
+
+      <div class="mb-12">
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Najczęściej czytane</h3>
+
+        <div class="border-t border-slate-200">
+
+          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" /> </svg>
+              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak dodać darmowe ogłoszenie?</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
+              </svg>
+              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Dostałem podejrzany SMS / Link - co robić?</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
+              </svg>
+              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak bezpiecznie kupować (odbiór osobisty)?</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/login" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
+              </svg>
+              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Nie mogę zalogować się na konto</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybierz temat</h3>
+
+        <div class="border-t border-slate-200">
+
+          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Sprzedawanie</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Kupowanie</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Zaufanie i bezpieczeństwo</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/login" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Moje Konto i Ustawienia</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/legal/terms" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Regulamin i RODO</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

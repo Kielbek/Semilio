@@ -1,0 +1,15 @@
+<app-search-bar></app-search-bar>
+<app-list
+  [fetchDataFn]="featuredSource"
+  [itemTemplate]="myCardTemplate"
+  cacheKey="home-promoted-list">
+</app-list>
+
+<ng-template #myCardTemplate let-p>
+
+  <app-card
+    [product]="p"
+    >
+  </app-card>
+
+</ng-template>

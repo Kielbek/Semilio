@@ -1,0 +1,51 @@
+<nav
+  #headerEl
+  class="bg-my fixed top-0 py-4 px-4 lg:px-16 z-50 w-full md:px-8 xl:px-24 xxl:px-40 transition-transform duration-300"
+  [class.-translate-y-full]="isHeaderHidden()"
+  id="navbar"
+>
+  <div class="flex items-center justify-between flex-wrap relative">
+    <div class="mb-2 sm:mb-0">
+      <div class="flex items-center cursor-pointer" routerLink="/home">
+        <img class="h-10" src="full_logo.png" alt="logo" />
+      </div>
+    </div>
+
+    <div class="md:hidden">
+      @if (!(user$ | async)) {
+        <app-button variant="secondary" (click)="login()">Zaloguj się</app-button>
+      }
+    </div>
+
+    <div class="w-full navigation-menu hidden md:flex md:w-3/4 relative">
+      <div class="flex flex-col md:flex-row pt-8 pb-2 md:pt-0 md:pb-0 md:ml-auto md:items-center relative">
+
+        @if (user$ | async; as user) {
+          <a [routerLink]="paths.LINKS.CHAT" class="font-semibold text-white hover:text-gray-200 transition-colors p-2">
+            <lucide-icon name="message-circle" class="w-6 h-6"></lucide-icon>
+          </a>
+
+          <a [routerLink]="paths.LINKS.PRODUCT.FAVORITE" class="block mt-4 font-semibold text-white md:ml-4 lg:inline hover:text-gray-200 md:mt-0 transition-colors p-2">
+            <lucide-icon name="heart" class="w-6 h-6"></lucide-icon>
+          </a>
+
+          <div class="md:ml-4">
+            <app-user-dropdown
+              [user]="user"
+              (logout)="logout()">
+            </app-user-dropdown>
+          </div>
+
+          <app-button
+            variant="secondary"
+            [routerLink]="paths.LINKS.PRODUCT.CREATE"
+            extraClass="ml-5"
+          >Dodaj ogłoszenie</app-button>
+
+        } @else {
+          <app-button variant="secondary" (click)="login()">Zaloguj się</app-button>
+        }
+      </div>
+    </div>
+  </div>
+</nav>

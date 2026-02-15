@@ -41,7 +41,10 @@ public class ChatMapper {
                 .productId(chat.getProduct() != null ? chat.getProduct().getId() : null)
                 .productTitle(chat.getProduct() != null ? chat.getProduct().getTitle() : null)
                 .productPrice(chat.getProduct() != null ? productMapper.mapToPriceResponse(chat.getProduct().getPrice()) : null)
-                .productImage(chat.getProduct() != null ? chat.getProduct().getMainImageUrl() : null)
+                .productImage(chat.getProduct() != null ? imageMapper.imageTOImageResponse(
+                        chat
+                                .getProduct()
+                                .getMainImage()) : null)
                 .recipientId(chat.getSender().getId().equals(currentUserId)
                         ? chat.getRecipient().getId()
                         : chat.getSender().getId())

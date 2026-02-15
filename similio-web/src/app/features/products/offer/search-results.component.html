@@ -1,0 +1,22 @@
+<app-search-bar></app-search-bar>
+
+<app-search-filters></app-search-filters>
+
+<app-list
+  [fetchDataFn]="fetchProducts"
+  [itemTemplate]="productCard"
+>
+  <app-empty-state
+    emptyState
+    title="Nie znaleźliśmy ogłoszeń"
+    [description]="'Dla frazy: ' + currentQuery() + '. Spróbuj zmienić kategorię lub wpisz inne słowo.'"
+    icon="search"
+  >
+  </app-empty-state>
+</app-list>
+
+<ng-template #productCard let-product>
+  <app-card
+    [product]="product"
+  ></app-card>
+</ng-template>

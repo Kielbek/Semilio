@@ -23,6 +23,7 @@ import com.example.semilio.auth.AuthenticationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -39,6 +40,9 @@ import static com.example.semilio.exception.ErrorCode.*;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
+
+    @Value("${app.frontendUrl}")
+    private String frontendUrl;
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
@@ -153,7 +157,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         Map<String, Object> variables = new HashMap<>();
         variables.put("userName", user.getFirstName());
-        variables.put("resetLink", "http://localhost:4200/reset-password?token=" + rawToken);
+        variables.put("resetLink", frontendUrl + "/reset-password?token=" + rawToken);
 
         this.emailService.sendEmail(user.getEmail(), EmailTemplates.RESET_PASSWORD, variables);
     }

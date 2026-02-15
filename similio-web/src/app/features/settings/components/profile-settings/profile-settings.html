@@ -1,0 +1,82 @@
+<div class="max-w-3xl animate-in fade-in duration-500">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-8">
+
+    <app-form-section title="Zdjęcie profilowe">
+      <div class="flex items-center gap-6">
+        <app-user-avatar
+          [imageUrl]="selectedImagePreview || user?.profilePictureUrl"
+          [name]="getControl('nickName').value"
+          sizeClass="w-20 h-20 text-2xl">
+        </app-user-avatar>
+
+        <input
+          #fileInput
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          class="hidden">
+
+        <app-button
+          variant="secondary"
+          (click)="fileInput.click()"
+        >
+          Wybierz zdjęcie
+        </app-button>
+      </div>
+    </app-form-section>
+
+    <app-form-section title="Informacje o tobie">
+      <div class="space-y-6">
+
+        <app-input-field
+          label="Nazwa użytkownika"
+          placeholder="Wpisz nazwę"
+          [control]="getControl('nickName')">
+        </app-input-field>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="text-[11px] font-medium text-[#002f34] uppercase tracking-wider">
+              Kilka słów o tobie
+            </label>
+            <span class="text-gray-400 text-[10px]">
+              {{ getControl('bio').value?.length || 0 }} / 500
+            </span>
+          </div>
+          <textarea
+            formControlName="bio"
+            rows="4"
+            placeholder="Powiedz nam więcej o sobie i swoim stylu!"
+            class="w-full bg-[#f2f4f5] border-b-2 border-transparent focus:border-[#002f34] rounded-t-md px-4 py-3 text-[#002f34] outline-none transition-all resize-none text-sm font-light"
+          ></textarea>
+        </div>
+
+      </div>
+    </app-form-section>
+
+    <app-form-section title="Moja lokalizacja">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <app-select
+          label="Kraj"
+          [options]="countries"
+          formControlName="country">
+        </app-select>
+
+
+      </div>
+    </app-form-section>
+
+    <div class="flex justify-end pt-4">
+      <app-button
+        type="submit"
+        [disabled]="form.invalid || loading() || (!form.touched && (selectedImage == null))"
+        [isLoading]="loading()"
+      >
+        Zapisz zmiany
+      </app-button>
+    </div>
+
+  </form>
+</div>

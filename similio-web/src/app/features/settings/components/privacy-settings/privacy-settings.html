@@ -1,0 +1,58 @@
+<div class="max-w-3xl animate-in fade-in duration-500">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-8">
+
+    <app-form-section title="Zgody marketingowe" subtitle="Zdecyduj, w jaki sposób możemy się z Tobą kontaktować.">
+      <div class="space-y-6">
+
+        <div class="flex items-center justify-between">
+          <div class="pr-4">
+            <label class="font-medium text-gray-900 cursor-pointer" (click)="newsletterToggle.onChange({target: {checked: !form.get('newsletter')?.value}})">Newsletter</label>
+            <p class="text-sm text-gray-500 mt-1">Chcę otrzymywać informacje o nowościach na e-mail.</p>
+          </div>
+          <app-toggle-switch formControlName="newsletter" #newsletterToggle></app-toggle-switch>
+        </div>
+
+        <hr class="border-gray-100">
+
+        <div class="flex items-center justify-between">
+          <div class="pr-4">
+            <label class="font-medium text-gray-900 cursor-pointer" (click)="smsToggle.onChange({target: {checked: !form.get('smsNotifications')?.value}})">Powiadomienia SMS</label>
+            <p class="text-sm text-gray-500 mt-1">Powiadomienia o statusie zamówień na telefon.</p>
+          </div>
+          <app-toggle-switch formControlName="smsNotifications" #smsToggle></app-toggle-switch>
+        </div>
+
+      </div>
+    </app-form-section>
+
+    <app-form-section title="Prywatność" subtitle="Zarządzaj widocznością.">
+      <div class="space-y-6">
+
+        <div class="flex items-center justify-between">
+          <div class="pr-4">
+            <label class="font-medium text-gray-900">Wyszukiwarki internetowe</label>
+            <p class="text-sm text-gray-500 mt-1">Widoczność profilu w Google.</p>
+          </div>
+          <app-toggle-switch formControlName="searchEngineIndexing"></app-toggle-switch>
+        </div>
+
+        <hr class="border-gray-100">
+
+        <div class="flex items-center justify-between">
+          <div class="pr-4">
+            <label class="font-medium text-gray-900">Reklamy spersonalizowane</label>
+            <p class="text-sm text-gray-500 mt-1">Dopasowanie ofert do historii.</p>
+          </div>
+          <app-toggle-switch formControlName="personalizedAds"></app-toggle-switch>
+        </div>
+
+      </div>
+    </app-form-section>
+
+    <div class="flex justify-end pt-4 pb-4">
+      <app-button type="submit" [isLoading]="loading()">Zapisz ustawienia</app-button>
+    </div>
+
+  </form>
+</div>

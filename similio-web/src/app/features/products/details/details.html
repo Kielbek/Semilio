@@ -1,0 +1,30 @@
+<div class="max-w-7xl mx-auto my-5">
+
+  <nav class="w-full px-4 mb-4 lg:px-6 lg:mb-8">
+    <app-breadcrumbs [categoryId]="product?.categoryId"></app-breadcrumbs>
+  </nav>
+
+  <main class="flex flex-col gap-5 lg:hidden w-full pb-8">
+    <app-product-gallery [images]="product?.images || []"></app-product-gallery>
+    <app-product-info [product]="product" [isMine]="isMine"></app-product-info>
+    <app-product-description [product]="product"></app-product-description>
+    <app-seller-card [seller]="product?.seller"></app-seller-card>
+  </main>
+
+  <main class="hidden lg:grid grid-cols-12 gap-8 px-6 items-start">
+
+    <div class="col-span-8 flex flex-col gap-8">
+      <app-product-gallery [images]="product?.images || []"></app-product-gallery>
+
+      <div class="p-0">
+        <app-product-description [product]="product"></app-product-description>
+      </div>
+    </div>
+
+    <aside class="col-span-4 sticky top-8 flex flex-col gap-8">
+      <app-product-info [product]="product" [isMine]="isMine"></app-product-info>
+      <app-seller-card [seller]="product?.seller"></app-seller-card>
+    </aside>
+
+  </main>
+</div>

@@ -1,0 +1,27 @@
+<app-popup
+  [isOpen]="isLoginPopupOpen"
+  (close)="closePopup()"
+>
+  @if (mode === 'login') {
+    <app-login
+      (registerClick)="switchToRegister()"
+      (forgotPasswordClick)="switchToForgotPassword()"
+    ></app-login>
+  } @else if (mode === 'register') {
+    <app-register
+      (loginClick)="switchToLogin()"
+      (registerSuccess)="switchToSmsVerification()"
+    ></app-register>
+  }
+  @else if (mode === 'forgot-password') {
+    <app-forgot-password
+      (loginClick)="switchToLogin()"
+    ></app-forgot-password>
+  }
+  @else if (mode === 'sms-verification') {
+    <app-sms-verification
+      (verificationSuccess)="switchToLogin()"
+    ></app-sms-verification>
+  }
+
+</app-popup>

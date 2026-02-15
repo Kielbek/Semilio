@@ -1,5 +1,6 @@
 package com.example.semilio.chat.response;
 
+import com.example.semilio.image.ImageResponse;
 import com.example.semilio.product.response.PriceResponse;
 import lombok.*;
 
@@ -16,6 +17,6 @@ public class ChatDetailResponse {
     private String productId;
     private String productTitle;
     private PriceResponse productPrice;
-    private String productImage;
+    private ImageResponse productImage;
     private String recipientId;
 }

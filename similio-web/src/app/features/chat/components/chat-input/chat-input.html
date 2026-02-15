@@ -1,0 +1,73 @@
+<div class="flex-1 flex-col w-full bg-white">
+
+  @if (selectedImagePreview) {
+    <div class="p-2 flex w-full">
+      <div class="relative group">
+        <img
+          [src]="selectedImagePreview"
+          alt="Preview"
+          class="h-20 w-20 object-cover rounded-lg border border-gray-200 shadow-sm"
+        />
+
+        <button
+          (click)="removeImage()"
+          class="absolute -top-2 -right-2 bg-white text-gray-500 hover:text-red-500 border border-gray-200 rounded-full p-1 shadow-md transition-colors cursor-pointer"
+          title="Usuń zdjęcie"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  }
+
+  <footer class="flex items-center gap-2 w-full">
+
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      class="hidden"
+      (change)="onFileSelected($event)"
+    />
+
+    <button
+      type="button"
+      class="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors cursor-pointer shrink-0"
+      [class.text-blue-600]="selectedImagePreview"
+      [class.bg-blue-50]="selectedImagePreview"
+      (click)="triggerCamera()"
+      title="Dodaj zdjęcie"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
+    </button>
+
+    <div class="flex-1 relative min-w-0">
+      <input
+        type="text"
+        placeholder="Napisz wiadomość..."
+        class="w-full h-11 bg-gray-100 text-[#002f34] placeholder-gray-500 rounded-sm pl-4 pr-12 py-3 outline-none transition-all focus:ring-2 focus:ring-blue-100/50 focus:bg-white border border-transparent focus:border-gray-200"
+        [(ngModel)]="newMessage"
+        (keyup.enter)="sendMessage()"
+        maxlength="250"
+      />
+
+      @if (newMessage.length > 225) {
+        <span
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium pointer-events-none transition-colors"
+          [class.text-red-500]="newMessage.length >= 225"
+          [class.text-gray-400]="newMessage.length < 225"
+        >
+          {{ 250 - newMessage.length }}
+        </span>
+      }
+    </div>
+
+    <app-button
+      (click)="sendMessage()"
+      [disabled]="!newMessage.trim() && !selectedImage"
+      [extraClass]="'rounded-3xl px-3 md:px-6 h-11 shrink-0 flex items-center justify-center'"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+    </app-button>
+  </footer>
+</div>

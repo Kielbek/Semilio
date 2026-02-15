@@ -1,0 +1,35 @@
+<nav class="fixed bottom-0 left-0 z-50 w-full bg-white border-t border-gray-200 pb-[env(safe-area-inset-bottom)] md:hidden shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
+
+  <div class="flex justify-around items-end h-[60px] px-2">
+
+    @for (item of navItems; track item.path) {
+
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="text-[#002f34] font-medium"
+        [routerLinkActiveOptions]="{exact: item.path === '/'}"
+        class="group flex flex-col items-center justify-center w-full h-full pb-2 pt-1 transition-colors relative"
+        [ngClass]="item.isMainAction ? '' : 'text-gray-400 hover:text-[#002f3f]'"
+      >
+
+        @if (item.isMainAction) {
+          <div class="absolute -top-5 bg-my text-white p-3 rounded-full shadow-lg group-active:scale-95 transition-transform border-4 border-white">
+            <lucide-icon [name]="item.icon" [strokeWidth]="2.5" class="w-6 h-6"></lucide-icon>
+          </div>
+          <span class="text-[10px] mt-8 font-medium text-[#002f34]">{{ item.label }}</span>
+        }
+
+        @else {
+          <lucide-icon
+            [name]="item.icon"
+            class="w-6 h-6 mb-1 transition-transform group-active:scale-90"
+            [strokeWidth]="2"
+          ></lucide-icon>
+          <span class="text-[10px] tracking-wide">{{ item.label }}</span>
+        }
+
+      </a>
+    }
+
+  </div>
+</nav>

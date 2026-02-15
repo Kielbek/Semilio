@@ -1,0 +1,50 @@
+<div class="flex items-center justify-center p-4 font-sans">
+  <div class="w-full max-w-lg bg-white p-2 text-center">
+
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold text-[#002f34]">Weryfikacja numeru</h1>
+      <p class="text-gray-500 mt-2 text-sm">
+        Wysłaliśmy 6-cyfrowy kod na Twój numer telefonu.
+        Wpisz go poniżej, aby potwierdzić konto.
+      </p>
+    </div>
+
+    <div class="flex justify-center gap-2 mb-8" (paste)="onPaste($event)">
+      @for (item of [0,1,2,3,4,5]; track $index) {
+        <input
+          #otpInput
+          type="text"
+          maxLength="1"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          (input)="onInput($event, $index)"
+          (keydown)="onKeyDown($event, $index)"
+          class="w-10 h-12 sm:w-12 sm:h-14 text-center text-xl font-bold bg-[#f2f4f5] border-b-2 border-transparent focus:border-[#002f34] focus:bg-white rounded-t-md outline-none transition-all shadow-sm"
+        />
+      }
+    </div>
+
+    <button
+      (click)="verifyCode()"
+      [disabled]="loading || !isCodeComplete()"
+      class="w-full btn btn-primary py-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+
+      @if (loading) {
+        <svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      } @else {
+        Potwierdź i dołącz
+      }
+    </button>
+
+    <p class="mt-6 text-sm text-gray-500">
+      Nie otrzymałeś kodu?
+      <button (click)="resendCode()" class="text-[#002f34] font-bold underline hover:no-underline ml-1">
+        Wyślij ponownie
+      </button>
+    </p>
+
+  </div>
+</div>

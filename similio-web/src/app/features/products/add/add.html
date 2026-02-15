@@ -1,0 +1,102 @@
+<div class="max-w-5xl mx-auto px-4 py-10 space-y-6 font-sans text-left bg-gray-50/50 min-h-screen">
+
+  <header class="mb-8 px-2">
+    <h1 class="text-2xl font-normal text-[#002f34]">Dodaj ogłoszenie</h1>
+    <p class="text-gray-500 font-light mt-1 text-sm">Wypełnij formularz, aby wystawić swoje ubrania na sprzedaż.</p>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+    <app-form-section title="Informacje podstawowe">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <app-input-field
+          label="Tytuł ogłoszenia"
+          placeholder="np. Koszula lniana Zara"
+          [control]="getControl('title')">
+        </app-input-field>
+
+        <div class="flex-col items-center">
+          <app-category-select
+            label="Wybierz kategorię"
+            [categories]="categories"
+            formControlName="categoryId">
+          </app-category-select>
+        </div>
+      </div>
+    </app-form-section>
+
+    <app-form-section title="Zdjęcia" subtitle="Pierwsze zdjęcie będzie miniaturką.">
+      <app-image-uploader
+        [maxImages]="9"
+        [existingImages]="existingImages"
+        (filesChanged)="onFilesChanged($event)"
+        (existingImagesChanged)="onExistingImagesChanged($event)">
+      </app-image-uploader>
+    </app-form-section>
+
+    <app-form-section title="Szczegóły i Cena">
+      <div class="space-y-6">
+        <div class="max-w-[250px]">
+          <app-input-field
+            label="Twoja cena"
+            type="number"
+            suffix="PLN"
+            [control]="getControl('amount')">
+          </app-input-field>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="text-[11px] font-medium text-[#002f34] uppercase tracking-wider">Opis przedmiotu</label>
+            <span class="text-gray-400 text-[10px]">{{ getControl('description').value?.length || 0 }} / 2000</span>
+          </div>
+          <textarea
+            formControlName="description"
+            rows="5"
+            class="w-full bg-[#f2f4f5] border-b-2 border-transparent focus:border-[#002f34] rounded-t-md px-4 py-3 text-[#002f34] outline-none transition-all resize-none text-sm font-light"
+          ></textarea>
+        </div>
+      </div>
+    </app-form-section>
+
+    <app-form-section title="Szczegóły przedmiotu">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+
+        <app-select
+          label="Marka"
+          [options]="brandOptions"
+          formControlName="brand">
+        </app-select>
+
+        <app-select
+          label="Stan"
+          [options]="conditionOptions"
+          formControlName="condition">
+        </app-select>
+
+        <app-select
+          label="Kolor"
+          [options]="colorOptions"
+          formControlName="color">
+        </app-select>
+
+        <app-select
+          label="Rozmiar"
+          [options]="sizeOptions"
+          formControlName="size">
+        </app-select>
+
+      </div>
+    </app-form-section>
+
+    <div class="flex justify-end pt-4">
+      <app-button
+        type="submit"
+        [disabled]="form.invalid || loading()"
+        [isLoading]="loading()"
+      >
+        {{ isEditMode() ? 'Zapisz zmiany' : 'Wystaw przedmiot' }}
+      </app-button>
+    </div>
+
+  </form>
+</div>

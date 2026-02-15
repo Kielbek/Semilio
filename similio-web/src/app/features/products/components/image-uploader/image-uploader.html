@@ -1,0 +1,66 @@
+<div class="space-y-4">
+  <div class="flex justify-end text-[10px] text-gray-400 uppercase tracking-wider font-light">
+    {{ items().length }} / {{ maxImages }}
+  </div>
+
+  @if (items().length === 0 && !isProcessing()) {
+    <div
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+      [class.border-[#002f34]]="isDragging()"
+      [class.bg-gray-100]="isDragging()"
+      class="border-2 border-dashed border-[#f2f4f5] hover:border-[#002f34] bg-[#f8fafb] rounded-md p-12
+             flex flex-col items-center justify-center text-center transition-all group cursor-pointer relative"
+    >
+      <svg [class.scale-110]="isDragging()" class="w-12 h-12 text-gray-300 group-hover:text-[#002f34] mb-4 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 0 1 4-4h10a4 4 0 0 1 0 8H7a4 4 0 0 1-4-4z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9V3m0 0L8 7m4-4l4 4" />
+      </svg>
+      <p class="text-[#002f34] font-medium mb-6 text-sm">
+        {{ isDragging() ? 'Upuść zdjęcia tutaj' : 'Przeciągnij zdjęcia tutaj lub kliknij' }}
+      </p>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" multiple />
+    </div>
+  } @else {
+    <div class="flex flex-wrap gap-3">
+      @for (image of items(); track image; let i = $index) {
+        <div class="relative w-32 h-32 group aspect-square rounded-sm overflow-hidden bg-[#f2f4f5] border border-gray-100 shadow-sm">
+          <img [src]="image.preview" class="w-full h-full object-cover" />
+          @if (i === 0) {
+            <div class="absolute top-0 left-0 bg-[#002f34] text-white text-[9px] uppercase tracking-wider px-2 py-1 font-medium z-10">
+              Główne
+            </div>
+          }
+          <button type="button" (click)="removePhoto(i)" class="absolute top-1 right-1 bg-white text-[#002f34] p-1 rounded-full shadow-md hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      }
+
+      @if (isProcessing()) {
+        @for (item of [1, 2, 3]; track item) {
+          <div class="w-32 h-32 aspect-square rounded-sm bg-gray-200 animate-pulse border border-gray-100"></div>
+        }
+      }
+
+      @if (items().length < maxImages && !isProcessing()) {
+        <label
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+          [class.border-[#002f34]]="isDragging()"
+          [class.bg-gray-100]="isDragging()"
+          class="group w-32 h-32 aspect-square rounded-sm border-2 border-dashed border-[#f2f4f5] hover:border-[#002f34] bg-[#f8fafb] flex flex-col items-center justify-center cursor-pointer transition-all"
+        >
+          <svg [class.scale-110]="isDragging()" class="w-8 h-8 text-gray-300 group-hover:text-[#002f34] transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4" />
+          </svg>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" class="hidden" multiple />
+        </label>
+      }
+    </div>
+  }
+</div>

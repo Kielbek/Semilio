@@ -1,0 +1,19 @@
+<div class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-my">
+
+  <div class="relative flex flex-col items-center animate-fade-in-up">
+    <img
+      [src]="'/full_logo.png'"
+      alt="Logo"
+      class="h-12 md:h-16 w-auto object-contain mb-8 drop-shadow-sm"
+    />
+
+    <div class="scale-110 opacity-80">
+      <app-spinner></app-spinner>
+    </div>
+  </div>
+
+  <p class="absolute bottom-8 text-xs text-gray-400 font-medium tracking-widest uppercase opacity-60">
+    Wczytywanie...
+  </p>
+
+</div>

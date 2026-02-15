@@ -1,0 +1,14 @@
+<div>
+  <h6 class="text-sm font-bold uppercase text-color-my">{{ title }}</h6>
+  <ul class="mt-4 space-y-2">
+    @for (link of links; track link) {
+      <li>
+        <a
+          [routerLink]="link.href"
+          class="font-semibold hover:underline text-color-my"
+          >{{ link.label }}</a
+        >
+      </li>
+    }
+  </ul>
+</div>

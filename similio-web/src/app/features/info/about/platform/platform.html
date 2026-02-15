@@ -1,0 +1,204 @@
+<div class="min-h-screen bg-[#F8FAFC] font-sans text-slate-800 selection:bg-emerald-200 selection:text-[#002f3f]">
+
+  <header class="relative pt-20 pb-32 px-6 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+      <div class="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+    </div>
+
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-40">
+      <div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-200 rounded-full mix-blend-multiply filter blur-[100px] animate-blob"></div>
+      <div class="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-emerald-200 rounded-full mix-blend-multiply filter blur-[100px] animate-blob animation-delay-2000"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-8 transition hover:scale-105 cursor-default">
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+        </span>
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-600">Lokalny rynek mody</span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-black text-[#002f3f] tracking-tighter mb-8 leading-[1.05]">
+        Daj swoim ubraniom <br/>
+        <span class="relative inline-block">
+          <span class="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">drugie życie.</span>
+          <svg class="absolute -bottom-2 left-0 w-full h-3 text-emerald-300/50 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none">
+            <path d="M0 5 Q50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
+          </svg>
+        </span>
+      </h1>
+
+      <p class="text-xl md:text-2xl text-slate-600 leading-relaxed mb-10 max-w-2xl mx-auto font-light">
+        Semilio to Twoja wirtualna szafa bez prowizji. Wystawiasz za darmo, sprzedajesz lokalnie, a
+        <span class="font-semibold text-[#002f3f] bg-emerald-100 px-1 rounded">100% zysku</span> zostaje w Twojej kieszeni.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+        <a routerLink="/register" class="group relative px-8 py-4 bg-[#002f3f] text-white rounded-2xl font-bold text-lg overflow-hidden shadow-xl shadow-emerald-900/10 transition-transform hover:-translate-y-1">
+          <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+          Dołącz i sprzedawaj
+        </a>
+        <a routerLink="/products" class="px-8 py-4 bg-white text-[#002f3f] border border-slate-200 rounded-2xl font-bold text-lg hover:bg-slate-50 transition shadow-sm hover:shadow-md">
+          Przeglądaj szafy
+        </a>
+      </div>
+
+      <div class="flex flex-col items-center gap-3">
+        <div class="flex -space-x-3">
+          <img class="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64" alt="User">
+          <img class="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=64&h=64" alt="User">
+          <img class="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=64&h=64" alt="User">
+          <div class="w-10 h-10 rounded-full border-2 border-white bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-700">+1k</div>
+        </div>
+        <p class="text-sm text-slate-500 font-medium">Dołącz do osób czyszczących szafy w Twojej okolicy</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="py-24 px-6 bg-white relative">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-3 gap-12">
+
+        <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-[#002f3f] transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+          <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-white/10 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#002f3f] group-hover:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#002f3f] group-hover:text-white mb-3">0 zł Prowizji</h3>
+          <p class="text-slate-500 group-hover:text-slate-300 leading-relaxed">
+            Twój zysk to Twój zysk. Nie pobieramy opłat za wystawienie ani procentu od sprzedaży. To Twoje ubrania, więc pieniądze należą do Ciebie.
+          </p>
+        </div>
+
+        <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-[#002f3f] transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+          <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-white/10 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#002f3f] group-hover:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#002f3f] group-hover:text-white mb-3">Twoje zasady</h3>
+          <p class="text-slate-500 group-hover:text-slate-300 leading-relaxed">
+            Wysyłka paczkomatem czy spotkanie na kawę? Ty decydujesz, jak przekażesz ubrania nowemu właścicielowi. Pełna swoboda.
+          </p>
+        </div>
+
+        <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-[#002f3f] transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+          <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-white/10 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#002f3f] group-hover:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#002f3f] group-hover:text-white mb-3">Lokalny styl</h3>
+          <p class="text-slate-500 group-hover:text-slate-300 leading-relaxed">
+            Znajdź unikatowe perełki w swojej dzielnicy. Przymierz, zobacz na żywo, uniknij nietrafionych zakupów i śladu węglowego.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 px-6 overflow-hidden">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+
+      <div class="lg:w-1/2 relative group">
+        <div class="absolute -top-10 -left-10 w-40 h-40 opacity-20 bg-[radial-gradient(#002f3f_2px,transparent_2px)] [background-size:16px_16px]"></div>
+
+        <div class="relative rounded-[2.5rem] overflow-hidden aspect-[3/4] shadow-2xl shadow-[#002f3f]/20 rotate-2 group-hover:rotate-0 transition-transform duration-500">
+          <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+               alt="Stylowa szafa z ubraniami"
+               class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-[#002f3f]/60 to-transparent"></div>
+
+          <div class="absolute bottom-8 left-8 right-8 text-white">
+            <p class="font-serif italic text-2xl">"Moda przemija, styl pozostaje."</p>
+            <p class="text-sm uppercase tracking-widest mt-2 opacity-80">— Coco Chanel</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:w-1/2">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-[#002f3f] mb-8 leading-tight">
+          Od szafy do szafy. <br/>
+          <span class="text-emerald-600">Prościej się nie da.</span>
+        </h2>
+
+        <p class="text-slate-600 text-lg leading-relaxed mb-6">
+          Semilio powstało z buntu przeciwko skomplikowanym platformom. Wierzymy, że ubrania mają duszę i nie powinny kończyć na dnie szafy tylko dlatego, że prowizja zjada zysk ze sprzedaży.
+        </p>
+
+        <p class="text-slate-600 text-lg leading-relaxed mb-10">
+          Stworzyliśmy przestrzeń, która przypomina nowoczesny butik, ale działa jak sąsiedzka wymiana. Znajdź ten wymarzony trencz dwie ulice dalej, napisz do właścicielki i ciesz się nowym stylem jeszcze tego samego dnia.
+        </p>
+
+        <ul class="space-y-4">
+          <li class="flex items-center text-[#002f3f] font-bold bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+            <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center mr-4 text-emerald-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            Bezpieczeństwo (weryfikacja użytkowników)
+          </li>
+          <li class="flex items-center text-[#002f3f] font-bold bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+            <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center mr-4 text-emerald-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            Transparentne zasady (brak gwiazdek w regulaminie)
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="py-16 bg-[#002f3f] text-white relative overflow-hidden">
+    <div class="absolute -right-20 -top-40 w-96 h-96 rounded-full border-[20px] border-emerald-500/10"></div>
+    <div class="absolute -left-20 -bottom-40 w-96 h-96 rounded-full border-[20px] border-emerald-500/10"></div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
+        <div class="p-4">
+          <div class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 to-emerald-600 mb-2">0 zł</div>
+          <div class="text-xs font-bold text-slate-300 uppercase tracking-[0.2em]">Prowizji</div>
+        </div>
+        <div class="p-4">
+          <div class="text-4xl md:text-6xl font-black text-white mb-2">100%</div>
+          <div class="text-xs font-bold text-slate-300 uppercase tracking-[0.2em]">Twojego zysku</div>
+        </div>
+        <div class="p-4">
+          <div class="text-4xl md:text-6xl font-black text-white mb-2">24/7</div>
+          <div class="text-xs font-bold text-slate-300 uppercase tracking-[0.2em]">Dostęp do mody</div>
+        </div>
+        <div class="p-4">
+          <div class="text-4xl md:text-6xl font-black text-white mb-2">∞</div>
+          <div class="text-xs font-bold text-slate-300 uppercase tracking-[0.2em]">Inspiracji</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 px-6 text-center bg-white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-4xl font-extrabold text-[#002f3f] mb-6">Gotowy na porządki w szafie?</h2>
+      <p class="text-lg text-slate-500 mb-10 max-w-xl mx-auto">
+        Zrób zdjęcie, dodaj krótki opis i czekaj na powiadomienie. <br/>
+        To prostsze niż myślisz, a Twoje ubrania na to czekają.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a routerLink="/add-product" class="px-10 py-5 bg-[#002f3f] text-white rounded-2xl font-bold text-lg hover:bg-[#00455c] transition shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+          Dodaj darmowe ogłoszenie
+        </a>
+        <a routerLink="/products" class="px-10 py-5 bg-slate-50 text-[#002f3f] rounded-2xl font-bold text-lg hover:bg-slate-100 transition flex items-center justify-center gap-2">
+          Przeglądaj oferty
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>

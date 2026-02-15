@@ -1,0 +1,9 @@
+<section class="bg-white my-5 p-2 md:p-8 rounded-sm shadow-sm h-full">
+  <div class="mb-6">
+    <h2 class="text-lg font-medium text-[#002f34] mb-1">{{ title }}</h2>
+    @if (subtitle) {
+      <p class="text-gray-500 text-sm font-light">{{ subtitle }}</p>
+    }
+  </div>
+  <ng-content></ng-content>
+</section>

@@ -1,0 +1,142 @@
+<div class="flex items-center justify-center p-4 font-sans animate-in fade-in duration-500">
+  <div class="w-full max-w-lg bg-white p-2">
+
+    <div class="flex items-center gap-5 mb-8 text-left">
+      <div class="h-14 w-14 flex items-center shrink-0">
+        <img src="logo.png" class="h-full w-full object-contain" alt="Logo">
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-[#002f34]">Rejestracja</h1>
+        <p class="text-gray-500 mt-1 text-sm font-light">Utwórz nowe konto</p>
+      </div>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="mb-6 p-4 bg-red-50 border border-red-100 rounded-md flex items-start gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-sm text-red-800">{{ errorMessage() }}</p>
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="mb-6 p-4 bg-green-50 border border-green-100 rounded-md text-green-800 text-sm font-medium">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <app-input-field
+          label="Imię"
+          [control]="getControl('firstName')">
+        </app-input-field>
+
+        <app-input-field
+          label="Nazwisko"
+          [control]="getControl('lastName')">
+        </app-input-field>
+      </div>
+
+      <app-input-field
+        label="E-mail"
+        type="email"
+        [control]="getControl('email')">
+      </app-input-field>
+
+      <div>
+        <label class="block text-sm font-semibold text-[#002f34] mb-1.5">Telefon</label>
+        <div class="flex bg-[#f2f4f5] border-b-2 border-transparent focus-within:border-[#002f34] rounded-t-md overflow-hidden transition-all"
+             [class.!border-red-500]="form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched">
+
+          <select
+            formControlName="countryCode"
+            class="bg-transparent border-r border-gray-200 px-3 py-3 text-[#002f34] text-sm focus:outline-none cursor-pointer appearance-none min-w-[80px]"
+          >
+            @for (country of countries; track country.code) {
+              <option [value]="country.code">
+                {{ country.flag }} {{ country.code }}
+              </option>
+            }
+          </select>
+
+          <input
+            type="tel"
+            formControlName="phoneNumber"
+            class="flex-1 bg-transparent px-4 py-3 text-[#002f34] outline-none placeholder-gray-400"
+            placeholder="123 456 789"
+          />
+        </div>
+        @if (form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched) {
+          <p class="text-red-500 mt-1 text-xs font-light animate-in slide-in-from-top-1">
+            * Proszę podać prawidłowy numer telefonu
+          </p>
+        }
+      </div>
+
+      <div>
+        <app-input-field
+          label="Hasło"
+          type="password"
+          autocomplete="new-password"
+          [control]="getControl('password')">
+        </app-input-field>
+
+        <div class="flex flex-wrap gap-3 mt-2 text-gray-400 pl-1">
+          <span class="text-[10px] flex items-center transition-colors" [class.text-green-600]="passwordValue.length >= 8">
+            <span [class]="passwordValue.length >= 8 ? 'bg-green-500' : 'bg-gray-300'"
+                  class="w-1.5 h-1.5 rounded-full mr-1 transition-colors"></span> 8+ znaków
+          </span>
+          <span class="text-[10px] flex items-center transition-colors" [class.text-green-600]="hasUpperCase">
+            <span [class]="hasUpperCase ? 'bg-green-500' : 'bg-gray-300'"
+                  class="w-1.5 h-1.5 rounded-full mr-1 transition-colors"></span> Wielka litera
+          </span>
+          <span class="text-[10px] flex items-center transition-colors" [class.text-green-600]="hasNumber">
+            <span [class]="hasNumber ? 'bg-green-500' : 'bg-gray-300'"
+                  class="w-1.5 h-1.5 rounded-full mr-1 transition-colors"></span> Cyfra
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <app-input-field
+          label="Powtórz hasło"
+          type="password"
+          autocomplete="new-password"
+          [control]="getControl('confirmPassword')">
+        </app-input-field>
+
+        @if (form.get('confirmPassword')?.touched && form.hasError('mismatch')) {
+          <p class="text-red-500 mt-1 text-xs font-light pl-1 animate-in slide-in-from-top-1">
+            * Hasła muszą być identyczne
+          </p>
+        }
+      </div>
+
+      <app-button
+        type="submit"
+        [disabled]="isLoading() || form.invalid"
+        [fullWidth]="true"
+        extraClass="py-4"
+        [isLoading]="isLoading()"
+      >
+        Zarejestruj się
+      </app-button>
+
+    </form>
+
+    <div class="mt-8 pt-6 border-t border-gray-100 text-center text-sm">
+      <p class="text-gray-500 font-light">
+        Masz już konto?
+        <button
+          type="button"
+          class="text-[#002f34] font-bold underline ml-1 cursor-pointer hover:text-black transition-colors"
+          (click)="loginClick.emit()">
+          Zaloguj się
+        </button>
+      </p>
+    </div>
+  </div>
+</div>

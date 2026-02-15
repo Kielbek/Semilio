@@ -1,0 +1,37 @@
+<div class="max-w-7xl mx-auto">
+  <h2 class="text-xl font-bold text-[#002f34] px-2 pt-4">Oceny użytkownika</h2>
+
+  @if (ratings.length > 0) {
+    <div class="space-y-6 p-4">
+      @for (rating of ratings; track rating.id) {
+        <div class="border-b border-gray-100 pb-6 last:border-0">
+          <div class="flex justify-between items-start mb-2">
+            <div class="font-bold text-[#002f34]">{{ rating.authorName }}</div>
+            <time class="text-xs text-gray-400">{{ rating.date | date:'d MMMM y' }}</time>
+          </div>
+          <div class="flex text-yellow-400 mb-2 scale-75 origin-left">
+            @for(star of [1,2,3,4,5]; track star) {
+              <lucide-icon name="star" class="w-5 h-5"
+                           [class.fill-current]="star <= rating.stars"
+                           [class.text-gray-200]="star > rating.stars">
+              </lucide-icon>
+            }
+          </div>
+          <p class="text-gray-700 text-sm leading-relaxed mb-3">{{ rating.comment }}</p>
+          <div class="text-xs text-gray-500 bg-gray-50 inline-block px-2 py-1 rounded">
+            Kupił: <span class="font-medium text-gray-700">{{ rating.itemTitle }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <app-empty-state
+      [title]="isMine ? 'Nie masz jeszcze żadnych ocen' : 'Brak ocen'"
+      [description]="isMine
+    ? 'Oceny od kupujących i sprzedających pojawią się tutaj po sfinalizowaniu transakcji.'
+    : 'Ten użytkownik nie otrzymał jeszcze żadnych ocen.'"
+      icon="star">
+
+    </app-empty-state>
+  }
+</div>

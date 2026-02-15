@@ -1,0 +1,34 @@
+<div>
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-2 pt-4 pb-0">
+    <h2 class="text-xl font-bold text-[#002f34]">
+      {{ isMine ? 'Twoje ogłoszenia' : 'Aktywne ogłoszenia' }}
+    </h2>
+  </div>
+
+  <app-list
+    [fetchDataFn]="productsSource!"
+    [itemTemplate]="productCardTemplate"
+    [cacheKey]="'profile-ads-' + (isMine ? 'me' : userId)">
+
+    <app-empty-state
+      emptyState
+      [title]="isMine ? 'Nic jeszcze nie sprzedajesz' : 'Brak ogłoszeń'"
+      [description]="isMine ? 'Zrób porządki w szafie i wystaw swój pierwszy przedmiot!' : 'Ten użytkownik nie ma aktualnie żadnych wystawionych przedmiotów.'"
+      icon="shirt">
+      @if (isMine) {
+        <a routerLink="/create-product" class="px-6 py-2 bg-[#002f34] text-white rounded-md inline-block mt-4">
+          Dodaj ogłoszenie
+        </a>
+      }
+    </app-empty-state>
+  </app-list>
+
+</div>
+
+<ng-template #productCardTemplate let-p>
+  @if (isMine) {
+    <app-my-product-card [product]="p" (deleted)="onProductDeleted($event)"></app-my-product-card>
+  } @else {
+    <app-card [product]="p"></app-card>
+  }
+</ng-template>

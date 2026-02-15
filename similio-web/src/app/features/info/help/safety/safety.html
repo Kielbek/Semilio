@@ -1,0 +1,138 @@
+<div class="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8 font-sans text-slate-800">
+
+  <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12">
+
+    <div class="hidden lg:block lg:col-span-1 space-y-8">
+
+      <div>
+        <h2 class="text-xl font-bold text-slate-900 mb-6">Centrum Pomocy</h2>
+        <a routerLink="/" class="text-slate-500 hover:text-[#002f3f] transition block mb-4">Strona główna</a>
+      </div>
+
+      <nav class="space-y-1">
+
+        <div class="mb-4 space-y-3">
+          <a routerLink="/help/selling" class="block font-medium text-slate-600 hover:text-[#002f3f]">Sprzedawanie</a>
+          <a routerLink="/help/buying" class="block font-medium text-slate-600 hover:text-[#002f3f]">Kupowanie</a>
+        </div>
+
+        <div class="group">
+          <span class="block font-bold text-[#002f3f] mb-3">Zaufanie i Bezpieczeństwo</span>
+          <ul class="space-y-3 border-l-2 border-slate-100 ml-1 pl-4">
+            <li><a routerLink="/help/safety" class="text-[#002f3f] font-medium block">Ochrona przed oszustwami</a></li>
+            <li><a routerLink="/help/safety" class="text-slate-500 hover:text-[#002f3f] block">Bezpieczeństwo konta</a></li>
+            <li><a routerLink="/help/safety" class="text-slate-500 hover:text-[#002f3f] block">Zgłaszanie naruszeń</a></li>
+            <li><a routerLink="/legal/privacy" class="text-slate-500 hover:text-[#002f3f] block">Prywatność (RODO)</a></li>
+          </ul>
+        </div>
+
+        <div class="pt-4">
+          <a routerLink="/login" class="block font-medium text-slate-600 hover:text-[#002f3f]">Ustawienia konta</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="lg:col-span-3">
+
+      <div class="relative mb-10">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input type="text"
+               class="block w-full pl-12 pr-4 py-3 bg-slate-100 border-none rounded-lg text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-[#002f3f] transition"
+               placeholder="Wpisz pytanie (np. phishing, zgłaszanie)...">
+      </div>
+
+      <h1 class="text-3xl font-bold text-[#002f3f] mb-8">Polityka Bezpieczeństwa</h1>
+
+      <div class="mb-12">
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Ważne ostrzeżenia</h3>
+
+        <div class="border-t border-slate-200">
+
+          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-red-50 transition cursor-pointer group px-2">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span class="text-red-700 font-bold group-hover:text-red-800">Jak rozpoznać fałszywą wiadomość (linki SMS / WhatsApp)?</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-300 group-hover:text-red-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
+              </svg>
+              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Dlaczego nie wolno podawać kodu CVC karty?</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
+              </svg>
+              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Bezpieczny odbiór osobisty - dobre praktyki</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/legal/terms" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <div class="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
+              </svg>
+              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Czy Semilio zwraca pieniądze w przypadku oszustwa?</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybierz temat</h3>
+
+        <div class="border-t border-slate-200">
+
+          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Zgłaszanie naruszeń i oszustw (DSA)</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Bezpieczeństwo konta i hasła</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <a routerLink="/legal/privacy" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Ochrona danych osobowych (RODO)</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
