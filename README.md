@@ -9,7 +9,7 @@
 
 ## 🌍 Zasoby i Kontakt
 * **🚀 Live Demo (Semilio):** [semilio.pl](https://semilio.pl)
-* **👤 Portfolio:** [mateuszkielbas.dev](https://mateuszkielbas.dev)
+* **👤 Portfolio:** [mateuszkielbas.dev](https://mateuszkielbasa.dev)
 
 ---
 
