@@ -33,11 +33,43 @@ Projekt wyróżnia się zastosowaniem najnowszych standardów technologicznych (
 * **Advanced Filtering**: Wyszukiwanie po rozmiarach, markach i lokalizacji.
 * **Secure Auth**: Pełny proces rejestracji, logowania i resetowania haseł.
 
+## 🔐 Konfiguracja i Zabezpieczenia (Ważne!)
+
+Aplikacja integruje się z zewnętrznymi serwisami, co wymaga podania kluczy API. **Z przyczyn bezpieczeństwa dane te nie są śledzone w repozytorium.** Aby uruchomić aplikację lokalnie, musisz uzupełnić plik `application.properties` (lub ustawić zmienne środowiskowe) o następujące dane:
+
+* **AWS S3**: Wymagane są `aws.accessKeyId` oraz `aws.secretKey` do obsługi zdjęć.
+* **Spring Mail**: Wymagane są dane serwera SMTP (`spring.mail.username`, `spring.mail.password` – w przypadku Gmaila użyj *App Password*).
+* **Twilio**: Wymagane są `twilio.accountSid`, `twilio.authToken` oraz zweryfikowany numer nadawcy do obsługi SMS.
+
 ## 🏗️ Architektura
 Projekt realizuje zasady **Clean Architecture** i **SOLID**:
 1. **Backend**: Warstwy Controller -> Service -> Repository.
 2. **Frontend**: Feature-based structure (Features, Core, Shared).
 
+## 🏁 Uruchomienie lokalne
+
+### Wymagania wstępne (Prerequisites)
+Przed uruchomieniem upewnij się, że masz zainstalowane na swoim komputerze:
+* **Java 21** oraz Maven
+* **Node.js** (wersja 18+) oraz Angular CLI
+* **PostgreSQL** (uruchomiony lokalnie na porcie 5432 z utworzoną bazą danych)
+
+### 1. Uruchomienie Backendu (Spring Boot)
+Pamiętaj, aby przed uruchomieniem uzupełnić plik `application.properties` o hasła i klucze API.
+
 ```bash
 cd semilio-core
+mvn clean install
 mvn spring-boot:run
+```
+
+Serwer uruchomi się domyślnie na porcie 8080.
+
+### 2. Uruchomienie Frontendu (Angular 19)
+Przejdź do folderu z kodem źródłowym frontendu i zainstaluj zależności.
+
+```bash
+cd semilio-frontend
+npm install
+ng serve
+```
