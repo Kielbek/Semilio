@@ -1,0 +1,117 @@
+validation:
+  registration:
+    first_name:
+      blank: "Imię nie może być puste."
+      size: "Imię musi mieć od 1 do 50 znaków."
+      pattern: "Imię zawiera niedozwolone znaki."
+    last_name:
+      blank: "Nazwisko nie może być puste."
+      size: "Nazwisko musi mieć od 1 do 50 znaków."
+      pattern: "Nazwisko zawiera niedozwolone znaki."
+    email:
+      blank: "E-mail nie może być pusty."
+      format: "Format e-maila jest nieprawidłowy."
+    phone:
+      blank: "Numer telefonu nie może być pusty."
+      format: "Format numeru telefonu jest nieprawidłowy."
+    password:
+      blank: "Hasło nie może być puste."
+      size: "Hasło musi mieć od 8 do 72 znaków."
+      weak: "Hasło musi mieć co najmniej 8 znaków, w tym wielką literę, małą literę i cyfrę."
+    confirm_password:
+      blank: "Potwierdzenie hasła nie może być puste."
+      size: "Potwierdzenie hasła musi mieć od 8 do 72 znaków."
+
+  authentication:
+    email:
+      not_blank: "E-mail nie może być pusty."
+      format: "Format e-maila jest nieprawidłowy."
+    password:
+      not_blank: "Hasło nie może być puste."
+    sms:
+      code_not_blank: "Kod SMS jest wymagany."
+      code_invalid_length: "Kod SMS musi składać się z dokładnie 6 cyfr."
+    reset_password:
+      token:
+        not_blank: "Token resetowania hasła jest wymagany."
+
+  user:
+    password:
+      current_blank: "Aktualne hasło jest wymagane."
+      new_blank: "Nowe hasło jest wymagane."
+      confirm_blank: "Potwierdzenie hasła jest wymagane."
+      size: "Hasło musi mieć od 8 do 72 znaków."
+      weak: "Hasło musi zawierać wielką literę, małą literę i cyfrę."
+
+  product:
+    title:
+      blank: "Tytuł jest wymagany."
+      size: "Tytuł musi mieć od 5 do 255 znaków."
+    description:
+      blank: "Opis jest wymagany."
+      size: "Opis musi mieć od 20 do 2000 znaków."
+    price:
+      not_null: "Cena jest wymagana."
+      min: "Cena musi być większa od 0."
+    size:
+      not_null: "Rozmiar jest wymagany."
+    brand:
+      not_null: "Marka jest wymagana."
+    color:
+      not_null: "Kolor jest wymagany."
+    category:
+      not_null: "Kategoria jest wymagana."
+    condition:
+      not_null: "Stan produktu jest wymagany."
+
+  message:
+    content:
+      blank: "Treść wiadomości nie może być pusta."
+      size: "Wiadomość nie może przekraczać 250 znaków."
+  proposal:
+    amount:
+      not_null: "Kwota propozycji jest wymagana."
+      positive: "Kwota musi być większa od zera."
+    status:
+      not_null: "Status propozycji jest wymagany."
+
+error:
+  access_denied: "Nie jesteś uczestnikiem."
+  err_email_exists: "E-mail jest już zajęty."
+  err_phone_exists: "Konto z tym numerem telefonu już istnieje."
+  nickname_already_exists: "Ta nazwa użytkownika jest już zajęta."
+  err_password_mismatch: "Hasło i potwierdzenie nie są zgodne."
+  invalid_current_password: "Aktualne hasło jest nieprawidłowe."
+  err_user_disabled: "Konto użytkownika jest wyłączone, aktywuj konto lub skontaktuj się z administratorem."
+  bad_credentials: "Niepoprawny login lub hasło."
+  user_not_found: "Nie znaleziono użytkownika."
+  username_not_found: "Nie znaleziono użytkownika o podanej nazwie."
+  account_already_deactivated: "Konto zostało dezaktywowane."
+
+  product_not_found: "Produkt o tym ID nie istnieje."
+  forbidden_action: "Nie masz uprawnień do modyfikacji lub usunięcia tego produktu."
+  category_not_found: "Nie znaleziono kategorii."
+  category_already_exists_for_user: "Kategoria już istnieje dla tego użytkownika."
+
+  chat_not_found: "Nie znaleziono czatu."
+  chat_access_denied: "Nie jesteś uczestnikiem tego czatu."
+  invalid_chat_request: "Musisz podać ChatId lub ProductId."
+  invalid_message_type: "Operacja niedozwolona dla tego typu wiadomości."
+  message_not_found: "Nie znaleziono żądanej wiadomości."
+  proposal_already_processed: "Ta oferta została już zaakceptowana lub odrzucona."
+
+  err_invalid_file_type: "Wybrany plik musi być obrazem (JPG, PNG, WEBP)."
+  err_file_too_large: "Obraz jest za duży, maksymalny rozmiar to 15MB."
+  err_file_empty: "Nie można wysłać pustego pliku."
+  err_file_upload: "Wystąpił błąd podczas przesyłania pliku."
+
+  invalid_verification_code: "Nieprawidłowy kod weryfikacyjny."
+  expired_verification_code: "Kod weryfikacyjny wygasł."
+  invalid_reset_token: "Link do resetowania hasła jest nieprawidłowy."
+  expired_reset_token: "Link do resetowania hasła wygasł."
+  err_sending_activation_email: "Wystąpił błąd podczas wysyłania e-maila aktywacyjnego."
+
+  search_query_too_short: "Fraza wyszukiwania jest za krótka (minimum 2 znaki)."
+  report_already_exists: "Już zgłosiłeś te treści."
+  internal_exception: "Wystąpił błąd wewnętrzny, spróbuj ponownie lub skontaktuj się z administratorem."
+  error: "Błąd."

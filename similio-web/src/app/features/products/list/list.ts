@@ -34,8 +34,8 @@ export class List implements OnInit, AfterViewInit, OnDestroy {
   products = signal<IProductCard[]>([]);
   loading = signal(false);
 
-  private currentPage = 0;
-  private isLastPage = false;
+  public currentPage = 0;
+  public isLastPage = false;
   private readonly pageSize = 12;
   private currentScrollY = 0;
 
@@ -59,17 +59,15 @@ export class List implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Odpinamy słuchaczy i obserwatora
     window.removeEventListener('scroll', this.onWindowScroll);
     this.observer?.disconnect();
 
-    // Zapisujemy stan tylko jeśli mamy poprawny klucz i dane
     if (this.cacheKey && !this.cacheKey.includes('null') && this.products().length > 0) {
       this.listStateService.saveState(this.cacheKey, {
         products: this.products(),
         currentPage: this.currentPage,
         isLastPage: this.isLastPage,
-        scrollPosition: this.currentScrollY // Zapisujemy ostatnią znaną pozycję
+        scrollPosition: this.currentScrollY
       });
     }
   }
@@ -86,13 +84,11 @@ export class List implements OnInit, AfterViewInit, OnDestroy {
     this.currentPage = state.currentPage;
     this.isLastPage = state.isLastPage;
 
-    // Skaczemy natychmiastowo
     setTimeout(() => {
       window.scrollTo({
         top: state.scrollPosition,
-        behavior: 'get' as any // Hack: niektóre przeglądarki lepiej reagują na brak definicji lub 'instant'
+        behavior: 'instant' as any
       });
-      // Standardowy, najszybszy skok:
       window.scroll(0, state.scrollPosition);
     }, 0);
 
@@ -107,9 +103,12 @@ export class List implements OnInit, AfterViewInit, OnDestroy {
     this.currentPage = 0;
     this.isLastPage = false;
     this.loadData();
+
+    // Po odświeżeniu musimy ponownie podpiąć obserwatora
+    setTimeout(() => this.setupObserver(), 100);
   }
 
-  removeProductById(id: number) {
+  removeProductById(id: string | number) {
     this.products.update(current =>
       current.filter(p => String(p.id) !== String(id))
     );
@@ -123,21 +122,37 @@ export class List implements OnInit, AfterViewInit, OnDestroy {
     this.fetchDataFn(this.currentPage, this.pageSize)
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
-        next: (page) => {
-          this.products.update(current => [...current, ...page.content]);
-          this.isLastPage = page.last;
-          this.currentPage++;
+        next: (response: any) => {
+          if (response.content && response.content.length > 0) {
+            this.products.update(current => [...current, ...response.content]);
+
+            const currentPageNumber = response.page.number;
+            const totalPages = response.page.totalPages;
+
+            this.isLastPage = currentPageNumber >= (totalPages - 1);
+
+            if (!this.isLastPage) {
+              this.currentPage++;
+            }
+          } else {
+            this.isLastPage = true;
+          }
         },
         error: (err) => console.error('Data loading error:', err)
       });
   }
 
   private setupObserver() {
+    this.observer?.disconnect();
+
     this.observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && this.products().length > 0) {
+      if (entries[0].isIntersecting && !this.loading() && !this.isLastPage) {
         this.loadData();
       }
-    }, { threshold: 0.1 });
+    }, {
+      threshold: 0.1,
+      rootMargin: '200px'
+    });
 
     if (this.sentinel) {
       this.observer.observe(this.sentinel.nativeElement);

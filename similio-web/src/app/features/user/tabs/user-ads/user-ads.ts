@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {LucideAngularModule} from 'lucide-angular';
 import {EmptyState} from '../../../products/components/empty-state/empty-state';
@@ -25,8 +25,13 @@ export class UserAds {
   @Input() isMine = false;
   @Input() userId?: string;
   @Output() deleted = new EventEmitter<String>();
+  @ViewChild(List) listComponent!: List;
 
   onProductDeleted(id: string) {
+    if (this.listComponent) {
+      // this.listComponent.removeProductById(id);
+    }
+
     this.deleted.emit(id);
   }
 }

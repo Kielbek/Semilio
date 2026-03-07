@@ -39,9 +39,9 @@ export class Card {
     event.stopPropagation();
     event.preventDefault();
 
-    const wasLiked = this.product.likedByCurrentUser;
+    const wasLiked = this.product.isLikedByCurrentUser;
 
-    this.product.likedByCurrentUser = !wasLiked;
+    this.product.isLikedByCurrentUser = !wasLiked;
 
     if (wasLiked) {
       this.product.stats.likes--;
@@ -54,7 +54,7 @@ export class Card {
         this.listStateService.clearState('my-favorites');
       },
       error: () => {
-        this.product.likedByCurrentUser = wasLiked;
+        this.product.isLikedByCurrentUser = wasLiked;
         this.product.stats.likes = wasLiked ? this.product.stats.likes + 1 : this.product.stats.likes - 1;
       }
     });

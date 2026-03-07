@@ -40,21 +40,22 @@ routes = [
       {
         path: P.CREATE,
         loadComponent: () => import('./features/products/add/add').then(m => m.Add),
-        title: 'Dodaj ogłoszenie'
+        title: 'Wystaw przedmiot na sprzedaż | Semilio'
       },
       {
         path: `${P.EDIT}/:id`,
         loadComponent: () => import('./features/products/add/add').then(m => m.Add),
-        title: 'Edytuj ogłoszenie'
+        title: 'Aktualizacja szczegółów oferty | Semilio'
       },
       {
         path: P.SUCCESS,
-        loadComponent: () => import('./features/products/product-success/product-success').then(m => m.ProductSuccess)
+        loadComponent: () => import('./features/products/product-success/product-success').then(m => m.ProductSuccess),
+        title: 'Gratulacje! Twoja oferta jest już widoczna | Semilio'
       },
       {
         path: P.FAVORITE,
         loadComponent: () => import('./features/favorite/favorite').then(m => m.Favorite),
-        title: 'Ulubione'
+        title: 'Twoja wymarzona szafa | Semilio'
       }
     ]
   },

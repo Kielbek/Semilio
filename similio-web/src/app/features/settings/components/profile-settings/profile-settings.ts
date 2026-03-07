@@ -1,5 +1,5 @@
 import {Component, inject, Input, OnInit, signal} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LucideAngularModule} from 'lucide-angular';
 import {FormSection} from '../../../../shared/form-section/form-section';
 import {InputField} from '../../../../shared/input-field/input-field';
@@ -60,11 +60,6 @@ export class ProfileSettings implements OnInit {
     });
   }
 
-  getControl(name: string) {
-    return this.form.get(name) as any;
-  }
-
-
   onSubmit() {
     if (this.form.invalid) return;
 
@@ -92,6 +87,10 @@ export class ProfileSettings implements OnInit {
           }
         }
       });
+  }
+
+  getControl(name: string): FormControl {
+    return this.form.get(name) as FormControl;
   }
 
   async onFileSelected(event: Event) {

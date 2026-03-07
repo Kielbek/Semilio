@@ -4,7 +4,11 @@
     <div class="relative flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start animate-fade-in">
 
       <div class="relative flex-shrink-0">
-        <app-user-avatar [imageUrl]="user.profilePictureUrl" [name]="user.nickName"></app-user-avatar>
+        <app-user-avatar
+          [imageUrl]="user.profilePictureUrl"
+          [name]="user.nickName"
+          sizeClass="w-25 h-25"
+        ></app-user-avatar>
       </div>
 
       <div class="flex-1 w-full text-center md:text-left">

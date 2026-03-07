@@ -11,6 +11,7 @@ export class UserAvatar implements OnChanges {
   @Input() imageUrl: string | null | undefined = null;
   @Input() name: string | null | undefined = '';
   @Input() sizeClass: string = 'w-16 h-16 md:w-20 md:h-20';
+  @Input() borderRadius: string = 'rounded-full';
 
   public showImage: boolean = false;
   public currentImageUrl: string = '';

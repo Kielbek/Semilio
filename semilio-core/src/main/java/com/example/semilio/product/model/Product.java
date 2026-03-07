@@ -1,14 +1,17 @@
 package com.example.semilio.product.model;
 
-import com.example.semilio.category.Category;
+import com.example.semilio.category.model.Category;
 import com.example.semilio.comon.SlugUtils;
-import com.example.semilio.image.Image;
-import com.example.semilio.product.Color;
-import com.example.semilio.product.Condition;
-import com.example.semilio.product.Status;
-import com.example.semilio.user.User;
+import com.example.semilio.dictionary.model.Brand;
+import com.example.semilio.dictionary.model.Color;
+import com.example.semilio.dictionary.model.Size;
+import com.example.semilio.image.model.Image;
+import com.example.semilio.product.enums.Condition;
+import com.example.semilio.product.enums.Status;
+import com.example.semilio.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,8 +19,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static jakarta.persistence.GenerationType.UUID;
 
@@ -31,11 +34,12 @@ import static jakarta.persistence.GenerationType.UUID;
 @Table(name = "products", indexes = {
         @Index(name = "idx_product_slug", columnList = "slug")
 })
+@SQLDelete(sql = "UPDATE products SET deleted = true WHERE id = ?")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = UUID)
-    private String id;
+    private UUID id;
 
     private String title;
 
@@ -49,18 +53,23 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    private String size;
-
     @Enumerated(EnumType.STRING)
     private Condition condition;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "color_id", nullable = false)
+    private Color color;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "size_id", nullable = false)
+    private Size size;
+
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    private String brand;
-
-    @Enumerated(EnumType.STRING)
-    private Color color;
 
     @Column(nullable = false)
     private Price price;
@@ -69,8 +78,6 @@ public class Product {
     @JoinColumn(name = "seller_id", nullable = false)
     private User seller;
 
-    private String mainImageUrl;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "product_id")
     @OrderBy("sortOrder ASC")
@@ -78,6 +85,9 @@ public class Product {
 
     @Embedded
     private ProductStats stats;
+
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+    private boolean deleted = false;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
@@ -89,11 +99,11 @@ public class Product {
 
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    private String createdBy;
+    private UUID createdBy;
 
     @LastModifiedBy
     @Column(insertable = false)
-    private String lastModifiedBy;
+    private UUID lastModifiedBy;
 
     @PrePersist
     public void generateSlug() {

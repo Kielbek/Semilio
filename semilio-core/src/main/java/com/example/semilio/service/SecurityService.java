@@ -1,11 +1,14 @@
 package com.example.semilio.service;
 
-import com.example.semilio.user.User;
+import com.example.semilio.security.SecurityUser;
+import com.example.semilio.user.model.User;
 import org.springframework.security.core.Authentication;
+
+import java.util.UUID;
 
 public interface SecurityService {
 
-    String getCurrentUserId(Authentication authentication);
+    UUID getCurrentUserId(Authentication authentication);
 
-    public User getCurrentUser(Authentication authentication);
+    User getCurrentUser(Authentication authentication);
 }

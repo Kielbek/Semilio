@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import {NgClass} from '@angular/common';
+import {AsyncPipe, NgClass} from '@angular/common';
 import {
   LucideAngularModule,
   LUCIDE_ICONS,
@@ -13,6 +13,7 @@ import {
 } from 'lucide-angular';
 import {UserService} from '../../core/service/user-service';
 import {AppConfig} from '../../core/config/app-paths';
+import {NotificationService} from '../../core/service/notification';
 
 @Component({
   selector: 'app-mobile-nav',
@@ -20,7 +21,8 @@ import {AppConfig} from '../../core/config/app-paths';
     RouterLink,
     RouterLinkActive,
     NgClass,
-    LucideAngularModule
+    LucideAngularModule,
+    AsyncPipe
   ],
   providers: [
     {
@@ -39,6 +41,7 @@ import {AppConfig} from '../../core/config/app-paths';
 })
 export class MobileNav implements OnInit {
   private userService = inject(UserService);
+  public notificationService = inject(NotificationService);
 
   navItems: any[] = [];
 

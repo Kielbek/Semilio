@@ -1,10 +1,13 @@
-import {Component, inject, Input} from '@angular/core';
+import {Component, inject, Input, signal} from '@angular/core';
 import {Button} from '../../../../shared/button/button';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {Router} from '@angular/router';
 import {LucideAngularModule} from 'lucide-angular';
 import {IProduct} from '../../../../core/models/product/i-product';
 import {AppConfig} from '../../../../core/config/app-paths';
+import {ProposePrice} from '../../../chat/components/propose-price/propose-price';
+import {AuthService} from '../../../../core/service/auth-service';
+import {UserService} from '../../../../core/service/user-service';
 
 @Component({
   selector: 'app-product-info',
@@ -12,20 +15,27 @@ import {AppConfig} from '../../../../core/config/app-paths';
     Button,
     DatePipe,
     LucideAngularModule,
-    DecimalPipe
+    DecimalPipe,
+    ProposePrice
   ],
   templateUrl: './product-info.html',
   styleUrl: './product-info.css',
 })
 export class ProductInfo {
   private router = inject(Router);
+  private authService = inject(AuthService)
+  private userService = inject(UserService);
 
   @Input({ required: true }) product?: IProduct;
   @Input() isMine: boolean = false;
 
+  showPriceModal = signal(false);
+
   linkCopied = false;
 
   openChat(): void {
+    if (!this.ensureAuthenticated()) return;
+
     if (!this.product || this.isMine) return;
 
     const contextData = {
@@ -43,7 +53,15 @@ export class ProductInfo {
     });
   }
 
+  openPriceProposal() {
+    if (!this.ensureAuthenticated()) return;
+
+    this.showPriceModal.set(true);
+  }
+
   editProduct() {
+    if (!this.ensureAuthenticated()) return;
+
     if (!this.product || !this.isMine) return;
 
     this.router.navigate([AppConfig.LINKS.PRODUCT.EDIT_ROOT, this.product.id]);
@@ -51,7 +69,6 @@ export class ProductInfo {
 
   async shareProduct() {
     const productUrl = `${window.location.origin}/${AppConfig.LINKS.PRODUCT.DETAILS}/${this.product?.slug}`;
-    console.log(productUrl);
 
     if (navigator.share) {
       try {
@@ -64,19 +81,16 @@ export class ProductInfo {
         console.log('Udostępnianie anulowane');
       }
     } else {
-      // Fallback dla komputerów (zwykłe kopiowanie)
       this.copyToClipboard(productUrl);
     }
   }
 
   private copyToClipboard(url: string) {
-      // 1. Nowoczesny sposób (wymaga HTTPS)
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url)
           .then(() => this.showSuccessMessage())
           .catch(() => this.fallbackCopy(url));
       } else {
-        // 2. Fallback dla HTTP i starych przeglądarek
         this.fallbackCopy(url);
       }
     }
@@ -109,4 +123,13 @@ export class ProductInfo {
   private showSuccessMessage() {
       // Tutaj Twój toast lub alert\
     }
+
+  private ensureAuthenticated(): boolean {
+    if (this.userService.isAuthenticated()) {
+      return true;
+    }
+
+    this.authService.openLoginPopup();
+    return false;
+  }
 }

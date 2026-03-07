@@ -1,0 +1,88 @@
+<app-ui-modal
+  [title]="step() === 1 ? 'Zgłoś naruszenie' : (selectedCategory()?.label || '')"
+  [showBackButton]="step() === 2"
+  [isLoading]="isLoadingCategories()"
+  (back)="goBack()"
+  (close)="close.emit()">
+
+  @switch (step()) {
+
+    @case (1) {
+      <div class="flex flex-col">
+        @for (cat of categories(); track cat.id) {
+          <button
+            (click)="selectCategory(cat)"
+            class="w-full text-left px-5 py-3.5 flex items-center justify-between border-b border-gray-100 hover:bg-gray-50 transition-colors group"
+          >
+            <div class="flex flex-col gap-0.5 pr-3">
+              <span class="text-[15px] font-medium text-[#002f34] leading-tight group-hover:underline decoration-1 underline-offset-2">
+                {{ cat.label }}
+              </span>
+              @if (cat.description) {
+                <span class="text-[12px] text-[#7f8c8d] leading-snug">
+                  {{ cat.description }}
+                </span>
+              }
+            </div>
+            <lucide-icon name="chevron-right" class="w-5 h-5 text-[#002f34] shrink-0 stroke-[1.5] opacity-70"></lucide-icon>
+          </button>
+        }
+      </div>
+    }
+
+    @case (2) {
+      <div class="flex flex-col animate-in slide-in-from-right-2 duration-200">
+
+        <div class="flex flex-col border-b border-gray-200 mb-5">
+          @for (sub of selectedCategory()?.subcategories; track sub.id) {
+            <button
+              (click)="selectSubcategory(sub.id)"
+              class="w-full text-left px-5 py-3.5 flex items-start justify-between border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors"
+            >
+              <div class="flex flex-col gap-0.5 pr-3">
+                <span class="text-[15px] text-[#002f34] font-medium leading-tight">{{ sub.label }}</span>
+                @if (sub.description) {
+                  <span class="text-[12px] text-[#7f8c8d] leading-snug">{{ sub.description }}</span>
+                }
+              </div>
+
+              @if (form.controls.subcategoryId.value === sub.id) {
+                <lucide-icon name="check" class="w-5 h-5 text-[#002f34] shrink-0 stroke-[3] mt-0.5"></lucide-icon>
+              }
+            </button>
+          }
+        </div>
+
+        <div class="px-5 space-y-4">
+
+          <app-textarea-field
+            label="Wyjaśnij, co jest nie tak"
+            [control]="form.controls.description"
+            placeholder="Wskazówka: chcesz zgłosić wiele ogłoszeń? Umieść tutaj link do nich."
+            [maxLength]="1000"
+            [rows]="5">
+          </app-textarea-field>
+
+          <p class="text-[11px] text-[#7f8c8d] leading-relaxed text-center px-4 pt-1 pb-4">
+            Wysyłając niniejsze zgłoszenie, potwierdzasz, że działasz w dobrej wierze, a podane informacje są zgodne z prawdą.
+          </p>
+        </div>
+
+      </div>
+    }
+  }
+
+  @if (step() === 2) {
+    <div footer class="p-5 bg-white border-t border-gray-100">
+      <app-button
+        [fullWidth]="true"
+        [isLoading]="isSubmitting()"
+        (click)="onSubmit()"
+        [disabled]="!form.valid"
+      >
+        Dalej
+      </app-button>
+    </div>
+  }
+
+</app-ui-modal>

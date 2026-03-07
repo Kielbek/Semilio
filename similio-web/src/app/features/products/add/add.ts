@@ -1,21 +1,34 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
-import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
-import {FormSection} from '../../../shared/form-section/form-section';
-import {InputField} from '../../../shared/input-field/input-field';
-import {ImageUploader} from '../components/image-uploader/image-uploader';
-import {CategorySelect} from '../components/category-select/category-select.component';
-import {CategoryService} from '../../../core/service/category-service';
-import {ICategory} from '../../../core/models/i-category';
-import {Button} from '../../../shared/button/button';
-import {ProductService} from '../../../core/service/product.service';
-import {Select, SelectOption} from '../../../shared/select/select';
-import {ActivatedRoute, Router} from '@angular/router';
-import {finalize} from 'rxjs';
-import {CONDITION_OPTIONS} from '../../../core/models/product/condition';
-import {IImage} from '../../../core/models/product/i-image';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { BehaviorSubject, combineLatest, finalize, map, Observable, startWith } from 'rxjs';
+
+import { FormSection } from '../../../shared/form-section/form-section';
+import { InputField } from '../../../shared/input-field/input-field';
+import { Button } from '../../../shared/button/button';
+import { Select } from '../../../shared/select/select';
+import { TextareaField } from '../../../shared/textarea-field/textarea-field';
+import { ImageUploader } from '../components/image-uploader/image-uploader';
+import { CategorySelect } from '../components/category-select/category-select.component';
+
+import { CategoryService } from '../../../core/service/category-service';
+import { ProductService } from '../../../core/service/product.service';
+import { DictionaryService } from '../../../core/service/dictionary-service';
+import { ICategory } from '../../../core/models/i-category';
+import { CONDITION_OPTIONS } from '../../../core/models/product/condition';
+import { IImage } from '../../../core/models/product/i-image';
+import { noWhitespaceValidator } from '../../../core/validators/no-whitespace-validator';
+import {ListStateService} from '../../../core/service/list-state-service';
+
+interface SelectOption {
+  value: number;
+  label: string;
+}
 
 @Component({
   selector: 'app-add',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     FormSection,
@@ -23,213 +36,107 @@ import {IImage} from '../../../core/models/product/i-image';
     ImageUploader,
     CategorySelect,
     Button,
-    Select
+    Select,
+    TextareaField,
+    AsyncPipe
   ],
   templateUrl: './add.html',
   styleUrl: './add.css',
 })
 export class Add implements OnInit {
-  conditionOptions = CONDITION_OPTIONS;
-  brandOptions: SelectOption[] = [
-    { label: '4F', value: '4F' },
-    { label: 'Adidas', value: 'ADIDAS' },
-    { label: 'Asos', value: 'ASOS' },
-    { label: 'Atmosphere', value: 'ATMOSPHERE' },
-    { label: 'Bershka', value: 'BERSHKA' },
-    { label: 'Bimba y Lola', value: 'BIMBA_Y_LOLA' },
-    { label: 'C&A', value: 'CA' },
-    { label: 'Calvin Klein', value: 'CALVIN_KLEIN' },
-    { label: 'Champion', value: 'CHAMPION' },
-    { label: 'Converse', value: 'CONVERSE' },
-    { label: 'Cropp', value: 'CROPP' },
-    { label: 'Desigual', value: 'DESIGUAL' },
-    { label: 'Diesel', value: 'DIESEL' },
-    { label: 'Dr. Martens', value: 'DR_MARTENS' },
-    { label: 'Fila', value: 'FILA' },
-    { label: 'Gap', value: 'GAP' },
-    { label: 'Gino Rossi', value: 'GINO_ROSSI' },
-    { label: 'Gucci', value: 'GUCCI' },
-    { label: 'Guess', value: 'GUESS' },
-    { label: 'H&M', value: 'HM' },
-    { label: 'House', value: 'HOUSE' },
-    { label: 'Hugo Boss', value: 'HUGO_BOSS' },
-    { label: 'Jack & Jones', value: 'JACK_JONES' },
-    { label: 'Jordan', value: 'JORDAN' },
-    { label: 'Karl Lagerfeld', value: 'KARL_LAGERFELD' },
-    { label: 'Lacoste', value: 'LACOSTE' },
-    { label: 'Lee', value: 'LEE' },
-    { label: 'Levi\'s', value: 'LEVIS' },
-    { label: 'Louis Vuitton', value: 'LOUIS_VUITTON' },
-    { label: 'Mango', value: 'MANGO' },
-    { label: 'Massimo Dutti', value: 'MASSIMO_DUTTI' },
-    { label: 'Michael Kors', value: 'MICHAEL_KORS' },
-    { label: 'Mohito', value: 'MOHITO' },
-    { label: 'Monnari', value: 'MONNARI' },
-    { label: 'Moschino', value: 'MOSCHINO' },
-    { label: 'New Balance', value: 'NEW_BALANCE' },
-    { label: 'New Look', value: 'NEW_LOOK' },
-    { label: 'Next', value: 'NEXT' },
-    { label: 'Nike', value: 'NIKE' },
-    { label: 'North Face', value: 'THE_NORTH_FACE' },
-    { label: 'Only', value: 'ONLY' },
-    { label: 'Patagonia', value: 'PATAGONIA' },
-    { label: 'Pepco', value: 'PEPCO' },
-    { label: 'Primark', value: 'PRIMARK' },
-    { label: 'Pull & Bear', value: 'PULL_BEAR' },
-    { label: 'Puma', value: 'PUMA' },
-    { label: 'Ralph Lauren', value: 'RALPH_LAUREN' },
-    { label: 'Reebok', value: 'REEBOK' },
-    { label: 'Reserved', value: 'RESERVED' },
-    { label: 'River Island', value: 'RIVER_ISLAND' },
-    { label: 'Shein', value: 'SHEIN' },
-    { label: 'Sinsay', value: 'SINSAY' },
-    { label: 'Stradivarius', value: 'STRADIVARIUS' },
-    { label: 'Supreme', value: 'SUPREME' },
-    { label: 'Tally Weijl', value: 'TALLY_WEIJL' },
-    { label: 'Timberland', value: 'TIMBERLAND' },
-    { label: 'Tommy Hilfiger', value: 'TOMMY_HILFIGER' },
-    { label: 'Under Armour', value: 'UNDER_ARMOUR' },
-    { label: 'Uniqlo', value: 'UNIQLO' },
-    { label: 'Vans', value: 'VANS' },
-    { label: 'Vero Moda', value: 'VERO_MODA' },
-    { label: 'Versace', value: 'VERSACE' },
-    { label: 'Victoria\'s Secret', value: 'VICTORIAS_SECRET' },
-    { label: 'Wrangler', value: 'WRANGLER' },
-    { label: 'Zara', value: 'ZARA' },
-    { label: 'Inna marka', value: 'OTHER', description: 'Wybierz tę opcję, jeśli Twojej marki nie ma na liście powyżej.' }
-  ];
+  private readonly dictionaryService = inject(DictionaryService);
+  private readonly fb = inject(FormBuilder);
+  private readonly categoryService = inject(CategoryService);
+  private readonly productService = inject(ProductService);
+  private readonly listStateService = inject(ListStateService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
-  colorOptions: SelectOption[] = [
-    { label: 'Czarny', value: 'BLACK', color: '#000000' },
-    { label: 'Biały', value: 'WHITE', color: '#ffffff' },
-    { label: 'Szary', value: 'GRAY', color: '#808080' },
-    { label: 'Beżowy', value: 'BEIGE', color: '#f5f5dc' },
-    { label: 'Brązowy', value: 'BROWN', color: '#8b4513' },
-    { label: 'Niebieski', value: 'BLUE', color: '#0000ff' },
-    { label: 'Granatowy', value: 'NAVY', color: '#000080' },
-    { label: 'Błękitny', value: 'LIGHT_BLUE', color: '#add8e6' },
-    { label: 'Czerwony', value: 'RED', color: '#ff0000' },
-    { label: 'Bordowy', value: 'BURGUNDY', color: '#800000' },
-    { label: 'Różowy', value: 'PINK', color: '#ffc0cb' },
-    { label: 'Fuksja', value: 'FUCHSIA', color: '#ff00ff' },
-    { label: 'Fioletowy', value: 'PURPLE', color: '#800080' },
-    { label: 'Zielony', value: 'GREEN', color: '#008000' },
-    { label: 'Oliwkowy', value: 'OLIVE', color: '#808000' },
-    { label: 'Żółty', value: 'YELLOW', color: '#ffff00' },
-    { label: 'Pomarańczowy', value: 'ORANGE', color: '#ffa500' },
-    { label: 'Złoty', value: 'GOLD', color: '#ffd700' },
-    { label: 'Srebrny', value: 'SILVER', color: '#c0c0c0' },
-    { label: 'Wielokolorowy', value: 'MULTICOLOR', color: 'linear-gradient(45deg, red, blue, green, yellow)' }
-  ];
+  readonly conditionOptions = CONDITION_OPTIONS;
+  readonly maxImage = 9;
 
-  sizeOptions: SelectOption[] = [
-    { label: 'XXS', value: 'XXS' }, { label: 'XS', value: 'XS' }, { label: 'S', value: 'S' },
-    { label: 'M', value: 'M' }, { label: 'L', value: 'L' }, { label: 'XL', value: 'XL' },
-    { label: 'XXL', value: 'XXL' }, { label: '3XL', value: '3XL' }, { label: '4XL', value: '4XL' },
-    { label: '32', value: '32' }, { label: '34', value: '34' }, { label: '36', value: '36' },
-    { label: '38', value: '38' }, { label: '40', value: '40' }, { label: '42', value: '42' },
-    { label: '44', value: '44' }, { label: '46', value: '46' }, { label: '48', value: '48' },
-    { label: '50', value: '50' },
-    { label: 'W28', value: 'W28' }, { label: 'W29', value: 'W29' }, { label: 'W30', value: 'W30' },
-    { label: 'W31', value: 'W31' }, { label: 'W32', value: 'W32' }, { label: 'W33', value: 'W33' },
-    { label: 'W34', value: 'W34' },
-    { label: '37', value: '37_SHOES' }, { label: '38', value: '38_SHOES' }, { label: '39', value: '39_SHOES' },
-    { label: '40', value: '40_SHOES' }, { label: '41', value: '41_SHOES' }, { label: '42', value: '42_SHOES' },
-    { label: '43', value: '43_SHOES' }, { label: '44', value: '44_SHOES' }, { label: '45', value: '45_SHOES' },
-    { label: 'Uniwersalny', value: 'ONE_SIZE', description: 'Rozmiar pasujący na każdą sylwetkę' },
-    { label: 'Inny', value: 'OTHER' }
-  ];
+  readonly loading = signal(false);
+  readonly isEditMode = signal(false);
 
-  private fb = inject(FormBuilder);
-  private categoryService = inject(CategoryService);
-  private productService = inject(ProductService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-
-  loading = signal(false);
-  isEditMode = signal(false);
   productId: string | null = null;
-
   files: File[] = [];
   existingImages: IImage[] = [];
   imagesToKeep: string[] = [];
-
   categories: ICategory[] = [];
 
-  form = this.fb.group({
-    title: ['', [Validators.required, Validators.minLength(5)]],
-    description: ['', [Validators.required, Validators.maxLength(2000)]],
-    amount: [0, [Validators.required, Validators.min(1)]],
-    categoryId: [0, [Validators.required]],
-    brand: ['', Validators.required],
-    color: ['', [Validators.required]],
-    size: [''],
-    condition: ['']
+  private readonly categoriesSubject = new BehaviorSubject<ICategory[]>([]);
+
+  readonly form = this.fb.group({
+    title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100), noWhitespaceValidator()]],
+    description: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(2000), noWhitespaceValidator()]],
+    amount: [0, [Validators.required, Validators.min(1), Validators.max(9999999), Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+    categoryId: [0, [Validators.required, Validators.min(1)]],
+    brandId: [null as number | null, [Validators.required]],
+    colorId: [null as number | null, [Validators.required]],
+    sizeId: [null as number | null, [Validators.required]],
+    condition: ['', [Validators.required]],
+    imageCount: [0, [Validators.required, Validators.min(1), Validators.max(this.maxImage)]]
   });
 
-  ngOnInit(): void {
-    this.categoryService.getCategories().subscribe({
-      next: (data) => {
-        this.categories = data;
-      },
-      error: (err) => console.error('Error loading categories:', err)
-    });
+  readonly brands$ = this.dictionaryService.dictionaries$.pipe(
+    map(dict => dict.brands.map(b => ({ value: b.id, label: b.name })))
+  );
 
-    const idParam = this.route.snapshot.paramMap.get('id');
+  readonly colors$ = this.dictionaryService.dictionaries$.pipe(
+    map(dict => dict.colors.map(c => ({
+      value: c.id,
+      label: c.name,
+      color: c.hexCode
+    })))
+  );
 
-    if (idParam) {
-      this.productId = idParam;
-      this.isEditMode.set(true);
-      this.loadProductData(this.productId);
-    }
-  }
-
-  private loadProductData(id: string) {
-    this.loading.set(true);
-
-    this.productService.getProductById(id).subscribe({
-      next: (product) => {
-        this.form.patchValue({
-          title: product.title,
-          description: product.description,
-          amount: product.price.amount,
-          categoryId: product.categoryId,
-          brand: product.brand,
-          color: product.color,
-          size: product.size,
-          condition: product.condition
-        });
-
-        if (product.images) {
-          this.existingImages = product.images;
-          this.imagesToKeep = product.images.map(img => img.url);
-        }
-
-        this.loading.set(false);
-      },
-      error: (err) => {
-        console.error('Nie udało się pobrać produktu', err);
-        this.loading.set(false);
-        this.router.navigate(['/']);
+  readonly sizes$: Observable<SelectOption[]> = combineLatest([
+    this.dictionaryService.dictionaries$.pipe(map(dict => dict.sizes)),
+    this.form.get('categoryId')!.valueChanges.pipe(
+      startWith(this.form.get('categoryId')?.value)
+    ),
+    this.categoriesSubject.asObservable()
+  ]).pipe(
+    map(([sizesMap, selectedCategoryId, categories]) => {
+      const catId = Number(selectedCategoryId);
+      if (!catId || categories.length === 0) {
+        return this.mapToSelectOptions(sizesMap['OTHER'] || []);
       }
-    });
+
+      const result = this.findCategoryWithInheritance(categories, catId);
+      const effectiveType = result?.effectiveType && result.effectiveType !== 'NONE'
+        ? result.effectiveType
+        : 'OTHER';
+
+      const matchedSizes = sizesMap[effectiveType] || sizesMap['OTHER'] || [];
+      return this.mapToSelectOptions(matchedSizes);
+    })
+  );
+
+  ngOnInit(): void {
+    this.loadCategories();
+    this.checkEditMode();
+    this.setupCategoryChangeListener();
   }
 
   getControl(name: string): FormControl {
     return this.form.get(name) as FormControl;
   }
 
-  onFilesChanged(newFiles: File[]) {
+  onFilesChanged(newFiles: File[]): void {
     this.files = newFiles;
+    this.updateImageCount();
   }
 
-  onExistingImagesChanged(keptUrls: string[]) {
+  onExistingImagesChanged(keptUrls: string[]): void {
     this.imagesToKeep = keptUrls;
+    this.updateImageCount();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.scrollToFirstError();
       return;
     }
 
@@ -243,40 +150,126 @@ export class Add implements OnInit {
     }
   }
 
-  private handleCreate(data: any) {
-    this.productService.createProduct(data, this.files)
-      .pipe(
-        finalize(() => this.loading.set(false))
-      )
+  private loadCategories(): void {
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+        this.categoriesSubject.next(data);
+      },
+      error: (err) => console.error('Failed to load categories', err)
+    });
+  }
+
+  private checkEditMode(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.productId = idParam;
+      this.isEditMode.set(true);
+      this.loadProductData(this.productId);
+    }
+  }
+
+  private setupCategoryChangeListener(): void {
+    this.form.get('categoryId')?.valueChanges.subscribe(() => {
+      this.form.get('sizeId')?.setValue(null);
+    });
+  }
+
+  private mapToSelectOptions(sizes: any[]): SelectOption[] {
+    return sizes.map(s => ({ value: s.id, label: s.name }));
+  }
+
+  private loadProductData(id: string): void {
+    this.loading.set(true);
+    this.productService.getProductById(id)
+      .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
-        next: (response) => {
-          this.router.navigate(['/create-success'], {
-            state: { product: response }
+        next: (product) => {
+          this.form.patchValue({
+            title: product.title,
+            description: product.description,
+            amount: product.price.amount,
+            categoryId: product.categoryId,
+            brandId: product.brand?.id,
+            colorId: product.color?.id,
+            sizeId: product.size?.id,
+            condition: product.condition,
+            imageCount: product.images.length,
           });
+
+          if (product.images) {
+            this.existingImages = product.images;
+            this.imagesToKeep = product.images.map(img => img.url);
+          }
         },
-        error: (err) => {
-          console.error('Błąd tworzenia produktu', err);
-        }
+        error: () => this.router.navigate(['/'])
       });
   }
 
-  private handleUpdate(id: string, data: any) {
-    const updateData = {
-      ...data,
-      remainingImages: this.imagesToKeep
-    };
-
-    this.productService.updateProduct(id, updateData, this.files)
-      .pipe(
-        finalize(() => this.loading.set(false))
-      )
+  private handleCreate(data: any): void {
+    this.productService.createProduct(data, this.files)
+      .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
-        next: () => {
-          this.router.navigate(['/product-details', id])
+        next: (response) => {
+          this.listStateService.clearByPrefix('profile-ads-me');
+
+          this.router.navigate(['/create-success'], { state: { product: response } });
         },
-        error: (err) => {
-          console.error('Błąd edycji produktu', err);
-        }
+        error: (err) => console.error('Create error', err)
       });
+  }
+
+  private handleUpdate(id: string, data: any): void {
+    const updateData = { ...data, remainingImages: this.imagesToKeep };
+    this.productService.updateProduct(id, updateData, this.files)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (response: any) => this.router.navigate(['/product-details', response.slug]),
+        error: (err) => console.error('Update error', err)
+      });
+  }
+
+  private scrollToFirstError(): void {
+    setTimeout(() => {
+      const firstInvalidControl = document.querySelector(
+        'input.ng-invalid, textarea.ng-invalid, select.ng-invalid, ' +
+        'app-select.ng-invalid, app-category-select.ng-invalid, ' +
+        'app-image-uploader.ng-invalid'
+      );
+      if (firstInvalidControl) {
+        firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        (firstInvalidControl as HTMLElement).focus();
+      }
+    }, 100);
+  }
+
+  private updateImageCount(): void {
+    const retainedImagesCount = this.existingImages.filter(img => this.imagesToKeep.includes(img.url)).length;
+    const total = this.files.length + retainedImagesCount;
+
+    this.form.patchValue({ imageCount: total });
+    this.form.get('imageCount')?.markAsTouched();
+  }
+
+  private findCategoryWithInheritance(
+    categories: ICategory[],
+    targetId: number,
+    inheritedType?: string
+  ): { category: ICategory, effectiveType?: string } | undefined {
+
+    for (const cat of categories) {
+      const currentEffectiveType = cat.sizeType || inheritedType;
+
+      if (cat.id === targetId) {
+        return { category: cat, effectiveType: currentEffectiveType };
+      }
+
+      if (cat.subcategories && cat.subcategories.length > 0) {
+        const found = this.findCategoryWithInheritance(cat.subcategories, targetId, currentEffectiveType);
+        if (found) return found;
+      }
+    }
+
+    return undefined;
   }
 }

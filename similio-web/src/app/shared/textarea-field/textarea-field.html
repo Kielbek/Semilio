@@ -1,1 +1,26 @@
-<p>textarea-field works!</p>
+<div class="w-full">
+  <div class="flex justify-between items-center mb-2">
+    <label class="text-[11px] font-medium text-[#002f34] uppercase tracking-wider">
+      {{ label }}
+    </label>
+    <span class="text-gray-400 text-[10px]">
+      {{ control.value?.length || 0 }} / {{ maxLength }}
+    </span>
+  </div>
+
+  <textarea
+    [formControl]="control"
+    [rows]="rows"
+    [placeholder]="placeholder"
+    class="w-full bg-[#f2f4f5] border-b-2 border-transparent focus:border-[#002f34]
+           rounded-t-md px-4 py-3 text-[#002f34] outline-none transition-all
+           resize-none text-sm font-light placeholder:text-gray-400"
+    [ngClass]="{
+      'focus:!border-red-500 bg-red-50': control.invalid && control.touched
+    }"
+  ></textarea>
+
+  @if (control.invalid && control.touched) {
+    <span class="text-red-500 text-[10px] mt-1 block">To pole jest wymagane lub błędne</span>
+  }
+</div>

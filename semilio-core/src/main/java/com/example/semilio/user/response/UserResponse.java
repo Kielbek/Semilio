@@ -1,38 +1,32 @@
 package com.example.semilio.user.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.Builder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@SuperBuilder
-public class UserResponse {
-    private String id;
-    private String firstName;
-    private String lastName;
-    private  String nickName;
-    private String email;
-    private String phoneNumber;
-    private String bio;
-    private LocalDate dateOfBirth;
-    private String countryName;
-    private boolean enabled;
-    private boolean locked;
-    private boolean credentialsExpired;
-    private boolean emailVerified;
-    private boolean phoneVerified;
-    private String profilePictureUrl;
-    private List<String> roles;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
-    private LocalDateTime createdDate;
+@Builder
+public record UserResponse(
+        UUID id,
+        String firstName,
+        String lastName,
+        String nickName,
+        String email,
+        String phoneNumber,
+        String bio,
+        LocalDate dateOfBirth,
+        String countryName,
+        boolean enabled,
+        boolean locked,
+        boolean credentialsExpired,
+        boolean emailVerified,
+        boolean phoneVerified,
+        String profilePictureUrl,
+        List<String> roles,
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+        LocalDateTime createdDate
+) {
 }

@@ -1,9 +1,6 @@
-const serverIp = '192.168.0.111';
-const port = '8080';
-
 export const environment = {
-  production: false,
-  serverIp: serverIp,
-  serverUrl: `http://${serverIp}:${port}`,
-  apiBase: `http://${serverIp}:${port}/api/v1`,
+  production: true, // Zmień na true na serwerze
+  serverIp: 'semilio.pl',
+  serverUrl: 'https://semilio.pl',
+  apiBase: 'https://semilio.pl/api/v1', // Żądania idą przez Nginx
 };

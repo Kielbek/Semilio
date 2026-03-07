@@ -8,6 +8,6 @@ import java.util.Optional;
 @Repository
 public interface SmsTokenVerificationRepository extends JpaRepository<SmsTokenVerification, String> {
 
-    Optional<SmsTokenVerification> findByCode(Integer code);
-    boolean existsByCode(Integer code);
+    Optional<SmsTokenVerification> findByCode(String code);
+    boolean existsByCode(String code);
 }

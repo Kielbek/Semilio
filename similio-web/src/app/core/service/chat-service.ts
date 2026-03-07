@@ -1,14 +1,14 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { environment } from '../../../environment';
-import { IMessage, MessageState, MessageType } from '../models/i-message';
-import { WebSocketService } from './web-socket-service';
+import {inject, Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {environment} from '../../../environment';
+import {IMessage, MessageState, MessageType, ProposalStatus} from '../models/chat/i-message';
+import {WebSocketService} from './web-socket-service';
 import {IPage} from '../models/i-page';
-import {IChat} from '../models/i-chat';
+import {IChat} from '../models/chat/i-chat';
+import {IChatList} from '../models/chat/i-chat-list';
 
-// DTO dla żądania wysłania wiadomości (zamiast any)
 export interface SendMessageRequest {
   content: string;
   chatId?: string;
@@ -28,7 +28,7 @@ export class ChatService {
   // === STATE MANAGEMENT (Single Source of Truth) ===
 
   // 1. Lista czatów (dla ChatLayout / Sidebar)
-  private chatsSubject = new BehaviorSubject<IChat[]>([]);
+  private chatsSubject = new BehaviorSubject<IChatList[]>([]);
   public readonly chats$ = this.chatsSubject.asObservable();
 
   // 2. Wiadomości aktywnego czatu (dla ChatDetail)
@@ -39,20 +39,14 @@ export class ChatService {
   private currentActiveChatId: string | null = null;
 
   constructor() {
-    this.initWebSocketListener();
+    this.listenToIncomingMessages(); // Dodano tylko nasłuchiwanie
   }
 
   // =================================================================
   // 1. WEBSOCKET & SYNC LOGIC (The Brain)
   // =================================================================
 
-  private initWebSocketListener() {
-    // Upewniamy się, że połączenie istnieje
-    if (!this.wsService.isConnected$.value) {
-      this.wsService.connect();
-    }
-
-    // Nasłuchujemy GLOBALNIE na wszystkie wiadomości
+  private listenToIncomingMessages() {
     this.wsService.notificationSubject.pipe(
       filter((n: any) => n && n.type === 'CHAT_MESSAGE')
     ).subscribe(notif => {
@@ -61,7 +55,7 @@ export class ChatService {
   }
 
   private handleRealTimeMessage(notif: any) {
-    const chatId = notif.data?.chatId || notif.chatId;
+    const chatId = notif.data.chatId;
 
     // A. Aktualizacja Listy Czatów (Sidebar)
     // Przesuwamy czat na górę i aktualizujemy ostatnią wiadomość
@@ -72,21 +66,37 @@ export class ChatService {
     // B. Aktualizacja Szczegółów (Detail)
     // Aktualizujemy tylko jeśli użytkownik patrzy na ten konkretny czat
     if (this.currentActiveChatId === chatId) {
-      this.pushToActiveMessagesSafe(notif);
+      this.upsertActiveMessage(notif);
     }
   }
 
-  private pushToActiveMessagesSafe(notif: any) {
-    const msgId = Number(notif.id);
+  private upsertActiveMessage(notif: any) {
+    const sourceData = notif.data || notif;
+    const msgId = sourceData.id;
+
     const currentMsgs = this.activeMessagesSubject.value;
+    const existingIndex = currentMsgs.findIndex(m => String(m.id) === String(msgId));
 
-    // SAFETY NET: Sprawdzamy czy wiadomość już istnieje (rozwiązuje problem duplikatów)
-    if (currentMsgs.some(m => m.id === msgId)) {
-      return; // Ignorujemy duplikat
+    if (existingIndex > -1) {
+      const updatedMessages = [...currentMsgs];
+      const existingMsg = updatedMessages[existingIndex];
+
+      if (existingMsg.payload?.type === MessageType.PROPOSAL && sourceData.payload) {
+        updatedMessages[existingIndex] = {
+          ...existingMsg,
+          payload: {
+            ...existingMsg.payload,
+            status: sourceData.payload.status
+          }
+        };
+
+        this.activeMessagesSubject.next(updatedMessages);
+      }
+
+    } else {
+      const newMsg = this.mapToIMessage(notif);
+      this.activeMessagesSubject.next([...currentMsgs, newMsg]);
     }
-
-    const newMsg = this.mapToIMessage(notif);
-    this.activeMessagesSubject.next([...currentMsgs, newMsg]);
   }
 
   private updateChatListState(chatId: string, notif: any) {
@@ -96,17 +106,21 @@ export class ChatService {
     const lastMessageContent = notif.content ||
       (notif.data?.messageType === 'IMAGE' ? 'Przesłano zdjęcie' : 'Nowa wiadomość');
 
+    const isCurrentlyOpen = this.currentActiveChatId === chatId;
+
     if (index > -1) {
+      const chatToUpdate = currentChats[index];
       const updatedChat = {
-        ...currentChats[index],
+        ...chatToUpdate,
         lastMessage: lastMessageContent,
         lastMessageDate: new Date(),
+        unreadCount: isCurrentlyOpen ? chatToUpdate.unreadCount : (chatToUpdate.unreadCount || 0) + 1
       };
 
       const otherChats = currentChats.filter(c => c.id !== chatId);
       this.chatsSubject.next([updatedChat, ...otherChats]);
     } else {
-      this.getChatById(chatId).subscribe({
+      this.getSingleChatSummary(chatId).subscribe({
         next: (newChat) => {
           const freshList = this.chatsSubject.value;
 
@@ -115,7 +129,8 @@ export class ChatService {
           const chatToAdd = {
             ...newChat,
             lastMessage: lastMessageContent,
-            lastMessageDate: new Date().toISOString()
+            lastMessageDate: new Date().toISOString(),
+            unreadCount: isCurrentlyOpen ? 0 : (newChat.unreadCount || 1)
           };
 
           this.chatsSubject.next([chatToAdd, ...freshList]);
@@ -133,13 +148,26 @@ export class ChatService {
    * Wywoływane gdy użytkownik wchodzi do konkretnego czatu.
    * Resetuje stan wiadomości i ładuje nowe.
    */
+  /**
+   * Wywoływane gdy użytkownik wchodzi do konkretnego czatu.
+   * Resetuje stan wiadomości i ładuje nowe.
+   */
   enterChat(chatId: string) {
     this.currentActiveChatId = chatId;
-    this.activeMessagesSubject.next([]); // Czyścimy widok (lub pokazujemy loader)
+    this.activeMessagesSubject.next([]);
+
+    const currentChats = this.chatsSubject.value;
+    const updatedChats = currentChats.map(chat => {
+      if (chat.id === chatId && chat.unreadCount > 0) {
+        return { ...chat, unreadCount: 0 };
+      }
+      return chat;
+    });
+
+    this.chatsSubject.next(updatedChats);
 
     this.getMessagesApi(chatId).subscribe(page => {
-      // Odwracamy kolejność jeśli backend zwraca od najnowszych, a frontend renderuje od dołu
-      const sortedMessages = page.content.reverse(); // Zakładam, że mapowanie jest w getMessagesApi
+      const sortedMessages = page.content.reverse();
       this.activeMessagesSubject.next(sortedMessages);
     });
   }
@@ -156,12 +184,12 @@ export class ChatService {
   // 3. HTTP REQUESTS (With State Updates)
   // =================================================================
 
-  loadUserChats(page: number, size: number): Observable<IPage<IChat>> {
+  loadUserChats(page: number, size: number): Observable<IPage<IChatList>> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
 
-    return this.http.get<IPage<IChat>>(this.baseChatUrl, { params }).pipe(
+    return this.http.get<IPage<IChatList>>(this.baseChatUrl, { params }).pipe(
       tap(response => {
         // Dodajemy nowe czaty do istniejącej listy (dla paginacji "Load More")
         const current = this.chatsSubject.value;
@@ -201,6 +229,46 @@ export class ChatService {
     );
   }
 
+  sendProposal(chatId: string | undefined, productId: string | undefined, amount: number): Observable<any> {
+    return this.http.post<any>(`${this.baseMessageUrl}/proposal`, { chatId, productId, amount }).pipe(
+      map(dto => this.mapToIMessage(dto)),
+      tap(savedMsg => {
+        if (this.currentActiveChatId === savedMsg.chatId || this.currentActiveChatId === chatId) {
+          const current = this.activeMessagesSubject.value;
+          this.activeMessagesSubject.next([...current, savedMsg]);
+        }
+      })
+    );
+  }
+
+  updateProposalStatus(messageId: string, newStatus: ProposalStatus): Observable<any> {
+    const request = {newStatus};
+
+    return this.http.patch<any>(
+      `${this.baseMessageUrl}/${messageId}/proposal-status`,
+      request
+    ).pipe(
+      tap(() => {
+        const currentMessages = this.activeMessagesSubject.value;
+
+        const updatedMessages = currentMessages.map(msg => {
+          if (msg.id === messageId) {
+            return {
+              ...msg,
+              payload: {
+                ...msg.payload,
+                status: newStatus
+              }
+            };
+          }
+          return msg;
+        });
+
+        this.activeMessagesSubject.next(updatedMessages);
+      })
+    );
+  }
+
   uploadMedia(chatId: string, file: File): Observable<IMessage> {
     const formData = new FormData();
     formData.append('file', file);
@@ -233,6 +301,11 @@ export class ChatService {
     return this.http.get<IPage<any>>(`${this.baseMessageUrl}/${chatId}`, { params });
   }
 
+  markMessagesAsRead(chatId: string): Observable<void> {
+
+    return this.http.patch<void>(`${this.baseMessageUrl}/${chatId}/read`, {});
+  }
+
   getChatById(chatId: string): Observable<IChat> {
     return this.http.get<IChat>(`${this.baseChatUrl}/${chatId}`);
   }
@@ -241,18 +314,21 @@ export class ChatService {
     return this.http.get<IChat>(`${this.baseChatUrl}/product/${productId}`);
   }
 
+  getSingleChatSummary(chatId: string): Observable<IChatList> {
+    return this.http.get<IChatList>(`${this.baseChatUrl}/${chatId}/summary`);
+  }
+
   private mapToIMessage(dto: any): IMessage {
+    const source = dto.data || dto;
+
     return {
-      id: Number(dto.id),
-      content: dto.content || '',
-      mediaFile: dto.data?.media || dto.mediaFile,
-      type: dto.data?.messageType || dto.type || MessageType.TEXT,
-      state: dto.state || MessageState.SENT,
-      senderId: dto.data?.senderId || dto.senderId,
-      chatId: dto.chatId,
-      receiverId: dto.receiverId,
-      createdAt: new Date(dto.createdAt || dto.createdDate),
-      data: dto.data
+      id: source.id,
+      chatId: source.chatId,
+      senderId: source.senderId,
+      state: source.state || MessageState.SENT,
+      createdAt: new Date(source.createdAt || source.createdDate),
+
+      payload: source.payload
     };
   }
 }

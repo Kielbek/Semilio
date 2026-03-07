@@ -13,13 +13,15 @@ import {CustomValidators} from '../../../../core/validators/custom-validators';
 import {COUNTRIES} from '../../../../core/constants/countries';
 import {finalize} from 'rxjs';
 import {InputField} from '../../../../shared/input-field/input-field';
+import {PhoneField} from '../../../../shared/phone-field/phone-field';
 
 @Component({
   selector: 'app-register',
   imports: [
     ReactiveFormsModule,
     Button,
-    InputField
+    InputField,
+    PhoneField
   ],
   templateUrl: './register.html',
   styleUrl: './register.css'
@@ -34,8 +36,6 @@ export class Register {
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly successMessage = signal<string | null>(null);
-
-  readonly countries = COUNTRIES;
 
   readonly form = this.fb.group(
     {

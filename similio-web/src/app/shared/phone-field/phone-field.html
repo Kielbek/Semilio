@@ -1,0 +1,38 @@
+<div class="w-full">
+  <label class="block text-[11px] font-medium text-[#002f34] mb-2 uppercase tracking-wider">
+    {{ label }}
+  </label>
+
+  <div class="flex bg-[#f2f4f5] border-b-2 border-transparent focus-within:border-[#002f34] rounded-t-md overflow-hidden transition-all"
+       [ngClass]="{'!border-red-500 bg-red-50': phoneControl.invalid && phoneControl.touched}">
+
+    <div class="relative flex items-center border-r border-gray-300">
+      <select
+        [formControl]="codeControl"
+        class="bg-transparent pl-3 pr-6 py-3 text-[#002f34] text-sm focus:outline-none cursor-pointer appearance-none min-w-[85px] z-10"
+      >
+        @for (country of countries; track country.code) {
+          <option [value]="country.code">
+            {{ country.flag }} {{ country.code }}
+          </option>
+        }
+      </select>
+      <svg class="absolute right-2 w-4 h-4 pointer-events-none text-[#002f34]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+
+    <input
+      type="tel"
+      [formControl]="phoneControl"
+      class="flex-1 bg-transparent px-4 py-3 text-[#002f34] outline-none placeholder:text-gray-400 text-sm font-light"
+      placeholder="123 456 789"
+    />
+  </div>
+
+  @if (phoneControl.invalid && phoneControl.touched) {
+    <span class="text-red-500 text-[10px] mt-1 block animate-in slide-in-from-top-1">
+      * Proszę podać prawidłowy numer telefonu
+    </span>
+  }
+</div>

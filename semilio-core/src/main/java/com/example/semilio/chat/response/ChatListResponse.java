@@ -1,24 +1,24 @@
 package com.example.semilio.chat.response;
 
-import com.example.semilio.image.Image;
-import com.example.semilio.image.ImageResponse;
+import com.example.semilio.image.response.ImageResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class ChatListResponse {
-    private String id;
-    private String productTitle;
-    private String lastMessage;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
-    private LocalDateTime lastMessageDate;
-    private long unreadCount;
-    private ImageResponse productImage;
-    private String productId;
+public record ChatListResponse(
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
+        Long id,
+        String interlocutorName,
+        String interlocutorImage,
+        String productTitle,
+        String lastMessage,
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+        LocalDateTime lastMessageDate,
+        long unreadCount,
+        ImageResponse productImage,
+        UUID productId
+) {
 }

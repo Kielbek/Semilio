@@ -42,88 +42,97 @@
         </div>
         <input type="text"
                class="block w-full pl-12 pr-4 py-3 bg-slate-100 border-none rounded-lg text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-[#002f3f] transition"
-               placeholder="Wpisz pytanie (np. phishing, zgłaszanie)...">
+               placeholder="Wpisz pytanie (np. phishing, zgłaszanie, policja)...">
       </div>
 
       <h1 class="text-3xl font-bold text-[#002f3f] mb-8">Polityka Bezpieczeństwa</h1>
 
       <div class="mb-12">
-        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Ważne ostrzeżenia</h3>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Ostrzeżenia i dobre praktyki</h3>
 
         <div class="border-t border-slate-200">
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-red-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <span class="text-red-700 font-bold group-hover:text-red-800">Jak rozpoznać fałszywą wiadomość (linki SMS / WhatsApp)?</span>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-300 group-hover:text-red-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          <app-accordion-item title="Sygnały ostrzegawcze (Red Flags) - po czym poznać oszusta?">
+            <p class="mb-3">Zawsze zachowaj czujność, jeśli rozmówca (niezależnie czy kupuje, czy sprzedaje) zachowuje się w poniższy sposób:</p>
+            <ul class="list-disc pl-5 space-y-2 mb-3">
+              <li><strong>Presja czasu:</strong> Chce sfinalizować transakcję "natychmiast", ponagla Cię i wywiera presję.</li>
+              <li><strong>Przejście na WhatsApp/SMS:</strong> Próbuje przenieść rozmowę poza czat Semilio, podając swój numer telefonu w pierwszej wiadomości.</li>
+              <li><strong>Kurier z gotówką:</strong> Oferuje, że "wyśle swojego kuriera DPD/InPost/FedEx, który wręczy Ci gotówkę do koperty" pod warunkiem, że klikniesz w link. <strong>To zawsze oszustwo.</strong></li>
+              <li><strong>Dziwny język:</strong> Używa łamanej polszczyzny lub wyrażeń z translatora (np. "Jaki jest ostateczny koszt przedmiotu?").</li>
+            </ul>
+          </app-accordion-item>
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Dlaczego nie wolno podawać kodu CVC karty?</span>
+          <app-accordion-item title="Jak rozpoznać fałszywą wiadomość (Phishing)?">
+            <div class="p-4 bg-red-50 border-l-4 border-red-600 text-red-900 rounded-r-md mb-4">
+              <strong>ZŁOTA ZASADA:</strong> Semilio NIGDY nie wysyła linków SMS-em ani przez komunikatory (WhatsApp, Messenger) z prośbą o "odbiór wpłaty" lub "potwierdzenie zamówienia".
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+            <p class="mb-2">Oszuści tworzą strony, które wyglądają identycznie jak Semilio, a nawet udają strony Twojego banku lub firmy kurierskiej.</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>Zawsze sprawdzaj adres URL.</strong> Prawdziwa strona to zawsze <code>semilio.pl</code>. Jeśli widzisz adres typu <code>semilio-pay.com</code>, <code>dostawa-semilio.eu</code> – natychmiast zamknij stronę!</li>
+              <li>Jeśli kliknąłeś w link i strona prosi Cię o zalogowanie się do banku, numer PESEL lub dane karty płatniczej – to próba kradzieży.</li>
+            </ul>
+          </app-accordion-item>
 
-          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Bezpieczny odbiór osobisty - dobre praktyki</span>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          <app-accordion-item title="Dlaczego komunikacja tylko przez czat Semilio jest tak ważna?">
+            <p class="mb-2">Zachęcamy do prowadzenia wszystkich rozmów i negocjacji bezpośrednio w naszym systemie wiadomości. Ma to dwa kluczowe powody:</p>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li><strong>Ochrona systemowa:</strong> Nasz czat automatycznie blokuje wiele niebezpiecznych linków wysyłanych przez oszustów, zanim zdążysz w nie kliknąć.</li>
+              <li><strong>Dowody dla Policji:</strong> W przypadku oszustwa, historia czatu na Semilio jest twardym dowodem, który możemy udostępnić organom ścigania na ich oficjalny wniosek. Jeśli przeniesiesz rozmowę na SMS, tracimy możliwość pomocy.</li>
+            </ol>
+          </app-accordion-item>
 
-          <a routerLink="/legal/terms" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Czy Semilio zwraca pieniądze w przypadku oszustwa?</span>
+          <app-accordion-item title="Dlaczego nie wolno podawać kodu CVC/CVV karty?">
+            <p class="mb-2">Dane z Twojej karty płatniczej (numer karty, data ważności, 3-cyfrowy kod z tyłu) służą <strong>wyłącznie do PŁACENIA</strong> za Twoje zakupy w internecie.</p>
+            <ul class="list-disc pl-5 space-y-1 mb-3">
+              <li><strong>Nigdy nie podawaj tych danych</strong>, aby "otrzymać przelew" lub odebrać pieniądze od kupującego.</li>
+              <li>Do odebrania standardowego przelewu bankowego potrzebny jest <strong>tylko i wyłącznie 26-cyfrowy numer konta (IBAN)</strong>. Nikomu nie potrzebne są dane z plastiku Twojej karty.</li>
+            </ul>
+            <div class="p-3 bg-blue-50 border-l-4 border-blue-400 text-blue-800 text-sm rounded-r-md">
+              Jeśli podałeś te dane na fałszywej stronie, natychmiast zadzwoń na infolinię swojego banku i <strong>zastrzeż kartę</strong>.
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          </app-accordion-item>
+
+          <app-accordion-item title="Jak zgłosić podejrzane ogłoszenie lub użytkownika? (Procedura DSA)">
+            <p class="mb-2">Jako platforma działająca zgodnie z prawem unijnym (DSA), dajemy Ci narzędzia do szybkiego reagowania na nadużycia, nielegalne przedmioty czy próby oszustwa.</p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Zgłaszanie ogłoszenia:</strong> Na każdej stronie z ogłoszeniem znajduje się przycisk "Zgłoś naruszenie". Wybierz odpowiedni powód (np. "Towar zakazany", "Podejrzenie oszustwa") i wyślij formularz. Nasz zespół moderacji sprawdzi to bez zbędnej zwłoki.</li>
+              <li><strong>Zgłaszanie w wiadomościach:</strong> Możesz również zablokować i zgłosić podejrzanego rozmówcę bezpośrednio w oknie czatu.</li>
+            </ul>
+          </app-accordion-item>
+
+          <app-accordion-item title="Czy Semilio zwraca pieniądze w przypadku oszustwa?">
+            <p class="mb-2">Zgodnie z naszym <strong>Regulaminem (§9)</strong>, Semilio jest platformą C2C, działającą jako dostawca infrastruktury (tablica ogłoszeniowa).</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Nie pośredniczymy w płatnościach i <strong>nie posiadamy programu ochrony kupujących</strong>, który gwarantowałby zwrot środków.</li>
+              <li>Każdą transakcję zawierasz bezpośrednio z drugim użytkownikiem, dlatego tak ważna jest ostrożność i odbiór osobisty.</li>
+              <li>Jeśli padłeś ofiarą przestępstwa, <strong>niezwłocznie zgłoś sprawę na Policję</strong>. Zabezpiecz wszystkie dowody (screeny ogłoszenia, wiadomości, potwierdzenie przelewu). Policja zwróci się do nas, a my wydamy wszystkie niezbędne logi (w tym adresy IP oszusta).</li>
+            </ul>
+          </app-accordion-item>
 
         </div>
       </div>
 
       <div>
-        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybierz temat</h3>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Głębsze tematy</h3>
 
         <div class="border-t border-slate-200">
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Zgłaszanie naruszeń i oszustw (DSA)</span>
+          <a routerLink="/help/safety/report" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Lista towarów zakazanych (Czego nie wolno wystawiać)</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Bezpieczeństwo konta i hasła</span>
+          <a routerLink="/help/safety/account" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Zabezpieczenie konta i mocne hasło</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
 
           <a routerLink="/legal/privacy" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Ochrona danych osobowych (RODO)</span>
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Ochrona danych osobowych i logi systemowe (RODO)</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>

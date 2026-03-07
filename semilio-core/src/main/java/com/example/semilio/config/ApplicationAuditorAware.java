@@ -1,17 +1,20 @@
 package com.example.semilio.config;
 
-import com.example.semilio.user.User;
+import com.example.semilio.security.SecurityUser;
+import com.example.semilio.user.model.User;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
-public class ApplicationAuditorAware implements AuditorAware<String> {
+public class ApplicationAuditorAware implements AuditorAware<UUID> {
 
     @Override
-    public Optional<String> getCurrentAuditor() {
+    public Optional<UUID> getCurrentAuditor() {
         final Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
 
@@ -19,7 +22,7 @@ public class ApplicationAuditorAware implements AuditorAware<String> {
             return Optional.empty();
         }
 
-        final User user = (User) authentication.getPrincipal();
-        return Optional.ofNullable(user.getId());
+        final SecurityUser user = (SecurityUser) authentication.getPrincipal();
+        return Optional.ofNullable(Objects.requireNonNull(user).getId());
     }
 }

@@ -5,6 +5,7 @@ import {environment} from '../../../environment';
 import {IAuthResponse} from '../models/i-auth-response';
 import {UserService} from './user-service';
 import {Router} from '@angular/router';
+import {ListStateService} from './list-state-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class AuthService {
   private router = inject(Router);
   private http = inject(HttpClient);
   private userService = inject(UserService);
+  private readonly listStateService = inject(ListStateService);
 
   showLoginPopup$ = new BehaviorSubject<boolean>(false);
   private apiUrl = environment.apiBase + '/auth';
@@ -64,6 +66,7 @@ export class AuthService {
     localStorage.removeItem(this.refreshTokenKey);
     this.isLoggedIn$.next(false)
     this.userService.clearUser();
+    this.listStateService.clearAll();
     this.router.navigate(['/home']);
   }
 

@@ -3,6 +3,7 @@ package com.example.semilio.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,9 +21,10 @@ public class
 SecurityConfig {
 
     private static final String[] PUBLIC_URLS = {
-            "/api/v1/auth/**",
-            "/api/v1/products/public/**",
-            "/api/v1/users/public/**",
+            "/v1/auth/**",
+            "/v1/products/public/**",
+            "/v1/users/public/**",
+            "/v1/dictionaries/public/**",
             "/configuration/ui",
             "/configuration/security",
             "/ws/**",
@@ -32,7 +34,9 @@ SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers(PUBLIC_URLS)
                         .permitAll()
                         .anyRequest()

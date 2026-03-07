@@ -1,6 +1,6 @@
 package com.example.semilio.token;
 
-import com.example.semilio.user.User;
+import com.example.semilio.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +25,7 @@ public class SmsTokenVerification {
     private String id;
 
     @Column(unique = true)
-    private Integer code;
+    private String code;
 
     @Column(name = "CREATED_AT", updatable = false, nullable = false)
     private LocalDateTime createdAt;

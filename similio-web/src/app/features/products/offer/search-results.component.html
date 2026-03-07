@@ -1,6 +1,53 @@
 <app-search-bar></app-search-bar>
-
 <app-search-filters></app-search-filters>
+
+@if (totalResults() === null) {
+  <div class="max-w-7xl mx-auto mt-0 p-2 xl:p-0 md:mt-4 animate-pulse">
+    <div class="flex justify-between items-center mb-4">
+      <div class="h-8 bg-gray-200 rounded-md w-64"></div>
+
+      <div class="hidden md:block h-5 bg-gray-100 rounded-md w-40"></div>
+    </div>
+
+    <div class="hidden md:block h-20 bg-gray-100 rounded-lg mb-4"></div>
+  </div>
+}
+
+@if (totalResults() !== null && totalResults()! > 0) {
+  <div class="max-w-7xl mx-auto mt-0 p-2 xl:p-0 md:mt-4">
+
+    <div class="flex justify-between items-center mb-0 md:mb-4">
+      <span class="text-xl font-bold text-gray-800">{{ resultsText() }}</span>
+
+      <div class="hidden items-center gap-1.5 text-sm text-gray-500 md:flex">
+        Wyniki wyszukiwania
+        <span class="flex items-center justify-center w-[18px] h-[18px] border border-gray-400
+        rounded-full text-[11px] font-bold cursor-help" title="Wyniki oparte na Twoich kryteriach">?</span>
+      </div>
+    </div>
+
+    @if (showShippingInfo()) {
+      <div class="hidden border border-blue-200 bg-blue-50 rounded-lg p-4 flex justify-between
+      items-start sm:items-center shadow-sm mb-4 gap-4 md:flex">
+
+        <div class="flex items-start sm:items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5 sm:mt-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+
+          <span class="text-[14px] sm:text-[15px] text-blue-900 leading-snug">
+            <strong>Bezpieczeństwo przede wszystkim!</strong> Semilio nie obsługuje płatności online. Nigdy nie podawaj danych karty ani kodów BLIK w rozmowie ze sprzedawcą. Najbezpieczniejszą formą transakcji jest odbiór osobisty.
+          </span>
+        </div>
+
+        <button (click)="closeShippingInfo()" class="text-blue-400 hover:text-blue-800 transition-colors text-2xl leading-none cursor-pointer flex-shrink-0">
+          &times;
+        </button>
+      </div>
+    }
+
+  </div>
+}
 
 <app-list
   [fetchDataFn]="fetchProducts"

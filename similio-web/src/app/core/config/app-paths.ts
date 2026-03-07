@@ -22,13 +22,13 @@ const S = {
   PLATFORM: 'platform',
   SUSTAINABILITY: 'sustainability',
   PRESS: 'press',
+  CENTER: 'center',
   SELLING: 'selling',
   BUYING: 'buying',
   SAFETY: 'safety',
   TERMS: 'terms',
   COOKIES: 'cookies',
   PRIVACY: 'privacy',
-  CENTER: 'center',
 
   ACCOUNT: 'account',
   ADS: 'ads',
@@ -72,6 +72,7 @@ export const AppConfig = {
       SELLING: `/${S.HELP}/${S.SELLING}`,
       BUYING: `/${S.HELP}/${S.BUYING}`,
       SAFETY: `/${S.HELP}/${S.SAFETY}`,
+      CENTER: `/${S.HELP}/${S.CENTER}`,
     },
     LEGAL: {
       TERMS: `/${S.LEGAL}/${S.TERMS}`,

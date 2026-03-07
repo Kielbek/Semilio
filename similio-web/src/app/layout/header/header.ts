@@ -28,6 +28,7 @@ import {
 } from 'lucide-angular';
 import {UserDropdown} from '../../shared/user-dropdown/user-dropdown';
 import {AppConfig} from '../../core/config/app-paths';
+import {NotificationService} from '../../core/service/notification';
 
 @Component({
   selector: 'app-header',
@@ -53,6 +54,7 @@ export class Header implements AfterViewInit {
   private layoutService = inject(LayoutService);
   private authService = inject(AuthService);
   private userService = inject(UserService);
+  public notificationService = inject(NotificationService);
 
   @ViewChild('headerEl') private headerElement!: ElementRef<HTMLDivElement>;
 

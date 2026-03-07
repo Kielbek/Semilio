@@ -1,35 +1,23 @@
 package com.example.semilio.product.response;
 
-import com.example.semilio.image.ImageResponse;
-import com.example.semilio.product.Condition;
-import com.example.semilio.product.Status;
-import lombok.AllArgsConstructor;
+import com.example.semilio.image.response.ImageResponse;
+import com.example.semilio.product.enums.Condition;
+import com.example.semilio.product.enums.Status;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
+import java.util.UUID;
+
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductCardResponse {
-    private String id;
-
-    private String title;
-
-    private String slug;
-
-    private PriceResponse price;
-
-    private ImageResponse mainImage;
-
-    private String size;
-
-    private Condition condition;
-
-    private ProductStatsResponse stats;
-
-    private Status status;
-
-    boolean isLikedByCurrentUser;
+public record ProductCardResponse(
+        UUID id,
+        String title,
+        String slug,
+        PriceResponse price,
+        ImageResponse mainImage,
+        String size,
+        Condition condition,
+        ProductStatsResponse stats,
+        Status status,
+        boolean isLikedByCurrentUser
+) {
 }

@@ -1,11 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {DatePipe, NgClass} from '@angular/common';
-import {IMessage, MessageType} from '../../../../core/models/i-message';
+import {IMessage, MessageType, ProposalStatus} from '../../../../core/models/chat/i-message';
 import {CheckCheck, LUCIDE_ICONS, LucideAngularModule, LucideIconProvider} from 'lucide-angular';
+import {Button} from '../../../../shared/button/button';
+import {ChatService} from '../../../../core/service/chat-service';
 
 @Component({
   selector: 'app-chat-messages',
-  imports: [NgClass, LucideAngularModule, DatePipe],
+  imports: [NgClass, LucideAngularModule, DatePipe, Button],
   templateUrl: './chat-messages.html',
   styleUrl: './chat-messages.css',
   providers: [
@@ -16,6 +18,8 @@ import {CheckCheck, LUCIDE_ICONS, LucideAngularModule, LucideIconProvider} from 
   ]
 })
 export class ChatMessages {
+  private chatService = inject(ChatService);
+
   @Input() message!: IMessage;
   @Input() currentUserId!: string;
 
@@ -23,9 +27,10 @@ export class ChatMessages {
     return this.message.senderId === this.currentUserId;
   }
 
-  get isImageMessage(): boolean {
-    return this.message.type === MessageType.IMAGE;
+  handleProposalResponse(status: ProposalStatus) {
+    this.chatService.updateProposalStatus(this.message.id, status).subscribe();
   }
 
   protected readonly MessageType = MessageType;
+  protected readonly ProposalStatus = ProposalStatus;
 }

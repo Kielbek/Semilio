@@ -18,7 +18,8 @@
           <app-category-select
             label="Wybierz kategorię"
             [categories]="categories"
-            formControlName="categoryId">
+            formControlName="categoryId"
+            [control]="getControl('categoryId')">
           </app-category-select>
         </div>
       </div>
@@ -26,10 +27,12 @@
 
     <app-form-section title="Zdjęcia" subtitle="Pierwsze zdjęcie będzie miniaturką.">
       <app-image-uploader
-        [maxImages]="9"
+        [maxImages]="maxImage"
         [existingImages]="existingImages"
         (filesChanged)="onFilesChanged($event)"
-        (existingImagesChanged)="onExistingImagesChanged($event)">
+        (existingImagesChanged)="onExistingImagesChanged($event)"
+        [control]="getControl('imageCount')"
+      >
       </app-image-uploader>
     </app-form-section>
 
@@ -44,17 +47,13 @@
           </app-input-field>
         </div>
 
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <label class="text-[11px] font-medium text-[#002f34] uppercase tracking-wider">Opis przedmiotu</label>
-            <span class="text-gray-400 text-[10px]">{{ getControl('description').value?.length || 0 }} / 2000</span>
-          </div>
-          <textarea
-            formControlName="description"
-            rows="5"
-            class="w-full bg-[#f2f4f5] border-b-2 border-transparent focus:border-[#002f34] rounded-t-md px-4 py-3 text-[#002f34] outline-none transition-all resize-none text-sm font-light"
-          ></textarea>
-        </div>
+        <app-textarea-field
+          label="Opis przedmiotu"
+          [control]="getControl('description')"
+          placeholder="Wpisz szczegółowy opis..."
+          [maxLength]="2000"
+          [rows]="5">
+        </app-textarea-field>
       </div>
     </app-form-section>
 
@@ -63,35 +62,45 @@
 
         <app-select
           label="Marka"
-          [options]="brandOptions"
-          formControlName="brand">
+          [options]="(brands$ | async) || []"
+          formControlName="brandId"
+          [control]="getControl('brandId')">
         </app-select>
 
         <app-select
           label="Stan"
           [options]="conditionOptions"
-          formControlName="condition">
+          formControlName="condition"
+          [control]="getControl('condition')">
         </app-select>
 
         <app-select
           label="Kolor"
-          [options]="colorOptions"
-          formControlName="color">
+          [options]="(colors$ | async) || []"
+          formControlName="colorId"
+          [control]="getControl('colorId')">
         </app-select>
 
         <app-select
           label="Rozmiar"
-          [options]="sizeOptions"
-          formControlName="size">
+          [options]="(sizes$ | async) || []"
+          formControlName="sizeId"
+          [control]="getControl('sizeId')">
         </app-select>
 
       </div>
     </app-form-section>
 
+    @if (form.invalid && form.touched) {
+      <div class="text-red-500 text-sm text-right mb-2 pr-2">
+        Formularz zawiera błędy. Sprawdź brakujące pola.
+      </div>
+    }
+
     <div class="flex justify-end pt-4">
       <app-button
         type="submit"
-        [disabled]="form.invalid || loading()"
+        [disabled]="loading() || !form.touched"
         [isLoading]="loading()"
       >
         {{ isEditMode() ? 'Zapisz zmiany' : 'Wystaw przedmiot' }}

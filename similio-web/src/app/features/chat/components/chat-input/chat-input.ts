@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, inject, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {Button} from '../../../../shared/button/button';
 import {SendMessageEvent} from '../../../../core/facades/chat-detail.facade';
@@ -20,6 +20,7 @@ export class ChatInput {
   selectedImage: File | null = null;
   selectedImagePreview: string | null = null;
   newMessage = '';
+  @Input() isSending!: any;
 
   sendMessage(): void {
     const text = this.newMessage.trim();

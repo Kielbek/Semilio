@@ -1,0 +1,42 @@
+report:
+  categories:
+    - id: "SELLER_DATA"
+      label: "Nieprawid\u0142owe dane sprzedaj\u0105cego"
+      description: "Konto wygl\u0105da na fa\u0142szywe lub przej\u0119te"
+
+    - id: "ITEM_ISSUE"
+      label: "Problem z przedmiotem/us\u0142ug\u0105"
+      description: "Przedmiot niedozwolony, podrobiony lub zwierz\u0119ta"
+      subcategories:
+        - id: "FORBIDDEN"
+          label: "Niedozwolony przedmiot lub us\u0142uga"
+          description: "Bro\u0144, narkotyki, leki, inne"
+        - id: "FAKE"
+          label: "Podrobiony przedmiot"
+          description: "Podr\u00F3bki marek, nieautoryzowane repliki"
+        - id: "ANIMALS"
+          label: "Nielegalna sprzeda\u017C zwierz\u0105t"
+          description: "Gatunki chronione, brak zarejestrowanej hodowli"
+
+    - id: "MISLEADING"
+      label: "Og\u0142oszenie wprowadzaj\u0105ce w b\u0142\u0105d"
+      description: "Sprzeczne informacje, z\u0142a kategoria, inna cena"
+
+    - id: "SCAM"
+      label: "Oszustwo"
+      description: "Pr\u00F3ba wy\u0142udzenia danych (phishing) lub pieni\u0119dzy"
+
+    - id: "ABUSE"
+      label: "Nadu\u017Cycie, dyskryminacja, nago\u015B\u0107"
+      description: "Tre\u015Bci obra\u017Aliwe, rasizm lub materia\u0142y dla doros\u0142ych"
+      subcategories:
+        - id: "HATE_SPEECH"
+          label: "Mowa nienawi\u015Bci / Dyskryminacja"
+          description: "Ataki na tle rasowym, religijnym lub orientacji"
+        - id: "NUDITY"
+          label: "Nago\u015B\u0107 lub pornografia"
+          description: "Zdj\u0119cia zawieraj\u0105ce nieodpowiednie tre\u015Bci"
+
+    - id: "OTHER"
+      label: "Inny pow\u00F3d"
+      description: "Opisz problem w kolejnym kroku"

@@ -1,1 +1,41 @@
-<p>chat-header works!</p>
+<header class="flex items-center gap-3 p-3 md:p-4 border-b border-gray-100 shrink-0 h-[70px] bg-white">
+  <button (click)="back.emit()" class="md:hidden p-1 -ml-1 text-[#002f34] hover:bg-gray-50 rounded-full transition-colors cursor-pointer border-none bg-transparent">
+    <lucide-icon name="arrow-left" class="w-6 h-6"></lucide-icon>
+  </button>
+
+  @if (chat) {
+    <div class="flex items-center gap-3 flex-1 min-w-0 animate-in fade-in duration-300">
+      <img
+        [src]="chat.productImage.url || 'assets/placeholder.png'"
+        alt="Product"
+        class="w-10 h-10 object-cover rounded-full border border-gray-100 bg-gray-50 shrink-0"
+      />
+
+      <div class="flex flex-col overflow-hidden flex-1 min-w-0">
+        <span class="font-semibold text-[#002f34] truncate">
+          {{ chat.productTitle }}
+        </span>
+        <span class="text-xs text-gray-500 font-medium">
+          {{ chat.productPrice.amount | number:'1.2-2' }} {{ chat.productPrice.currencyCode }}
+        </span>
+      </div>
+
+      <app-button
+        variant="secondary"
+        class="ml-auto shrink-0"
+        extraClass="!px-2.5 !py-1.5 whitespace-nowrap"
+        (click)="openProposal.emit()"
+      >
+        Zaproponuj cenę
+      </app-button>
+    </div>
+  } @else {
+    <div class="flex items-center gap-3 animate-pulse w-full">
+      <div class="w-10 h-10 bg-gray-200 rounded-full shrink-0"></div>
+      <div class="flex flex-col gap-2 flex-1">
+        <div class="h-4 w-32 bg-gray-200 rounded-md"></div>
+        <div class="h-3 w-16 bg-gray-100 rounded-md"></div>
+      </div>
+    </div>
+  }
+</header>

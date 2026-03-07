@@ -90,9 +90,16 @@ export class ProductService {
     if (criteria.query) params = params.set('query', criteria.query);
     if (criteria.minPrice) params = params.set('minPrice', criteria.minPrice.toString());
     if (criteria.maxPrice) params = params.set('maxPrice', criteria.maxPrice.toString());
-    if (criteria.category) params = params.set('category', criteria.category);
     if (criteria.condition) params = params.set('condition', criteria.condition);
-    if (criteria.size) params = params.set('productSize', criteria.size);
+
+    if (criteria.categoryId) params = params.set('categoryId', criteria.categoryId.toString());
+    if (criteria.sizeId) params = params.set('sizeId', criteria.sizeId.toString());
+    if (criteria.brandId) params = params.set('brandId', criteria.brandId.toString());
+    if (criteria.colorId) params = params.set('colorId', criteria.colorId.toString());
+
+    if (criteria.sort && criteria.sort !== 'recommended') {
+      params = params.set('sort', criteria.sort);
+    }
 
     return this.http.get<IPage<IProductCard>>(`${this.baseUrl}/public/search`, { params });
   }

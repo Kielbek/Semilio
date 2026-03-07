@@ -1,0 +1,3 @@
+::ng-deep html {
+  scroll-behavior: smooth;
+}

@@ -8,6 +8,7 @@
         "id": 11,
         "name": "Ubrania",
         "icon": "shirt",
+        "sizeType": "CLOTHING",
         "subcategories": [
           {
             "id": 111,
@@ -19,7 +20,8 @@
               { "id": 1114, "name": "Sukienki wieczorowe" },
               { "id": 1115, "name": "Sukienki letnie" },
               { "id": 1116, "name": "Sukienki dżinsowe" },
-              { "id": 1117, "name": "Szmizjerki" }
+              { "id": 1117, "name": "Szmizjerki" },
+              { "id": 1118, "name": "Dresowe" }
             ]
           },
           {
@@ -27,71 +29,140 @@
             "name": "Topy i t-shirty",
             "subcategories": [
               { "id": 1121, "name": "T-shirty" },
-              { "id": 1122, "name": "Topy bez rękawów" },
-              { "id": 1123, "name": "Body" },
-              { "id": 1124, "name": "Polo" },
-              { "id": 1125, "name": "Gorsety" }
+              { "id": 1122, "name": "Bluzki" },
+              { "id": 1123, "name": "Topy bez rękawów" },
+              { "id": 1124, "name": "Koszule" },
+              { "id": 1125, "name": "Body" },
+              { "id": 1126, "name": "Polo" },
+              { "id": 1127, "name": "Gorsety" }
             ]
           },
           {
             "id": 113,
             "name": "Spodnie",
             "subcategories": [
-              { "id": 1131, "name": "Jeansy" },
+              { "id": 1131, "name": "Jeansy", "sizeType": "JEANS" },
               { "id": 1132, "name": "Legginsy" },
               { "id": 1133, "name": "Spodnie materiałowe" },
-              { "id": 1134, "name": "Szorty" },
-              { "id": 1135, "name": "Kombinezony" },
-              { "id": 1136, "name": "Spodnie skórzane" }
+              { "id": 1134, "name": "Spodnie dresowe" },
+              { "id": 1135, "name": "Chinosy" },
+              { "id": 1136, "name": "Szorty" },
+              { "id": 1137, "name": "Kombinezony" },
+              { "id": 1138, "name": "Spodnie skórzane" }
             ]
           },
           {
             "id": 114,
             "name": "Swetry i bluzy",
             "subcategories": [
-              { "id": 1141, "name": "Swetry wkładane" },
+              { "id": 1141, "name": "Swetry wkładane przez głowę" },
               { "id": 1142, "name": "Kardigany" },
               { "id": 1143, "name": "Golfy" },
-              { "id": 1144, "name": "Bluzy z kapturem" },
-              { "id": 1145, "name": "Bluzy bez kaptura" }
+              { "id": 1144, "name": "Kamizelki dzianinowe" },
+              { "id": 1145, "name": "Bluzy z kapturem" },
+              { "id": 1146, "name": "Bluzy rozpinane" },
+              { "id": 1147, "name": "Bluzy bez kaptura" }
             ]
           },
-          { "id": 115, "name": "Spódnice" },
-          { "id": 116, "name": "Kurtki i płaszcze" },
+          {
+            "id": 115,
+            "name": "Odzież wierzchnia",
+            "subcategories": [
+              { "id": 1151, "name": "Płaszcze" },
+              { "id": 1152, "name": "Kurtki zimowe" },
+              { "id": 1153, "name": "Kurtki przejściowe" },
+              { "id": 1154, "name": "Ramoneski" },
+              { "id": 1155, "name": "Kurtki dżinsowe" },
+              { "id": 1156, "name": "Wiatrówki" }
+            ]
+          },
+          {
+            "id": 116,
+            "name": "Spódnice",
+            "subcategories": [
+              { "id": 1161, "name": "Mini" },
+              { "id": 1162, "name": "Midi" },
+              { "id": 1163, "name": "Maxi" },
+              { "id": 1164, "name": "Ołówkowe" },
+              { "id": 1165, "name": "Plisowane" }
+            ]
+          },
           { "id": 117, "name": "Garnitury i marynarki" },
-          { "id": 118, "name": "Bielizna i piżamy" },
-          { "id": 119, "name": "Odzież sportowa" }
+          {
+            "id": 118,
+            "name": "Bielizna i piżamy",
+            "subcategories": [
+              { "id": 1181, "name": "Biustonosze", "sizeType": "LINGERIE" },
+              { "id": 1182, "name": "Majtki i figi" },
+              { "id": 1183, "name": "Komplety bielizny" },
+              { "id": 1184, "name": "Piżamy i koszule nocne" },
+              { "id": 1185, "name": "Szlafroki" },
+              { "id": 1186, "name": "Skarpetki" },
+              { "id": 1187, "name": "Rajstopy" }
+            ]
+          },
+          {
+            "id": 119,
+            "name": "Stroje kąpielowe",
+            "subcategories": [
+              { "id": 1191, "name": "Jednoczęściowe" },
+              { "id": 1192, "name": "Bikini" }
+            ]
+          },
+          { "id": 110, "name": "Odzież sportowa" }
         ]
       },
       {
         "id": 12,
         "name": "Obuwie",
         "icon": "footprints",
+        "sizeType": "SHOES",
         "subcategories": [
-          { "id": 121, "name": "Sneakersy" },
+          { "id": 121, "name": "Sneakersy i sportowe" },
           { "id": 122, "name": "Szpilki" },
           { "id": 123, "name": "Czółenka" },
           { "id": 124, "name": "Botki" },
           { "id": 125, "name": "Kozaki" },
           { "id": 126, "name": "Baleriny" },
-          { "id": 127, "name": "Mokasyny" },
+          { "id": 127, "name": "Mokasyny i lordsy" },
           { "id": 128, "name": "Sandały" },
-          { "id": 129, "name": "Klapki" }
+          { "id": 129, "name": "Klapki" },
+          { "id": 120, "name": "Kapcie" }
         ]
       },
       {
         "id": 13,
         "name": "Torby i akcesoria",
         "icon": "shopping-bag",
+        "sizeType": "NONE",
         "subcategories": [
-          { "id": 131, "name": "Torebki do ręki" },
+          {
+            "id": 131,
+            "name": "Torebki",
+            "subcategories": [
+              { "id": 1311, "name": "Shopperki" },
+              { "id": 1312, "name": "Listonoszki" },
+              { "id": 1313, "name": "Kopertówki" },
+              { "id": 1314, "name": "Torebki do ręki" },
+              { "id": 1315, "name": "Koszyki" }
+            ]
+          },
           { "id": 132, "name": "Plecaki" },
-          { "id": 133, "name": "Portfele" },
-          { "id": 134, "name": "Biżuteria" },
-          { "id": 135, "name": "Okulary" },
+          { "id": 133, "name": "Portfele i etui" },
+          {
+            "id": 134,
+            "name": "Biżuteria",
+            "subcategories": [
+              { "id": 1341, "name": "Kolczyki" },
+              { "id": 1342, "name": "Naszyjniki" },
+              { "id": 1343, "name": "Bransoletki" },
+              { "id": 1344, "name": "Pierścionki", "sizeType": "RINGS" }
+            ]
+          },
+          { "id": 135, "name": "Okulary przeciwsłoneczne" },
           { "id": 136, "name": "Zegarki" },
-          { "id": 137, "name": "Paski" },
-          { "id": 138, "name": "Czapki, szale, rękawiczki" }
+          { "id": 137, "name": "Paski", "sizeType": "BELTS" },
+          { "id": 138, "name": "Czapki, szale, rękawiczki", "sizeType": "HATS" }
         ]
       }
     ]
@@ -105,32 +176,108 @@
         "id": 21,
         "name": "Ubrania",
         "icon": "shirt",
+        "sizeType": "CLOTHING",
         "subcategories": [
-          { "id": 211, "name": "T-shirty i polo" },
-          { "id": 212, "name": "Koszule" },
-          { "id": 213, "name": "Bluzy" },
-          { "id": 214, "name": "Swetry" },
-          { "id": 215, "name": "Jeansy" },
-          { "id": 216, "name": "Spodnie" },
-          { "id": 217, "name": "Kurtki i płaszcze" },
-          { "id": 218, "name": "Marynarki i garnitury" },
-          { "id": 219, "name": "Bielizna i skarpetki" }
+          {
+            "id": 211,
+            "name": "T-shirty i polo",
+            "subcategories": [
+              { "id": 2111, "name": "T-shirty" },
+              { "id": 2112, "name": "Koszulki polo" },
+              { "id": 2113, "name": "Bez rękawów" }
+            ]
+          },
+          {
+            "id": 212,
+            "name": "Koszule",
+            "subcategories": [
+              { "id": 2121, "name": "Na co dzień (casual)" },
+              { "id": 2122, "name": "Eleganckie" }
+            ]
+          },
+          {
+            "id": 213,
+            "name": "Spodnie",
+            "subcategories": [
+              { "id": 2131, "name": "Jeansy", "sizeType": "JEANS" },
+              { "id": 2132, "name": "Chinosy" },
+              { "id": 2133, "name": "Spodnie dresowe" },
+              { "id": 2134, "name": "Eleganckie spodnie" },
+              { "id": 2135, "name": "Szorty" },
+              { "id": 2136, "name": "Bojówki" }
+            ]
+          },
+          {
+            "id": 214,
+            "name": "Bluzy i swetry",
+            "subcategories": [
+              { "id": 2141, "name": "Bluzy z kapturem" },
+              { "id": 2142, "name": "Bluzy bez kaptura" },
+              { "id": 2143, "name": "Swetry wkładane" },
+              { "id": 2144, "name": "Kardigany" },
+              { "id": 2145, "name": "Golfy" }
+            ]
+          },
+          {
+            "id": 215,
+            "name": "Odzież wierzchnia",
+            "subcategories": [
+              { "id": 2151, "name": "Kurtki przejściowe" },
+              { "id": 2152, "name": "Kurtki zimowe" },
+              { "id": 2153, "name": "Płaszcze" },
+              { "id": 2154, "name": "Ramoneski" }
+            ]
+          },
+          {
+            "id": 216,
+            "name": "Garnitury i marynarki",
+            "subcategories": [
+              { "id": 2161, "name": "Kompletne garnitury" },
+              { "id": 2162, "name": "Marynarki" },
+              { "id": 2163, "name": "Kamizelki" }
+            ]
+          },
+          {
+            "id": 217,
+            "name": "Bielizna",
+            "subcategories": [
+              { "id": 2171, "name": "Bokserki i slipy" },
+              { "id": 2172, "name": "Skarpetki" },
+              { "id": 2173, "name": "Piżamy" }
+            ]
+          },
+          { "id": 218, "name": "Stroje kąpielowe" }
         ]
       },
       {
         "id": 22,
         "name": "Obuwie",
         "icon": "footprints",
+        "sizeType": "SHOES",
         "subcategories": [
-          { "id": 221, "name": "Sneakersy" },
-          { "id": 222, "name": "Półbuty" },
-          { "id": 223, "name": "Eleganckie" },
-          { "id": 224, "name": "Trampki" },
-          { "id": 225, "name": "Sportowe" },
+          { "id": 221, "name": "Sneakersy i sportowe" },
+          { "id": 222, "name": "Półbuty eleganckie" },
+          { "id": 223, "name": "Mokasyny" },
+          { "id": 224, "name": "Sztyblety i botki" },
+          { "id": 225, "name": "Sandały i klapki" },
           { "id": 226, "name": "Zimowe" }
         ]
       },
-      { "id": 23, "name": "Akcesoria", "icon": "watch" }
+      {
+        "id": 23,
+        "name": "Akcesoria",
+        "icon": "watch",
+        "sizeType": "NONE",
+        "subcategories": [
+          { "id": 231, "name": "Zegarki" },
+          { "id": 232, "name": "Paski", "sizeType": "BELTS" },
+          { "id": 233, "name": "Portfele" },
+          { "id": 234, "name": "Krawaty, muchy i poszetki" },
+          { "id": 235, "name": "Torby i plecaki" },
+          { "id": 236, "name": "Okulary" },
+          { "id": 237, "name": "Czapki, szale, rękawiczki", "sizeType": "HATS" }
+        ]
+      }
     ]
   },
   {
@@ -143,9 +290,20 @@
         "name": "Dziewczynki",
         "icon": "flower-2",
         "subcategories": [
-          { "id": 311, "name": "Ubrania" },
-          { "id": 312, "name": "Obuwie" },
-          { "id": 313, "name": "Akcesoria" }
+          {
+            "id": 311,
+            "name": "Ubrania",
+            "sizeType": "KIDS_CLOTHING",
+            "subcategories": [
+              { "id": 3111, "name": "Sukienki i spódniczki" },
+              { "id": 3112, "name": "T-shirty i bluzki" },
+              { "id": 3113, "name": "Spodnie i legginsy" },
+              { "id": 3114, "name": "Swetry i bluzy" },
+              { "id": 3115, "name": "Odzież wierzchnia" }
+            ]
+          },
+          { "id": 312, "name": "Obuwie", "sizeType": "SHOES" },
+          { "id": 313, "name": "Akcesoria", "sizeType": "NONE" }
         ]
       },
       {
@@ -153,9 +311,19 @@
         "name": "Chłopcy",
         "icon": "rocket",
         "subcategories": [
-          { "id": 321, "name": "Ubrania" },
-          { "id": 322, "name": "Obuwie" },
-          { "id": 323, "name": "Akcesoria" }
+          {
+            "id": 321,
+            "name": "Ubrania",
+            "sizeType": "KIDS_CLOTHING",
+            "subcategories": [
+              { "id": 3211, "name": "T-shirty i koszule" },
+              { "id": 3212, "name": "Spodnie i dresy" },
+              { "id": 3213, "name": "Swetry i bluzy" },
+              { "id": 3214, "name": "Odzież wierzchnia" }
+            ]
+          },
+          { "id": 322, "name": "Obuwie", "sizeType": "SHOES" },
+          { "id": 323, "name": "Akcesoria", "sizeType": "NONE" }
         ]
       },
       {
@@ -163,9 +331,10 @@
         "name": "Niemowlęta",
         "icon": "smile",
         "subcategories": [
-          { "id": 331, "name": "Body i pajacyki" },
-          { "id": 332, "name": "Śpiworki" },
-          { "id": 333, "name": "Buciki" }
+          { "id": 331, "name": "Body i pajacyki", "sizeType": "KIDS_CLOTHING" },
+          { "id": 332, "name": "Komplety", "sizeType": "KIDS_CLOTHING" },
+          { "id": 333, "name": "Śpiworki i kocyki", "sizeType": "NONE" },
+          { "id": 334, "name": "Buciki", "sizeType": "SHOES" }
         ]
       }
     ]

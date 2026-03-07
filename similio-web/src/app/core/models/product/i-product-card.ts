@@ -13,6 +13,6 @@ export interface IProductCard {
   status: Status;
   size: string;
   condition: Condition;
-  likedByCurrentUser: boolean;
+  isLikedByCurrentUser: boolean;
   stats: IStats
 }

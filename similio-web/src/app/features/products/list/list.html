@@ -31,6 +31,8 @@
     </div>
   }
 
-  <div #sentinel class="h-10 w-full flex justify-center items-center mt-4">
-  </div>
+  @if (!isLastPage) {
+    <div #sentinel class="h-10 w-full flex justify-center items-center mt-4">
+    </div>
+  }
 </section>

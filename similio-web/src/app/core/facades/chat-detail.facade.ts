@@ -4,7 +4,8 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';
 import {ChatService} from '../service/chat-service';
 import {UserService} from '../service/user-service';
-import {IChat} from '../models/i-chat';
+import {IChatList} from '../models/chat/i-chat-list';
+import {IChat} from '../models/chat/i-chat';
 
 export interface SendMessageEvent {
   content: string;
@@ -46,7 +47,7 @@ export class ChatDetailFacade implements OnDestroy {
 
     // A. Wejście przez ID czatu (np. z listy)
     if (params.id && params.id !== this.currentChatId) {
-      this.enterExistingChat(params.id, stateData?.chatInfo);
+      this.enterExistingChat(params.id);
     }
     // B. Wejście przez Produkt (np. przycisk "Napisz do sprzedawcy")
     else if (params.productId) {
@@ -57,7 +58,6 @@ export class ChatDetailFacade implements OnDestroy {
   // === AKCJE (Delegacja do serwisu) ===
 
   sendMessage(content: string, file: File | null) {
-    // Scenariusz 1: Nowa rozmowa (brak ID czatu)
     if (this.isNewChat) {
       this.createNewChatFlow(content, file);
       return;
@@ -82,7 +82,7 @@ export class ChatDetailFacade implements OnDestroy {
 
   // === LOGIKA POMOCNICZA ===
 
-  private enterExistingChat(chatId: string, cachedInfo?: IChat) {
+  private enterExistingChat(chatId: string) {
     this.currentChatId = chatId;
     this.isNewChat = false;
 
@@ -93,58 +93,61 @@ export class ChatDetailFacade implements OnDestroy {
     // 1. Mówimy serwisowi: "Jestem w pokoju X, zacznij nasłuchiwać i ładuj dane"
     this.chatService.enterChat(chatId);
 
-    // 2. Ładujemy nagłówek (Info o produkcie/użytkowniku)
-    if (cachedInfo) {
-      this.chatInfoSubject.next(cachedInfo);
-    } else {
-      this.chatService.getChatById(chatId).pipe(
-        catchError(() => {
-          this.router.navigate(['/chat'], { replaceUrl: true });
-          return of(null);
-        })
-      ).subscribe(info => this.chatInfoSubject.next(info));
-    }
+    this.chatService.markMessagesAsRead(chatId).subscribe({
+      error: (err: any) => console.error('Nie udało się oznaczyć jako przeczytane', err)
+    });
+
+    this.chatService.getChatById(chatId).pipe(
+      catchError(() => {
+        this.router.navigate(['/chat'], { replaceUrl: true });
+        return of(null);
+      })
+    ).subscribe(info => this.chatInfoSubject.next(info));
+
   }
 
   private handleProductEntry(productId: string) {
     this.chatService.getChatByProductId(productId).pipe(
       tap(chat => {
-        // Czat istnieje -> wchodzimy w niego
-        this.router.navigate(['/chat', chat.id], { replaceUrl: true });
+        this.router.navigate(['/chat', chat.id], { replaceUrl: true, state: { chatInfo: chat } });
         this.enterExistingChat(chat.id);
       }),
       catchError(() => {
-        // Czat nie istnieje -> tryb tworzenia (Draft)
         this.setupNewChatState();
         return of(null);
       })
     ).subscribe();
   }
 
-
-  // NOWA METODA: Wywoływana przez scroll w komponencie
   loadMoreMessages(): Observable<boolean> {
-    // Jeśli już ładujemy, lub to ostatnia strona, lub nie ma ID -> przerwij
     if (this.isLoadingHistory || this.isLastPage || !this.currentChatId) {
       return of(false);
     }
 
     this.isLoadingHistory = true;
-    this.currentPage++; // Idziemy stronę wstecz w historii
+    const nextPage = this.currentPage + 1;
 
-    return this.chatService.loadOlderMessages(this.currentChatId, this.currentPage).pipe(
-      map(page => {
+    return this.chatService.loadOlderMessages(this.currentChatId, nextPage).pipe(
+      map(response => {
         this.isLoadingHistory = false;
 
-        // Jeśli pobraliśmy mniej niż rozmiar strony (np. 20), to znaczy że to koniec
-        if (page.last || page.content.length === 0) {
+        if (response.content && response.content.length > 0) {
+          const currentPageNumber = response.page.number;
+          const totalPages = response.page.totalPages;
+
+          this.isLastPage = currentPageNumber >= (totalPages - 1);
+
+          this.currentPage = currentPageNumber;
+
+          return true;
+        } else {
           this.isLastPage = true;
+          return false;
         }
-        return true; // Udało się załadować
       }),
-      catchError(() => {
+      catchError((err) => {
+        console.error('Błąd ładowania historii czatu:', err);
         this.isLoadingHistory = false;
-        this.currentPage--; // Cofamy licznik w razie błędu
         return of(false);
       })
     );
@@ -182,14 +185,18 @@ export class ChatDetailFacade implements OnDestroy {
     this.currentChatId = null;
     this.chatService.leaveChat();
 
-    this.chatInfoSubject.next({
-      id: 'new',
-      productTitle: this.draftContext?.productTitle || 'Nowa rozmowa',
-      productPrice: this.draftContext?.productPrice || 0,
-      productImage: {
-        url: this.draftContext?.productImage || ''
-      },
-    } as any);
+    if (this.draftContext) {
+      const draftChatInfo: IChat = {
+        id: '',
+        productId: this.draftContext.productId,
+        productTitle: this.draftContext.productTitle,
+        productImage: this.draftContext.productImage,
+        productPrice: this.draftContext.productPrice
+      };
+      this.chatInfoSubject.next(draftChatInfo);
+    } else {
+      this.chatInfoSubject.next(null);
+    }
   }
 
   ngOnDestroy() {

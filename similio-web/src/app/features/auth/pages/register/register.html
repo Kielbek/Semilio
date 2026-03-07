@@ -38,7 +38,6 @@
           label="Nazwisko"
           [control]="getControl('lastName')">
         </app-input-field>
-      </div>
 
       <app-input-field
         label="E-mail"
@@ -46,35 +45,11 @@
         [control]="getControl('email')">
       </app-input-field>
 
-      <div>
-        <label class="block text-sm font-semibold text-[#002f34] mb-1.5">Telefon</label>
-        <div class="flex bg-[#f2f4f5] border-b-2 border-transparent focus-within:border-[#002f34] rounded-t-md overflow-hidden transition-all"
-             [class.!border-red-500]="form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched">
-
-          <select
-            formControlName="countryCode"
-            class="bg-transparent border-r border-gray-200 px-3 py-3 text-[#002f34] text-sm focus:outline-none cursor-pointer appearance-none min-w-[80px]"
-          >
-            @for (country of countries; track country.code) {
-              <option [value]="country.code">
-                {{ country.flag }} {{ country.code }}
-              </option>
-            }
-          </select>
-
-          <input
-            type="tel"
-            formControlName="phoneNumber"
-            class="flex-1 bg-transparent px-4 py-3 text-[#002f34] outline-none placeholder-gray-400"
-            placeholder="123 456 789"
-          />
-        </div>
-        @if (form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched) {
-          <p class="text-red-500 mt-1 text-xs font-light animate-in slide-in-from-top-1">
-            * Proszę podać prawidłowy numer telefonu
-          </p>
-        }
-      </div>
+      <app-phone-field
+        label="Telefon"
+        [phoneControl]="getControl('phoneNumber')"
+        [codeControl]="getControl('countryCode')">
+      </app-phone-field>
 
       <div>
         <app-input-field
@@ -113,6 +88,7 @@
             * Hasła muszą być identyczne
           </p>
         }
+      </div>
       </div>
 
       <app-button

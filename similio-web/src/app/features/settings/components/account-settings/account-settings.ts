@@ -8,6 +8,7 @@ import {COUNTRIES} from '../../../../core/constants/countries';
 import {IUser} from '../../../../core/models/i-user';
 import {UserService} from '../../../../core/service/user-service';
 import {ToastService} from '../../../../core/service/toast-service';
+import {PhoneField} from '../../../../shared/phone-field/phone-field';
 
 @Component({
   selector: 'app-account-settings',
@@ -15,7 +16,8 @@ import {ToastService} from '../../../../core/service/toast-service';
     ReactiveFormsModule,
     FormSection,
     InputField,
-    Button
+    Button,
+    PhoneField
   ],
   templateUrl: './account-settings.html',
   styleUrl: './account-settings.css'
@@ -50,7 +52,7 @@ export class AccountSettings implements OnInit {
     this.infoForm = this.fb.group({
       email: [this.user?.email, [Validators.required, Validators.email]],
       countryCode: [foundCountry.code],
-      phone: [phoneWithoutCode, [Validators.required, Validators.pattern('^[0-9]+$')]]
+      phoneNumber: [phoneWithoutCode, [Validators.required, Validators.pattern('^[0-9]+$')]]
     });
 
     this.passwordForm = this.fb.group({

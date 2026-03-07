@@ -3,14 +3,12 @@
   <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12">
 
     <div class="hidden lg:block lg:col-span-1 space-y-8">
-
       <div>
         <h2 class="text-xl font-bold text-slate-900 mb-6">Centrum Pomocy</h2>
         <a routerLink="/" class="text-slate-500 hover:text-[#002f3f] transition block mb-4">Strona główna</a>
       </div>
 
       <nav class="space-y-1">
-
         <div class="group">
           <span class="block font-bold text-[#002f3f] mb-3">Przeglądaj tematy</span>
           <ul class="space-y-3 border-l-2 border-slate-100 ml-1 pl-4">
@@ -20,7 +18,6 @@
             <li><a routerLink="/legal/terms" class="text-slate-600 hover:text-[#002f3f] font-medium block">Regulamin i Prawne</a></li>
           </ul>
         </div>
-
         <div class="pt-4">
           <a routerLink="/login" class="block font-medium text-slate-600 hover:text-[#002f3f]">Moje Konto</a>
         </div>
@@ -37,104 +34,126 @@
         </div>
         <input type="text"
                class="block w-full pl-12 pr-4 py-3 bg-slate-100 border-none rounded-lg text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-[#002f3f] transition"
-               placeholder="Jak możemy Ci pomóc? (np. jak usunąć konto)...">
+               placeholder="Jak możemy Ci pomóc? (np. jak usunąć konto, zapomniałem hasła)...">
       </div>
 
       <h1 class="text-3xl font-bold text-[#002f3f] mb-8">Witaj w pomocy Semilio</h1>
 
       <div class="mb-12">
-        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Najczęściej czytane</h3>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Najczęściej zadawane pytania (FAQ)</h3>
 
         <div class="border-t border-slate-200">
 
-          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" /> </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak dodać darmowe ogłoszenie?</span>
+          <app-accordion-item title="Jak działa Semilio? (Brak płatności przez stronę)">
+            <p class="mb-2">Semilio to klasyczna tablica ogłoszeniowa łącząca kupujących ze sprzedającymi. Ważne zasady:</p>
+            <ul class="list-disc pl-5 space-y-1 mb-3">
+              <li><strong>Nie mamy przycisku "Kup Teraz".</strong> Nie wstrzymujemy wpłat, ani nie pośredniczymy w przelewach.</li>
+              <li>Wszelkie szczegóły dotyczące płatności i wysyłki ustalasz bezpośrednio ze sprzedawcą/kupującym przez nasz czat.</li>
+              <li>Korzystanie z portalu w ramach limitów jest w 100% darmowe. Nie pobieramy prowizji od udanej sprzedaży.</li>
+            </ul>
+            <div class="p-3 bg-blue-50 border-l-4 border-blue-400 text-blue-800 text-sm rounded-r-md">
+              Zalecamy finalizowanie transakcji poprzez <strong>odbiór osobisty</strong> lub bezpieczną przesyłkę pobraniową.
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          </app-accordion-item>
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Dostałem podejrzany SMS / Link - co robić?</span>
+          <app-accordion-item title="Dostałem podejrzany link do opłacenia zamówienia / kuriera - co robić?">
+            <div class="p-4 bg-red-50 border-l-4 border-red-500 text-red-800 rounded-r-md mb-3">
+              <strong>UWAGA NA PHISHING!</strong> Jeśli na czacie lub na WhatsAppie otrzymałeś link z prośbą o "odbiór środków", "potwierdzenie zamówienia" lub "dopłatę do paczki" – <strong>NIE KLIKAJ W NIEGO.</strong>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+            <p class="mb-2">Oszuści podszywają się pod kupujących. Ponieważ Semilio nie oferuje płatności systemowych, każdy link do bramki płatniczej wysłany w wiadomości to próba wyłudzenia danych Twojej karty bankowej. Natychmiast przerwij rozmowę i zgłoś takiego użytkownika.</p>
+          </app-accordion-item>
 
-          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak bezpiecznie kupować (odbiór osobisty)?</span>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          <app-accordion-item title="Jak dodać darmowe ogłoszenie?">
+            <p class="mb-2">Wystawienie przedmiotu jest błyskawiczne:</p>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>Zaloguj się na swoje konto.</li>
+              <li>Kliknij przycisk <strong>"Dodaj ogłoszenie"</strong> w prawym górnym rogu strony.</li>
+              <li>Wybierz odpowiednią kategorię, dodaj wyraźne zdjęcia (najlepiej robione w świetle dziennym) i rzetelny opis.</li>
+              <li>Wyceń przedmiot, zatwierdź regulamin i kliknij <strong>"Opublikuj"</strong>.</li>
+            </ol>
+          </app-accordion-item>
 
-          <a routerLink="/login" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Nie mogę zalogować się na konto</span>
+          <app-accordion-item title="Jak zgłosić podejrzane ogłoszenie lub oszustwo (DSA)?">
+            <p class="mb-2">Dbamy o czystość i bezpieczeństwo platformy. Jeśli zauważyłeś oszusta lub przedmiot niezgodny z regulaminem (np. towary podrabiane, niebezpieczne przedmioty):</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>W ogłoszeniu:</strong> Kliknij przycisk "Zgłoś naruszenie" widoczny na stronie przedmiotu.</li>
+              <li><strong>W wiadomościach:</strong> Kliknij ikonę trzech kropek w prawym górnym rogu czatu i wybierz "Zablokuj i zgłoś użytkownika".</li>
+            </ul>
+            <p class="mt-2 text-sm text-slate-500">Każde zgłoszenie jest sprawdzane przez naszych moderatorów bez zbędnej zwłoki, a nielegalne treści są niezwłocznie usuwane.</p>
+          </app-accordion-item>
+
+          <app-accordion-item title="Zapomniałem hasła / Nie mogę zalogować się na konto">
+            <p class="mb-2">Jeśli masz problem z logowaniem do Semilio, spróbuj tych kroków:</p>
+            <ul class="list-disc pl-5 space-y-1 mb-3">
+              <li>Upewnij się, że poprawnie wpisujesz adres e-mail i nie masz włączonego klawisza Caps Lock.</li>
+              <li>Jeśli nie pamiętasz hasła, wejdź na stronę logowania i kliknij link <strong>"Nie pamiętam hasła"</strong>. Na Twój adres e-mail wyślemy bezpieczny link do zresetowania hasła.</li>
+            </ul>
+            <div class="p-3 bg-slate-50 border border-slate-200 text-slate-600 text-sm rounded-md">
+              <strong>Wskazówka:</strong> Jeśli nie widzisz maila z linkiem do resetu, sprawdź foldery <em>SPAM</em>, <em>Oferty</em> lub <em>Inne</em> w swojej skrzynce pocztowej.
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          </app-accordion-item>
+
+          <app-accordion-item title="Jak usunąć konto w Semilio?">
+            <p class="mb-2">Przykro nam, że chcesz od nas odejść. Aby trwale zamknąć konto i usunąć swoje dane osobowe z naszych serwerów:</p>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>Przejdź do zakładki <strong>"Moje Konto"</strong> -> <strong>"Ustawienia"</strong>.</li>
+              <li>Zjedź na sam dół strony i kliknij czerwoną opcję <strong>"Usuń konto"</strong>.</li>
+              <li>Potwierdź operację wpisując swoje aktualne hasło.</li>
+            </ol>
+            <p class="mt-2 text-sm text-slate-500 italic">Uwaga: Zgodnie z RODO (oraz w celach dowodowych dla Policji w razie oszustw), część technicznych logów może zostać zachowana na naszych serwerach przez okres wymagany polskim prawem.</p>
+          </app-accordion-item>
 
         </div>
       </div>
 
       <div>
-        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybierz temat</h3>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybierz główny temat</h3>
 
-        <div class="border-t border-slate-200">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-200 pt-4">
 
-          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Sprzedawanie</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+          <a routerLink="/help/selling" class="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-lg hover:border-[#002f3f] hover:shadow-sm transition cursor-pointer group">
+            <div class="flex items-center gap-3">
+              <div class="bg-slate-100 p-2 rounded-full group-hover:bg-[#002f3f]/10 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </div>
+              <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Sprzedawanie</span>
+            </div>
           </a>
 
-          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Kupowanie</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+          <a routerLink="/help/buying" class="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-lg hover:border-[#002f3f] hover:shadow-sm transition cursor-pointer group">
+            <div class="flex items-center gap-3">
+              <div class="bg-slate-100 p-2 rounded-full group-hover:bg-[#002f3f]/10 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              </div>
+              <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Kupowanie</span>
+            </div>
           </a>
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Zaufanie i bezpieczeństwo</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+          <a routerLink="/help/safety" class="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-lg hover:border-[#002f3f] hover:shadow-sm transition cursor-pointer group">
+            <div class="flex items-center gap-3">
+              <div class="bg-red-50 p-2 rounded-full group-hover:bg-red-100 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Zaufanie i bezpieczeństwo</span>
+            </div>
           </a>
 
-          <a routerLink="/login" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Moje Konto i Ustawienia</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-
-          <a routerLink="/legal/terms" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Regulamin i RODO</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+          <a routerLink="/login" class="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-lg hover:border-[#002f3f] hover:shadow-sm transition cursor-pointer group">
+            <div class="flex items-center gap-3">
+              <div class="bg-slate-100 p-2 rounded-full group-hover:bg-[#002f3f]/10 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Konto i Ustawienia</span>
+            </div>
           </a>
 
         </div>

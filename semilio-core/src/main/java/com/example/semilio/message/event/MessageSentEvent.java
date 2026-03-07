@@ -1,16 +1,17 @@
 package com.example.semilio.message.event;
 
-import com.example.semilio.image.Image;
-import com.example.semilio.message.MessageType;
+import com.example.semilio.message.model.payload.MessagePayload;
 import lombok.Builder;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Builder
 public record MessageSentEvent(
-        Long messageId,
+        String id,
         String chatId,
-        String senderId,
-        String recipientId,
-        String content,
-        Image mediaFile,
-        MessageType type
+        UUID senderId,
+        UUID recipientId,
+        LocalDateTime createdAt,
+        MessagePayload payload
 ) {}

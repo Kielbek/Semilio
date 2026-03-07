@@ -1,6 +1,11 @@
+export interface IPageMetadata {
+  size: number;
+  number: number;
+  totalElements: number;
+  totalPages: number;
+}
+
 export interface IPage<T> {
   content: T[];
-  last: boolean;
-  totalElements: number;
-  number: number;
+  page: IPageMetadata;
 }

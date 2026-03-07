@@ -1,18 +1,19 @@
-import { IPrice } from './i-price';
-import { IStats } from './i-stats';
-import { Condition } from './condition';
+import {IPrice} from './i-price';
+import {IStats} from './i-stats';
 import {IImage} from './i-image';
+import {IDictionaryItem} from '../dictionary/i-dictionary-item';
+import {Condition} from './condition';
 
 export interface IProduct {
   id: string;
   title: string;
-  slug: string
+  slug: string;
   description: string;
   price: IPrice;
-  size: string;
   condition: Condition;
-  brand: string;
-  color: string;
+  size: IDictionaryItem;
+  brand: IDictionaryItem;
+  color: IDictionaryItem;
   categoryId: number;
   sellerId: number;
   images: IImage[];

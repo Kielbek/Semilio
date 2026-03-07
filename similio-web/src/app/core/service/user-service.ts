@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {IUser} from '../models/i-user';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, catchError, delay, map, Observable, of, tap} from 'rxjs';
@@ -14,6 +14,8 @@ export class UserService {
   private readonly baseUrl = environment.apiBase + '/users';
   private readonly TOKEN_KEY = 'access_token';
   private currentUser$ = new BehaviorSubject<IUser | null>(null);
+
+  readonly isAuthenticated = signal(false);
 
 
   fetchUser(forceRefresh = false): Observable<IUser | null> {
@@ -31,6 +33,7 @@ export class UserService {
     return this.http.get<IUser>(`${this.baseUrl}/me`).pipe(
       tap(user => {
         this.currentUser$.next(user);
+        this.isAuthenticated.set(true);
       }),
       catchError(err => {
         this.currentUser$.next(null);
@@ -61,6 +64,7 @@ export class UserService {
 
   clearUser(): void {
     this.currentUser$.next(null);
+    this.isAuthenticated.set(false);
   }
 
   updateProfile(request: any, imageFile: File | null): Observable<void> {

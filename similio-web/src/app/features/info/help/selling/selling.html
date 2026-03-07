@@ -37,86 +37,117 @@
         </div>
         <input type="text"
                class="block w-full pl-12 pr-4 py-3 bg-slate-100 border-none rounded-lg text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-[#002f3f] transition"
-               placeholder="Wpisz pytanie (np. jak edytować ogłoszenie)...">
+               placeholder="Wpisz pytanie (np. jak edytować ogłoszenie, co napisać w opisie)...">
       </div>
 
       <h1 class="text-3xl font-bold text-[#002f3f] mb-8">Sprzedawanie</h1>
 
       <div class="mb-12">
-        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybrane dla ciebie</h3>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wiedza dla Sprzedających</h3>
 
         <div class="border-t border-slate-200">
 
-          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18M12 3l4 4m-4-4l-4 4" /> </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak dodać pierwsze darmowe ogłoszenie?</span>
+          <app-accordion-item title="Jak dodać pierwsze darmowe ogłoszenie?">
+            <p class="mb-2">Jako użytkownik prywatny możesz wystawiać przedmioty za darmo. Proces jest błyskawiczny i zajmuje zazwyczaj mniej niż 2 minuty:</p>
+            <ol class="list-decimal pl-5 space-y-1 mb-4">
+              <li>Zaloguj się do Semilio (lub załóż darmowe konto).</li>
+              <li>Kliknij przycisk <strong>"Dodaj ogłoszenie"</strong> w prawym górnym rogu strony.</li>
+              <li>Wpisz chwytliwy tytuł i wybierz najlepiej pasującą kategorię.</li>
+              <li>Dodaj wyraźne zdjęcia sprzedawanego przedmiotu.</li>
+              <li>Wyceń przedmiot, opisz go i kliknij <strong>"Opublikuj"</strong>.</li>
+            </ol>
+            <div class="p-3 bg-blue-50 border-l-4 border-blue-400 text-blue-800 text-sm rounded-r-md">
+              <strong>Pro Tip:</strong> Ogłoszenia dodane w godzinach popołudniowych i wieczornych (16:00 - 21:00) zazwyczaj zdobywają najwięcej wyświetleń w pierwszych godzinach od publikacji!
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          </app-accordion-item>
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" /> </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak bezpiecznie umówić się na odbiór?</span>
+          <app-accordion-item title="Jak napisać skuteczny opis i zrobić dobre zdjęcia?">
+            <p class="mb-3">Dobre ogłoszenie sprzedaje się samo. Aby uniknąć ciągłych pytań od kupujących, zastosuj się do tych zasad:</p>
+            <div class="space-y-4">
+              <div>
+                <strong class="text-[#002f3f] block mb-1">Zdjęcia:</strong>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>Rób zdjęcia w <strong>świetle dziennym</strong>. Unikaj używania lampy błyskowej, która zniekształca kolory.</li>
+                  <li>Sfotografuj przedmiot z każdej strony. Jeśli posiada wady (rysy, plamy), zrób im zbliżenie – szczerość buduje zaufanie i zapobiega pretensjom po zakupie.</li>
+                </ul>
+              </div>
+              <div>
+                <strong class="text-[#002f3f] block mb-1">Opis:</strong>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>Podaj dokładne wymiary (szczególnie ważne przy ubraniach i meblach).</li>
+                  <li>Napisz, dlaczego sprzedajesz przedmiot (np. "nietrafiony prezent", "wymiana na nowszy model").</li>
+                  <li>Wyraźnie zaznacz preferowaną formę kontaktu (np. "Proszę o kontakt tylko przez czat Semilio, nie odbieram telefonów w pracy").</li>
+                </ul>
+              </div>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          </app-accordion-item>
 
-          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak edytować lub usunąć ogłoszenie?</span>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          <app-accordion-item title="Jak bezpiecznie umówić się na odbiór gotówki?">
+            <p class="mb-2">Jako platforma C2C rekomendujemy finalizowanie transakcji osobiście, z płatnością "z ręki do ręki". To w 100% chroni Cię przed oszustwami.</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Umawiaj się w <strong>miejscach publicznych</strong> wyposażonych w monitoring (np. kawiarnie, galerie handlowe, parkingi przed supermarketami).</li>
+              <li>Nie zapraszaj obcych osób do swojego domu, chyba że sprzedajesz gabaryty (np. szafę, lodówkę). Wtedy zawsze poproś kogoś bliskiego, by był z Tobą podczas wizyty kupującego.</li>
+              <li>Przelicz gotówkę przy kupującym, zanim oddasz mu przedmiot.</li>
+              <li>Jeśli kupujący płaci przelewem na telefon (BLIK P2P), poczekaj na powiadomienie z <strong>własnej aplikacji bankowej</strong>, zanim oddasz towar.</li>
+            </ul>
+          </app-accordion-item>
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Ostrzeżenie przed oszustwami (SMS/WhatsApp)</span>
+          <app-accordion-item title="Fałszywe potwierdzenia przelewu i rzekome nadpłaty (Oszustwo)">
+            <p class="mb-2">Popularną metodą wyłudzeń jest tzw. "oszustwo na nadpłatę". Jak to działa?</p>
+            <ol class="list-decimal pl-5 space-y-1 mb-4">
+              <li>Kupujący twierdzi, że wysłał Ci pieniądze i przesyła na czacie plik PDF potwierdzający przelew. Często na kwotę <strong>wyższą</strong> niż cena przedmiotu (np. "przypadkiem wpisałem 500 zł zamiast 50 zł").</li>
+              <li>Kupujący prosi Cię o zwrot "nadpłaconej różnicy" lub szybką wysyłkę towaru z dołączoną gotówką w paczce.</li>
+              <li><strong>To PDF wygenerowany w programie graficznym! Pieniądze nigdy nie dotrą na Twoje konto.</strong></li>
+            </ol>
+            <div class="p-3 bg-red-50 border-l-4 border-red-500 text-red-800 text-sm rounded-r-md">
+              <strong>Złota zasada:</strong> Nigdy nie wysyłaj towaru i nie zwracaj żadnych "nadpłat" na podstawie przesłanego obrazka lub pliku PDF. Zawsze loguj się do swojego banku i sprawdzaj rzeczywiste saldo konta.
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          </app-accordion-item>
+
+          <app-accordion-item title="Ostrzeżenie przed wyłudzaniem danych (Phishing SMS/WhatsApp)">
+            <div class="p-4 bg-red-50 border-l-4 border-red-600 text-red-900 rounded-r-md mb-3">
+              <strong>PRZYPOMINAMY:</strong> Semilio <strong>NIE POSIADA</strong> systemu płatności online ani zintegrowanych przesyłek. Nie obsługujemy wpłat i nie przechowujemy środków!
+            </div>
+            <p class="mb-2">Jeżeli rzekomy kupujący kontaktuje się z Tobą na WhatsAppie (lub wysyła SMS) i pisze:</p>
+            <ul class="list-disc pl-5 space-y-1 mb-3">
+              <li class="italic">"Kupiłem przedmiot i zapłaciłem przez Semilio, kliknij w link by odebrać pieniądze na kartę."</li>
+              <li class="italic">"Opłaciłem kuriera DPD/InPost przez platformę, wejdź w link i potwierdź swoje dane."</li>
+            </ul>
+            <p><strong>To na 100% oszust!</strong> Linki te prowadzą do fałszywych stron udających banki. Wpisanie tam danych karty płatniczej skutkuje natychmiastową kradzieżą pieniędzy z Twojego konta bankowego.</p>
+          </app-accordion-item>
+
+          <app-accordion-item title="Jak edytować, zawiesić lub usunąć ogłoszenie?">
+            <p class="mb-2">Pełne zarządzanie ogłoszeniami odbywa się w Twoim panelu użytkownika:</p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Edycja:</strong> Wejdź w <em>"Moje Konto" &rarr; "Moje ogłoszenia"</em>. Kliknij przycisk "Edytuj", aby dodać nowe zdjęcia, obniżyć cenę lub poprawić opis. Uwaga: ze względów bezpieczeństwa po publikacji często nie ma możliwości zmiany głównej kategorii przedmiotu.</li>
+              <li><strong>Usuwanie:</strong> Jeśli przedmiot został sprzedany, jak najszybciej kliknij <strong>"Zakończ ogłoszenie"</strong>. Dzięki temu zniknie ono z wyszukiwarki, a Ty nie będziesz otrzymywać niepotrzebnych pytań od innych użytkowników. Zakończone ogłoszenia trafiają do archiwum.</li>
+            </ul>
+          </app-accordion-item>
 
         </div>
       </div>
 
       <div>
-        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybierz temat</h3>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Głębsze tematy</h3>
 
         <div class="border-t border-slate-200">
 
-          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Dodawanie ogłoszeń</span>
+          <a routerLink="/help/selling/add" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Limity ogłoszeń i pakiety dla sprzedawców</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
 
-          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Zarządzanie ogłoszeniami</span>
+          <a routerLink="/help/selling/manage" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Przedmioty zakazane - czego nie wolno sprzedawać?</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
 
-          <a routerLink="/help/selling" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Promowanie i wyróżnienia</span>
+          <a routerLink="/help/selling/promote" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Jak wyróżnić ogłoszenie, by sprzedać szybciej?</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>

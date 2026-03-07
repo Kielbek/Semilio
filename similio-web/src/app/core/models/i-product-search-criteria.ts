@@ -2,7 +2,10 @@ export interface IProductSearchCriteria {
   query?: string;
   minPrice?: number;
   maxPrice?: number;
-  category?: string;
   condition?: string;
-  size?: string;
+  categoryId?: number;
+  sizeId?: number;
+  brandId?: number;
+  colorId?: number;
+  sort?: string;
 }

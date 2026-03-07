@@ -1,6 +1,6 @@
 package com.example.semilio.role;
 
-import com.example.semilio.user.User;
+import com.example.semilio.user.model.User;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;

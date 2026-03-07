@@ -1,0 +1,6 @@
+/* src/styles.css */
+body.modal-open {
+  overflow: hidden; /* Blokuje scrollowanie */
+  position: fixed;  /* Zapobiega skakaniu do góry na wielu przeglądarkach */
+  width: 100%;      /* Zapobiega zwężaniu się body przy position: fixed */
+}

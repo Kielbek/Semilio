@@ -9,6 +9,8 @@ import {MobileNav} from './layout/mobile-nav/mobile-nav';
 import {CommonModule} from '@angular/common';
 import {AppFacade} from './core/facades/app-facade';
 import {GlobalLoader} from './layout/global-loader/global-loader';
+import {UserService} from './core/service/user-service';
+import {delay} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,9 @@ import {GlobalLoader} from './layout/global-loader/global-loader';
 export class App implements OnInit {
   public facade = inject(AppFacade);
   public layoutService = inject(LayoutService);
+  public userService = inject(UserService);
+
+  readonly headerHeightDelayed$ = this.layoutService.headerHeight$.pipe(delay(0));
 
   ngOnInit(): void {
     this.facade.initialize();

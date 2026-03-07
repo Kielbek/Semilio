@@ -1,6 +1,6 @@
 package com.example.semilio.token;
 
-import com.example.semilio.user.User;
+import com.example.semilio.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

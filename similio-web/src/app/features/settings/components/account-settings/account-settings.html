@@ -10,37 +10,11 @@
           [control]="getControl(infoForm, 'email')">
         </app-input-field>
 
-        <div class="w-full">
-          <div>
-            <label class="block text-sm font-semibold text-[#002f34] mb-1.5">Telefon</label>
-            <div class="flex bg-[#f2f4f5] border-b-2 border-transparent focus-within:border-[#002f34] rounded-t-md overflow-hidden transition-all"
-                 [class.!border-red-500]="infoForm.get('phoneNumber')?.invalid && infoForm.get('phoneNumber')?.touched">
-
-              <select
-                formControlName="countryCode"
-                class="bg-transparent border-r border-gray-200 px-3 py-3 text-[#002f34] text-sm focus:outline-none cursor-pointer appearance-none min-w-[80px]"
-              >
-                @for (country of countries; track country.code) {
-                  <option [value]="country.code">
-                    {{ country.flag }} {{ country.code }}
-                  </option>
-                }
-              </select>
-
-              <input
-                type="tel"
-                formControlName="phone"
-                class="bg-transparent px-4 py-3 text-[#002f34] outline-none placeholder-gray-400"
-                placeholder="123 456 789"
-              />
-            </div>
-            @if (infoForm.get('phone')?.invalid && infoForm.get('phone')?.touched) {
-              <p class="text-red-500 mt-1 text-xs font-light animate-in slide-in-from-top-1">
-                * Proszę podać prawidłowy numer telefonu
-              </p>
-            }
-          </div>
-        </div>
+        <app-phone-field
+          label="Telefon"
+          [phoneControl]="getControl(infoForm,'phoneNumber')"
+          [codeControl]="getControl(infoForm,'countryCode')">
+        </app-phone-field>
 
 <!--        <div class="flex justify-end pt-2">-->
 <!--          <app-button-->

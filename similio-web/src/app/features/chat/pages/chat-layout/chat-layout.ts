@@ -1,11 +1,10 @@
 import {Component, HostListener, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {LayoutService} from '../../../../core/service/layout-service';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
-import {BehaviorSubject, combineLatest, filter, map, startWith, Subscription} from 'rxjs';
+import {BehaviorSubject, combineLatest, filter, map, startWith} from 'rxjs';
 import {ChatService} from '../../../../core/service/chat-service';
 import {ChatList} from '../../components/chat-list/chat-list';
 import {AsyncPipe} from '@angular/common';
-import {WebSocketService} from '../../../../core/service/web-socket-service';
 
 @Component({
   selector: 'app-chat-layout',
@@ -24,12 +23,10 @@ export class ChatLayout implements OnInit , OnDestroy {
 
   readonly chats$ = this.chatService.chats$;
 
-  // Stan widoku (Paginacja i UI)
   currentPage = 0;
   isLastPage = false;
   loading = signal(false);
 
-  // Stan UI (RWD)
   readonly headerHeight$ = this.layoutService.headerHeight$;
   private screenWidth$ = new BehaviorSubject<number>(window.innerWidth);
 
@@ -61,7 +58,6 @@ export class ChatLayout implements OnInit , OnDestroy {
     });
   }
 
-  // === LOGIKA UI / RWD (Bez zmian) ===
 
   @HostListener('window:resize', ['$event'])
   onResize(event: UIEvent): void {

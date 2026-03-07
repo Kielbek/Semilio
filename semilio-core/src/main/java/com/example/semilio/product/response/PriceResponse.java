@@ -1,17 +1,15 @@
 package com.example.semilio.product.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PriceResponse {
-    private BigDecimal amount;
-    private String currencyCode;
+public record PriceResponse(
+    BigDecimal amount,
+    String currencyCode
+) {
 }

@@ -2,20 +2,16 @@ package com.example.semilio.message.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Builder;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+import java.util.UUID;
+
 @Builder
-public class MessageRequest {
+public record MessageRequest(
+        Long chatId,
+        UUID productId,
 
-    private String chatId;
-
-    private String productId;
-
-    @NotBlank(message = "Message content cannot be empty")
-    @Size(max = 250, message = "Message cannot exceed 250 characters")
-    private String content;
-}
+        @NotBlank(message = "VALIDATION.MESSAGE.CONTENT.BLANK")
+        @Size(max = 250, message = "VALIDATION.MESSAGE.CONTENT.SIZE")
+        String content
+) {}

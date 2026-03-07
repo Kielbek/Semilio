@@ -49,8 +49,6 @@ public class S3ServiceImpl implements S3Service {
         }
     }
 
-    // --- REFAKTORYZACJA LISTY (OPCJONALNIE) ---
-    // Teraz uploadImages może korzystać z metody powyżej, żeby nie dublować kodu:
     @Override
     public List<String> uploadImages(List<MultipartFile> files, String folder) {
         List<String> urls = new ArrayList<>();

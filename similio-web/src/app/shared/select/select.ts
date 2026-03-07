@@ -1,6 +1,12 @@
-import { Component, ElementRef, forwardRef, HostListener, Input, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ArrowLeft, Check, ChevronDown, LUCIDE_ICONS, LucideAngularModule, LucideIconProvider } from 'lucide-angular';
+import { Component, computed, ElementRef, forwardRef, HostListener, Input, OnDestroy, signal } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  ArrowLeft, Check, ChevronDown, Search, SearchX,
+  LUCIDE_ICONS, LucideAngularModule, LucideIconProvider
+} from 'lucide-angular';
+import { InputField } from '../input-field/input-field';
 
 export interface SelectOption {
   value: any;
@@ -13,7 +19,13 @@ export interface SelectOption {
 @Component({
   selector: 'app-select',
   standalone: true,
-  imports: [LucideAngularModule],
+  imports: [
+    LucideAngularModule,
+    ReactiveFormsModule,
+    NgClass,
+    FormsModule,
+    InputField
+  ],
   templateUrl: './select.html',
   styleUrl: './select.css',
   providers: [
@@ -24,102 +36,161 @@ export interface SelectOption {
     },
     {
       provide: LUCIDE_ICONS,
-      useValue: new LucideIconProvider({ ArrowLeft, Check, ChevronDown })
+      useValue: new LucideIconProvider({ ArrowLeft, Check, ChevronDown, Search, SearchX })
     }
   ],
 })
 export class Select implements ControlValueAccessor, OnDestroy {
   @Input() label = '';
-  @Input() options: SelectOption[] = [];
   @Input() placeholder = 'Wybierz...';
+  @Input() control!: FormControl;
+
+  @Input()
+  set options(val: SelectOption[] | null) {
+    this._optionsSignal.set(val ?? []);
+    this.syncSelectedValue();
+  }
+
+  get options(): SelectOption[] {
+    return this._optionsSignal();
+  }
+
+  readonly isOpen = signal(false);
+  readonly searchQuery = signal('');
+  readonly searchControl = new FormControl('', { nonNullable: true });
 
   selectedOption: SelectOption | null = null;
-  isOpen = false;
 
-  private scrollPosition = 0;
-  private readonly stateKey = `select_${Math.random().toString(36).substring(2, 9)}`;
+  private readonly _optionsSignal = signal<SelectOption[]>([]);
+  private readonly _stateKey = `select_${Math.random().toString(36).substring(2, 9)}`;
 
-  constructor(private eRef: ElementRef) {}
+  readonly filteredOptions = computed(() => {
+    const query = this.searchQuery().toLowerCase().trim();
+    const currentOptions = this._optionsSignal();
 
-  @HostListener('window:popstate')
-  onPopState(): void {
-    if (this.isOpen) {
-      this.handleClosing();
-    }
-  }
+    if (!query) return currentOptions;
 
-  @HostListener('document:click', ['$event.target'])
-  onClickOutside(target: EventTarget | null): void {
-    if (this.isOpen && target instanceof Node && !this.eRef.nativeElement.contains(target)) {
-      this.closeManual();
-    }
-  }
+    return currentOptions.filter(opt =>
+      opt.label.toLowerCase().includes(query)
+    );
+  });
 
-  toggle(): void {
-    this.isOpen ? this.closeManual() : this.open();
-  }
-
-  open(): void {
-    if (this.isOpen) return;
-
-    this.isOpen = true;
-    this.lockScroll();
-    window.history.pushState({ [this.stateKey]: true }, '');
-  }
-
-  closeManual(): void {
-    if (!this.isOpen) return;
-
-    if (window.history.state?.[this.stateKey]) {
-      window.history.back();
-    } else {
-      this.handleClosing();
-    }
-  }
-
-  select(option: SelectOption): void {
-    this.selectedOption = option;
-    this.onChange(option.value);
-    this.onTouched();
-    this.closeManual();
-  }
-
-  private handleClosing(): void {
-    this.isOpen = false;
-    this.unlockScroll();
-  }
-
-  private lockScroll() {
-    this.scrollPosition = window.scrollY;
-    document.body.style.overflow = 'hidden';
-    if (window.innerWidth < 768) {
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${this.scrollPosition}px`;
-      document.body.style.width = '100%';
-    }
-  }
-
-  private unlockScroll() {
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    window.scrollTo(0, this.scrollPosition);
+  constructor(private readonly eRef: ElementRef) {
+    this.setupSearchSubscription();
   }
 
   ngOnDestroy(): void {
     this.unlockScroll();
   }
 
-  // --- ControlValueAccessor ---
+  @HostListener('window:popstate')
+  onPopState(): void {
+    if (this.isOpen()) {
+      this.close();
+    }
+  }
 
+  @HostListener('document:click', ['$event.target'])
+  onClickOutside(target: EventTarget | null): void {
+    const clickedOutside = target instanceof Node && !this.eRef.nativeElement.contains(target);
+    if (this.isOpen() && clickedOutside) {
+      this.close();
+    }
+  }
+
+  toggle(): void {
+    this.isOpen() ? this.close() : this.open();
+  }
+
+  open(): void {
+    if (this.isOpen()) return;
+
+    this.isOpen.set(true);
+    this.lockScroll();
+    window.history.pushState({ [this._stateKey]: true }, '');
+  }
+
+  openDesktop(): void {
+    if (!this.isOpen()) {
+      this.isOpen.set(true);
+      this.clearSearch();
+    }
+  }
+
+  close(): void {
+    if (!this.isOpen()) return;
+
+    this.isOpen.set(false);
+    this.unlockScroll();
+
+    if (window.history.state?.[this._stateKey]) {
+      window.history.back();
+    }
+  }
+
+  selectOption(option: SelectOption): void {
+    const isDeselection = this.selectedOption?.value === option.value;
+
+    if (isDeselection) {
+      this.selectedOption = null;
+      this.clearSearch();
+      this.onChange(null);
+    } else {
+      this.selectedOption = option;
+      this.onChange(option.value);
+    }
+
+    this.onTouched();
+    this.close();
+  }
+
+  onSearchChange(value: string): void {
+    this.searchQuery.set(value);
+  }
+
+  clearSearch(event?: Event): void {
+    event?.stopPropagation();
+    this.searchQuery.set('');
+    this.searchControl.setValue('', { emitEvent: false });
+  }
+
+  private setupSearchSubscription(): void {
+    this.searchControl.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(value => this.searchQuery.set(value));
+  }
+
+  private syncSelectedValue(): void {
+    if (this.control?.value != null) {
+      this.writeValue(this.control.value);
+    }
+  }
+
+  private lockScroll(): void {
+    if (window.innerWidth < 768) {
+      document.body.style.setProperty('overflow', 'hidden');
+    }
+  }
+
+  private unlockScroll(): void {
+    if (window.innerWidth < 768) {
+      document.body.style.removeProperty('overflow');
+    }
+  }
+
+  // --- Control Value Accessor ---
   onChange: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
   writeValue(value: any): void {
-    this.selectedOption = this.options?.find(o => o.value === value) || null;
+    this.selectedOption = this._optionsSignal().find(o => o.value === value) || null;
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 }

@@ -27,8 +27,12 @@ export const INFO_ROUTES: Routes = [
 
   {
     path: P.HELP,
-    loadComponent: () => import('./help/center/center').then(m => m.Center),
     children: [
+      {
+        path: P.CENTER,
+        loadComponent: () => import('./help/center/center').then(m => m.Center),
+        title: 'Centrum Pomocy | Semilio'
+      },
       {
         path: P.SELLING,
         loadComponent: () => import('./help/selling/selling').then(m => m.Selling),

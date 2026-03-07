@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zgłoszenie przyjęte</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f2f4f5; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f2f4f5; padding: 40px 0;">
+    <tr>
+        <td align="center">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+
+                <tr>
+                    <td style="padding: 30px 40px; border-bottom: 1px solid #f0f0f0; text-align: center;">
+                        <span style="color: #002f34; font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">Semilio</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 40px;">
+                        <h2 style="color: #002f34; font-size: 20px; margin: 0 0 20px 0; font-weight: 700;">Zgłoszenie przyjęte</h2>
+
+                        <p style="color: #4b5563; font-size: 15px; line-height: 1.6; margin: 0 0 25px 0;">
+                            Dziękujemy za Twoją czujność. Potwierdzamy otrzymanie zgłoszenia dotyczącego naruszenia zasad serwisu.
+                        </p>
+
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; margin-bottom: 25px;">
+                            <tr>
+                                <td style="padding: 15px 20px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tr>
+                                            <td style="padding-bottom: 8px; color: #6b7280; font-size: 13px; font-weight: 500;">Numer zgłoszenia:</td>
+                                            <td style="padding-bottom: 8px; color: #002f34; font-size: 13px; font-weight: 700; text-align: right;" th:text="${'#' + reportId}">#123456</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-bottom: 8px; color: #6b7280; font-size: 13px; font-weight: 500;">Powód:</td>
+                                            <td style="padding-bottom: 8px; color: #002f34; font-size: 13px; font-weight: 700; text-align: right;" th:text="${category}">Oszustwo</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color: #6b7280; font-size: 13px; font-weight: 500;">Data:</td>
+                                            <td style="color: #002f34; font-size: 13px; font-weight: 700; text-align: right;" th:text="${reportDate}">12.05.2024</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="color: #9ca3af; font-size: 13px; line-height: 1.5; margin: 0;">
+                            Nasi moderatorzy zweryfikują zgłoszenie w ciągu 48 godzin. O podjętej decyzji poinformujemy Cię w osobnej wiadomości.
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="background-color: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #f0f0f0;">
+                        <p style="color: #9ca3af; font-size: 12px; margin: 0;">&copy; 2026 Semilio. Wiadomość automatyczna.</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

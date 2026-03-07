@@ -2,6 +2,16 @@ import {Component, EventEmitter, inject, Input, Output, signal} from '@angular/c
 import {FileService} from '../../../../core/service/file-service';
 import {list} from 'postcss';
 import {IImage} from '../../../../core/models/product/i-image';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDragPlaceholder,
+  CdkDragPreview,
+  CdkDropList,
+  moveItemInArray
+} from '@angular/cdk/drag-drop';
+import {FormControl, FormsModule} from '@angular/forms';
+import {NgClass} from '@angular/common';
 
 export interface GalleryItem {
   preview: string;
@@ -12,14 +22,22 @@ export interface GalleryItem {
 @Component({
   selector: 'app-image-uploader',
   standalone: true,
-  imports: [],
+  imports: [
+    CdkDropList,
+    CdkDragPlaceholder,
+    CdkDragPreview,
+    CdkDrag,
+    FormsModule,
+    NgClass
+  ],
   templateUrl: './image-uploader.html',
   styleUrl: './image-uploader.css'
 })
 export class ImageUploader {
   private fileService = inject(FileService);
 
-  @Input() maxImages = 9;
+  @Input({ required: true }) control!: FormControl;
+  @Input({ required: true }) maxImages = 9;
   @Input()
   set existingImages(images: IImage[]) {
     if (images && images.length > 0) {
@@ -60,6 +78,13 @@ export class ImageUploader {
       const mockEvent = { target: { files } } as unknown as Event;
       await this.onFileSelected(mockEvent);
     }
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    const currentItems = [...this.items()];
+    moveItemInArray(currentItems, event.previousIndex, event.currentIndex);
+    this.items.set(currentItems);
+    this.emitChanges();
   }
 
   async onFileSelected(event: Event) {

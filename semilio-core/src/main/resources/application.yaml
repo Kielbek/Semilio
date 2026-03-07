@@ -15,12 +15,24 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: false
     properties:
       hibernate:
-        format_sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+        generate_statistics: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+      data-locations:
+        - classpath:db/init/brands.sql
+        - classpath:db/init/colors.sql
+        - classpath:db/init/sizes.sql
+
+  cache:
+    type: caffeine
 
   mail:
     host: smtp.gmail.com
@@ -47,8 +59,11 @@ app:
       access-token-expiration: 900000
       refresh-token-expiration: 604800000
   cors:
-    allowed-origin: http://192.168.0.111:4200/
-  frontendUrl: http://192.168.0.111:4200/
+    allowed-origins:
+      - http://localhost:4200
+      - https://www.semilio.pl
+      - https://semilio.pl
+  frontendUrl: https://www.semilio.pl
 
 cloud:
   aws:
@@ -69,14 +84,17 @@ twilio:
 
 
 server:
-  address: 0.0.0.0
+#  address: 0.0.0.0
   port: 8080
+  forward-headers-strategy: native
 
 logging:
   level:
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.orm.queries: DEBUG
     org:
       springframework:
         web: DEBUG
         security: DEBUG
-        messaging: DEBUG
-        web.socket: DEBUG
+#        messaging: DEBUG
+#        web.socket: DEBUG

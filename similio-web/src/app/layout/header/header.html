@@ -21,8 +21,20 @@
       <div class="flex flex-col md:flex-row pt-8 pb-2 md:pt-0 md:pb-0 md:ml-auto md:items-center relative">
 
         @if (user$ | async; as user) {
-          <a [routerLink]="paths.LINKS.CHAT" class="font-semibold text-white hover:text-gray-200 transition-colors p-2">
-            <lucide-icon name="message-circle" class="w-6 h-6"></lucide-icon>
+          <a
+            [routerLink]="paths.LINKS.CHAT"
+            class="font-semibold text-white hover:text-gray-200 transition-colors p-2 relative group"
+          >
+            <div class="relative">
+              <lucide-icon name="message-circle" class="w-6 h-6"></lucide-icon>
+
+              @if (notificationService.hasUnreadChatMessages$ | async) {
+                <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500 border-2 border-my"></span>
+                </span>
+              }
+            </div>
           </a>
 
           <a [routerLink]="paths.LINKS.PRODUCT.FAVORITE" class="block mt-4 font-semibold text-white md:ml-4 lg:inline hover:text-gray-200 md:mt-0 transition-colors p-2">

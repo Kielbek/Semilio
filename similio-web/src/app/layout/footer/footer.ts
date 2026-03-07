@@ -21,7 +21,7 @@ export class Footer {
   ];
 
   readonly helpLinks: IFooterLink[] = [
-    { href: AppConfig.LINKS.HELP.MAIN, label: 'Centrum Pomocy' },
+    { href: AppConfig.LINKS.HELP.CENTER, label: 'Centrum Pomocy' },
     { href: AppConfig.LINKS.HELP.SELLING, label: 'Sprzedawanie' },
     { href: AppConfig.LINKS.HELP.BUYING, label: 'Kupowanie' },
     { href: AppConfig.LINKS.HELP.SAFETY, label: 'Polityka bezpieczeństwa' },

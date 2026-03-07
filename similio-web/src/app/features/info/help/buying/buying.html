@@ -3,14 +3,12 @@
   <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12">
 
     <div class="hidden lg:block lg:col-span-1 space-y-8">
-
       <div>
         <h2 class="text-xl font-bold text-slate-900 mb-6">Centrum Pomocy</h2>
         <a routerLink="/" class="text-slate-500 hover:text-[#002f3f] transition block mb-4">Strona główna</a>
       </div>
 
       <nav class="space-y-1">
-
         <div class="mb-4">
           <a routerLink="/help/selling" class="block font-medium text-slate-600 hover:text-[#002f3f] mb-3">Sprzedawanie</a>
         </div>
@@ -41,92 +39,103 @@
         </div>
         <input type="text"
                class="block w-full pl-12 pr-4 py-3 bg-slate-100 border-none rounded-lg text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-[#002f3f] transition"
-               placeholder="Wpisz pytanie (np. jak sprawdzić sprzedawcę)...">
+               placeholder="Wpisz pytanie (np. jak sprawdzić sprzedawcę, odbiór osobisty)...">
       </div>
 
       <h1 class="text-3xl font-bold text-[#002f3f] mb-8">Kupowanie</h1>
 
       <div class="mb-12">
-        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybrane dla ciebie</h3>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wiedza dla Kupujących</h3>
 
         <div class="border-t border-slate-200">
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" /> </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak bezpiecznie kupować (odbiór osobisty vs wysyłka)?</span>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          <app-accordion-item title="Zasady modelu C2C: Brak 14-dniowego prawa do zwrotu">
+            <p class="mb-3">Semilio to platforma łącząca osoby prywatne. W odróżnieniu od klasycznych sklepów internetowych (e-commerce), <strong>tutaj nie kupujesz od firmy</strong>.</p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Zgodnie z polskim prawem, przy zakupie przedmiotu używanego od innej osoby prywatnej <strong>nie przysługuje Ci automatyczne prawo zwrotu towaru w ciągu 14 dni bez podania przyczyny</strong>.</li>
+              <li>Sprzedawca może dobrowolnie zgodzić się na zwrot, ale nie ma takiego obowiązku.</li>
+              <li>Jeśli towar okazał się niezgodny z opisem, nadal chronią Cię przepisy z tytułu rękojmi za wady ukryte (z kodeksu cywilnego), jednak dochodzenie ich odbywa się bezpośrednio ze sprzedawcą na drodze cywilnej.</li>
+            </ul>
+          </app-accordion-item>
 
-          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Jak skontaktować się ze sprzedawcą?</span>
+          <app-accordion-item title="Jak najbezpieczniej kupować na Semilio?">
+            <p class="mb-2">Nasza główna zasada brzmi: <strong>Najbezpieczniej jest blisko i osobiście!</strong></p>
+            <ol class="list-decimal pl-5 space-y-1 mb-4">
+              <li>Filtruj ogłoszenia po swoim mieście lub okolicy.</li>
+              <li>Umawiaj się na <strong>odbiór osobisty</strong> w bezpiecznym, oświetlonym miejscu publicznym.</li>
+              <li>Obejrzyj i przetestuj przedmiot (np. włącz telefon, przymierz ubranie) ZANIM przekażesz gotówkę.</li>
+              <li>Jeśli coś budzi Twoje wątpliwości na miejscu – po prostu zrezygnuj z zakupu.</li>
+            </ol>
+            <div class="p-3 bg-blue-50 border-l-4 border-blue-400 text-blue-800 text-sm rounded-r-md">
+              <strong>Pro Tip:</strong> Jeśli musisz kupić coś na odległość, zgódź się <strong>wyłącznie na przesyłkę pobraniową ze sprawdzeniem zawartości</strong> przy kurierze. Kosztuje to kilka złotych więcej, ale chroni przed otrzymaniem "cegły" w paczce.
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          </app-accordion-item>
 
-          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Na co zwrócić uwagę oglądając przedmiot?</span>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+          <app-accordion-item title="Jak skontaktować się ze sprzedawcą?">
+            <p class="mb-2">Na każdej stronie ogłoszenia znajdziesz moduł kontaktowy. Polecamy korzystanie z naszego wbudowanego czatu:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>Kliknij <strong>"Napisz wiadomość"</strong>. Historia czatu zostaje zapisana na Twoim koncie. To Twoje główne zabezpieczenie w razie nieporozumień.</li>
+              <li>Jeśli sprzedawca wyraził na to zgodę, poniżej opisu znajdziesz przycisk <strong>"Pokaż numer telefonu"</strong>.</li>
+              <li>Pamiętaj: jeśli po napisaniu na czacie sprzedawca od razu prosi o przeniesienie rozmowy na e-mail lub WhatsApp, zazwyczaj jest to próba oszustwa.</li>
+            </ul>
+          </app-accordion-item>
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <div class="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 3v18" />
-              </svg>
-              <span class="text-slate-700 font-medium group-hover:text-[#002f3f]">Sprzedawca chce przedpłatę – co robić?</span>
+          <app-accordion-item title="Zbyt niska cena? Uważaj na podejrzane ogłoszenia!">
+            <p class="mb-2">Znalazłeś najnowszego iPhone'a lub konsolę do gier za 30% rynkowej ceny? Zanim klikniesz "napisz", weź głęboki oddech.</p>
+            <ul class="list-disc pl-5 space-y-1 mb-3">
+              <li>Oszuści kuszą drastycznie zaniżonymi cenami, by wywołać w kupującym presję szybkiego działania ("muszę kupić teraz, bo zaraz ktoś sprzątnie mi to sprzed nosa!").</li>
+              <li>Następnie proszą o wpłatę BLIK na telefon przed wysłaniem towaru ("bo jest dużo chętnych"). Po wpłacie urywają kontakt.</li>
+            </ul>
+            <p><strong>Nigdy nie wysyłaj zaliczek, zadatków ani pełnych kwot z góry osobie, której nie znasz.</strong> Jeśli oferta wydaje się zbyt piękna, aby była prawdziwa – to najpewniej jest oszustwem.</p>
+          </app-accordion-item>
+
+          <app-accordion-item title="Sprzedawca żąda dopłaty kurierskiej poprzez link SMS (Oszustwo)">
+            <div class="p-4 bg-red-50 border-l-4 border-red-500 text-red-800 rounded-r-md mb-3">
+              <strong>OSTRZEŻENIE!</strong> Semilio nie pobiera opłat transakcyjnych ani dopłat do kuriera od kupujących.
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+            <p class="mb-2">Częstym schematem wyłudzeń jest sytuacja, gdy dogadałeś się ze sprzedawcą, a on po chwili wysyła Ci link (w czacie, SMS-ie lub WhatsAppie):</p>
+            <ul class="list-disc pl-5 space-y-1 mb-3">
+              <li class="italic">"Paczka już nadana, ale InPost/DPD prosi o dopłatę 1,50 zł z powodu przekroczenia wagi. Kliknij tutaj, aby dopłacić i odblokować przesyłkę."</li>
+            </ul>
+            <p><strong>Zignoruj tę wiadomość!</strong> Link poprowadzi Cię do fałszywej bramki płatności, a przestępcy spróbują opróżnić Twoje konto bankowe. W razie jakichkolwiek problemów z przesyłką kontaktuj się bezpośrednio z oficjalną infolinią danej firmy kurierskiej.</p>
+          </app-accordion-item>
+
+          <app-accordion-item title="Opcje wyszukiwania i filtry - jak znaleźć idealny przedmiot?">
+            <p class="mb-2">Skorzystaj z wbudowanych mechanizmów, by szybciej przeglądać tysiące ogłoszeń:</p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Sortowanie:</strong> Domyślnie pokazujemy ogłoszenia od najnowszego. Zmień to, jeśli interesuje Cię znalezienie najtańszej okazji.</li>
+              <li><strong>Lokalizacja:</strong> Podaj swoje miasto i suwakiem określ promień (np. +10 km). Dzięki temu znajdziesz tylko przedmioty, po które łatwo podjedziesz.</li>
+              <li><strong>Zapisane wyszukiwania:</strong> Jeśli szukasz rzadkiego przedmiotu, kliknij ikonę dzwonka/serduszka przy wynikach. Powiadomimy Cię e-mailem, gdy ktoś doda pasujące ogłoszenie.</li>
+            </ul>
+          </app-accordion-item>
 
         </div>
       </div>
 
       <div>
-        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Wybierz temat</h3>
+        <h3 class="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">Więcej informacji</h3>
 
         <div class="border-t border-slate-200">
-
-          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Wyszukiwanie i filtry</span>
+          <a routerLink="/help/buying/search" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Zarządzanie ulubionymi ogłoszeniami</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
 
-          <a routerLink="/help/buying" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Kontakt i negocjacje</span>
+          <a routerLink="/help/buying/contact" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Negocjacje - jak zaproponować swoją cenę?</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
 
-          <a routerLink="/help/safety" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
-            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Bezpieczeństwo i oszustwa</span>
+          <a routerLink="/help/safety/scams" class="flex items-center justify-between py-4 border-b border-slate-200 hover:bg-slate-50 transition cursor-pointer group px-2">
+            <span class="text-slate-800 font-semibold group-hover:text-[#002f3f]">Jak zgłosić nielegalne ogłoszenie (Procedura DSA)</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-300 group-hover:text-[#002f3f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </a>
-
         </div>
       </div>
 

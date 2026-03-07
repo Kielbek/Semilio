@@ -1,9 +1,7 @@
 <nav class="fixed bottom-0 left-0 z-50 w-full bg-white border-t border-gray-200 pb-[env(safe-area-inset-bottom)] md:hidden shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
-
   <div class="flex justify-around items-end h-[60px] px-2">
 
     @for (item of navItems; track item.path) {
-
       <a
         [routerLink]="item.path"
         routerLinkActive="text-[#002f34] font-medium"
@@ -20,11 +18,21 @@
         }
 
         @else {
-          <lucide-icon
-            [name]="item.icon"
-            class="w-6 h-6 mb-1 transition-transform group-active:scale-90"
-            [strokeWidth]="2"
-          ></lucide-icon>
+          <div class="relative">
+            <lucide-icon
+              [name]="item.icon"
+              class="w-6 h-6 mb-1 transition-transform group-active:scale-90"
+              [strokeWidth]="2"
+            ></lucide-icon>
+
+            @if (item.label === 'Wiadomości' && (notificationService.hasUnreadChatMessages$ | async)) {
+              <span class="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-500 border border-white"></span>
+              </span>
+            }
+          </div>
+
           <span class="text-[10px] tracking-wide">{{ item.label }}</span>
         }
 

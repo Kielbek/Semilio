@@ -21,7 +21,7 @@
       Dodano: {{ product.createdAt | date:'d MMMM y' }}
     </time>
 
-    <h1 class="text-lg md:text-xl font-bold leading-snug pr-10 text-black">
+    <h1 class="text-lg md:text-xl font-bold leading-snug pr-10 text-black break-all">
       {{ product.title }}
     </h1>
 
@@ -51,7 +51,9 @@
         <app-button
           variant="secondary"
           class="w-full"
-          [fullWidth]="true">
+          [fullWidth]="true"
+          (click)="openPriceProposal()"
+        >
           Zaproponuj cenę
         </app-button>
       }
@@ -75,3 +77,14 @@
     </div>
   }
 </div>
+
+@if (showPriceModal() && product) {
+  <app-propose-price
+    [productId]="product.id"
+    [productImage]="product.images[0].url"
+    [productTitle]="product.title"
+    [currentPrice]="product.price.amount"
+    (close)="showPriceModal.set(false)"
+  >
+  </app-propose-price>
+}

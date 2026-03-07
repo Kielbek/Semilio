@@ -1,0 +1,116 @@
+validation:
+  registration:
+    first_name:
+      blank: "First name cannot be empty."
+      size: "First name must be between 1 and 50 characters."
+      pattern: "First name contains invalid characters."
+    last_name:
+      blank: "Last name cannot be empty."
+      size: "Last name must be between 1 and 50 characters."
+      pattern: "Last name contains invalid characters."
+    email:
+      blank: "Email cannot be empty."
+      format: "Email format is invalid."
+    phone:
+      blank: "Phone number cannot be empty."
+      format: "Phone number format is invalid."
+    password:
+      blank: "Password cannot be empty."
+      size: "Password must be between 8 and 72 characters."
+      weak: "Password must have 8+ characters, including 1 uppercase, 1 lowercase, and 1 digit."
+    confirm_password:
+      blank: "Password confirmation cannot be empty."
+      size: "Password confirmation must be between 8 and 72 characters."
+
+  authentication:
+    email:
+      not_blank: "Email cannot be empty."
+      format: "Email format is invalid."
+    password:
+      not_blank: "Password cannot be empty."
+    sms:
+      code_not_blank: "SMS code is required."
+      code_invalid_length: "SMS code must be exactly 6 digits long."
+    token:
+      not_blank: "Reset token is required."
+
+  user:
+    password:
+      current_blank: "Current password is required."
+      new_blank: "New password is required."
+      confirm_blank: "Password confirmation is required."
+      size: "Password must be between 8 and 72 characters."
+      weak: "Password must contain an uppercase letter, a lowercase letter, and a digit."
+
+  product:
+    title:
+      blank: "Title is required."
+      size: "Title must be between 5 and 255 characters."
+    description:
+      blank: "Description is required."
+      size: "Description must be between 20 and 2000 characters."
+    price:
+      not_null: "Price is required."
+      min: "Price must be greater than 0."
+    size:
+      not_null: "Size is required."
+    brand:
+      not_null: "Brand is required."
+    color:
+      not_null: "Color is required."
+    category:
+      not_null: "Category is required."
+    condition:
+      not_null: "Product condition is required."
+
+  message:
+    content:
+      blank: "Message content cannot be empty."
+      size: "Message cannot exceed 250 characters."
+  proposal:
+    amount:
+      not_null: "Proposal amount is required."
+      positive: "Amount must be greater than zero."
+    status:
+      not_null: "Proposal status is required."
+
+error:
+  access_denied: "You are not a participant."
+  err_email_exists: "Email already exists."
+  err_phone_exists: "An account with this phone number already exists."
+  nickname_already_exists: "This username is already taken."
+  err_password_mismatch: "The password and confirmation do not match."
+  invalid_current_password: "The current password is incorrect."
+  err_user_disabled: "User account is disabled, please activate your account or contact the administrator."
+  bad_credentials: "Username or password is incorrect."
+  user_not_found: "User not found."
+  username_not_found: "Cannot find user with the provided username."
+  account_already_deactivated: "Account has been deactivated."
+
+  product_not_found: "The product with this id does not exist."
+  forbidden_action: "You do not have permission to modify or delete this product."
+  category_not_found: "Category not found."
+  category_already_exists_for_user: "Category already exists for this user."
+
+  chat_not_found: "Chat not found!"
+  chat_access_denied: "You are not a participant of this chat."
+  invalid_chat_request: "ChatId or ProductId must be provided."
+  invalid_message_type: "Operation not allowed for this message type."
+  message_not_found: "The requested message was not found."
+  proposal_already_processed: "This offer has already been accepted or rejected."
+
+  err_invalid_file_type: "The selected file must be an image (JPG, PNG, WEBP)."
+  err_file_too_large: "The image is too large, maximum size is 15MB."
+  err_file_empty: "Cannot send an empty file."
+  err_file_upload: "An error occurred while uploading the file."
+
+  invalid_verification_code: "Invalid verification code."
+  expired_verification_code: "Verification code has expired."
+  invalid_reset_token: "The password reset link is invalid."
+  expired_reset_token: "The password reset link has expired."
+  err_sending_activation_email: "An error occurred while sending the activation email."
+
+  search_query_too_short: "Search query is too short (minimum 2 characters)."
+  report_already_exists: "You have already reported this content."
+  internal_exception: "An internal exception occurred, please try again or contact the admin."
+  error: "Error."

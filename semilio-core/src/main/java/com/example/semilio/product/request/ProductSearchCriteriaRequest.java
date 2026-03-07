@@ -6,7 +6,10 @@ public record ProductSearchCriteriaRequest(
         String query,
         BigDecimal minPrice,
         BigDecimal maxPrice,
-        String category,
-        String productSize,
-        String condition
+        Long categoryId,
+        Long sizeId,
+        Long brandId,
+        Long colorId,
+        String condition,
+        String sort
 ) {}

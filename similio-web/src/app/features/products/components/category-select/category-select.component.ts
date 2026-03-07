@@ -2,20 +2,20 @@ import {
   Component,
   computed,
   ElementRef,
-  EventEmitter,
   forwardRef,
   HostListener,
   inject,
   Input,
-  Output,
+  OnChanges,
+  SimpleChanges,
   signal
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
-
+import { CommonModule } from '@angular/common';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   ArrowLeft,
-  Baby,
   Briefcase,
+  ChevronDown,
   ChevronRight,
   Cloudy,
   Columns2,
@@ -37,11 +37,10 @@ import {
   UtilityPole,
   Venus,
   Watch,
-  ChevronDown
+  Baby,
+  Check
 } from 'lucide-angular';
-import {ICategory} from '../../../../core/models/i-category';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-
+import { ICategory } from '../../../../core/models/i-category';
 
 @Component({
   selector: 'app-category-select',
@@ -50,6 +49,8 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
     CommonModule,
     LucideAngularModule
   ],
+  templateUrl: './category-select.component.html',
+  styleUrl: './category-select.component.css',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -62,24 +63,23 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
         Venus, Shirt, Sparkles, Layers, Columns2, Cloudy, UtilityPole,
         ThermometerSnowflake, Briefcase, Heart, Dumbbell, Footprints,
         ShoppingBag, Mars, Watch, Baby, Flower2, Rocket, Smile,
-        ArrowLeft, ChevronRight, ChevronDown
+        ArrowLeft, ChevronRight, ChevronDown, Check
       })
     }
   ],
-  templateUrl: './category-select.component.html',
-  styleUrl: './category-select.component.css'
 })
-export class CategorySelect {
+export class CategorySelect implements ControlValueAccessor, OnChanges {
+  @Input({ required: true }) control!: FormControl;
   @Input() categories: ICategory[] = [];
 
   isOpen = signal(false);
   selectedPath = signal<string>('');
-
   historyStack = signal<ICategory[]>([]);
 
   currentNodes = computed(() => {
     const stack = this.historyStack();
     if (stack.length === 0) return this.categories;
+
     return stack[stack.length - 1].subcategories || [];
   });
 
@@ -89,13 +89,26 @@ export class CategorySelect {
   });
 
   value: number | null = null;
+  isDisabled = false;
+
   onChange: (value: number | null) => void = () => {};
   onTouched: () => void = () => {};
-  isDisabled = false;
+
+  private eRef = inject(ElementRef);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['categories'] && this.value) {
+      this.reconstructStateFromValue(this.value);
+    }
+  }
 
   writeValue(obj: any): void {
     this.value = obj;
+    if (obj && this.categories.length > 0) {
+      this.reconstructStateFromValue(obj);
+    }
   }
+
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
   setDisabledState(isDisabled: boolean): void { this.isDisabled = isDisabled; }
@@ -103,10 +116,9 @@ export class CategorySelect {
   toggleDropdown() {
     if (this.isDisabled) return;
     this.isOpen.update(v => !v);
-    if (this.isOpen()) {
-      this.historyStack.set([]); // Reset przy otwarciu
-    } else {
-      this.onTouched(); // Oznaczamy pole jako "dotknięte" przy zamknięciu
+
+    if (!this.isOpen()) {
+      this.onTouched();
     }
   }
 
@@ -128,7 +140,6 @@ export class CategorySelect {
     this.historyStack.update(stack => stack.slice(0, -1));
   }
 
-  private eRef = inject(ElementRef);
   @HostListener('document:click', ['$event'])
   clickout(event: any) {
     if(!this.eRef.nativeElement.contains(event.target)) {
@@ -137,5 +148,39 @@ export class CategorySelect {
         this.onTouched();
       }
     }
+  }
+
+  private reconstructStateFromValue(targetId: number) {
+    const path: ICategory[] = [];
+    const found = this.findPath(this.categories, targetId, path);
+
+    if (found) {
+      this.selectedPath.set(path.map(c => c.name).join(' › '));
+
+      if (path.length > 1) {
+        this.historyStack.set(path.slice(0, -1));
+      } else {
+        this.historyStack.set([]);
+      }
+    }
+  }
+
+  private findPath(nodes: ICategory[], targetId: number, currentPath: ICategory[]): boolean {
+    for (const node of nodes) {
+      currentPath.push(node);
+
+      if (node.id === targetId) {
+        return true;
+      }
+
+      if (node.subcategories && node.subcategories.length > 0) {
+        if (this.findPath(node.subcategories, targetId, currentPath)) {
+          return true;
+        }
+      }
+
+      currentPath.pop();
+    }
+    return false;
   }
 }

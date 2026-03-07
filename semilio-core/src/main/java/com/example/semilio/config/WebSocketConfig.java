@@ -45,7 +45,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
                 .addEndpoint("/ws")
-                .setAllowedOrigins(this.corsProperties.getAllowedOrigin())
+                .setAllowedOrigins(this.corsProperties.getAllowedOrigins().toArray(new String[0]))
                 .withSockJS();
     }
 
