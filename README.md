@@ -7,7 +7,11 @@
 
 **Semilio** to nowoczesna platforma e-commerce typu C2C (Customer-to-Customer), zainspirowana rozwiązaniami takimi jak Vinted czy OLX. Aplikacja koncentruje się na rynku mody cyrkularnej (second-hand), oferując bezpieczne środowisko do sprzedaży, kupna i wymiany odzieży.
 
-Projekt wyróżnia się zastosowaniem najnowszych standardów technologicznych (Java 21, Angular Signals) oraz architektury Cloud-Ready (AWS S3).
+## 🌍 Zasoby i Kontakt
+* **🚀 Live Demo (Semilio):** [semilio.pl](https://semilio.pl)
+* **👤 Portfolio:** [mateuszkielbas.dev](https://mateuszkielbas.dev)
+
+---
 
 ## 🛠️ Stos Technologiczny (Tech Stack)
 
