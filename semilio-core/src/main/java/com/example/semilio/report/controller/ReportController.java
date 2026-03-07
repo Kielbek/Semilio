@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
-@RequestMapping("/v1/reports")
+@RequestMapping("api/v1/reports")
 @RequiredArgsConstructor
 public class ReportController {
 

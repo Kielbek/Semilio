@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("/v1/dictionaries")
+@RequestMapping("api/v1/dictionaries")
 @RequiredArgsConstructor
 public class DictionaryController {
 

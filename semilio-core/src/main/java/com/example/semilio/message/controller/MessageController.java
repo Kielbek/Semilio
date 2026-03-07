@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/v1/messages")
+@RequestMapping("api/v1/messages")
 @RequiredArgsConstructor
 public class MessageController {
 
