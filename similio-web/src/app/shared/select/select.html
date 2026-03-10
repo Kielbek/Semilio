@@ -5,6 +5,10 @@
 
   <div class="relative">
     <div class="relative">
+      <div
+        class="absolute inset-0 z-10 cursor-pointer md:hidden"
+        (click)="openDesktop()">
+      </div>
       <input
         type="text"
         [ngModel]="isOpen() ? searchQuery() : (selectedOption?.label || '')"
@@ -12,7 +16,7 @@
         (focus)="openDesktop()"
         (click)="openDesktop()"
         [placeholder]="placeholder"
-        class="w-full bg-[#f2f4f5] border-b-2 px-4 py-3 pr-10 rounded-t-md text-sm font-light text-[#002f34] outline-none transition-all duration-200 cursor-pointer md:cursor-text"
+        class="w-full bg-[#f2f4f5] border-b-2 px-4 py-3 pr-10 rounded-t-md text-sm font-light text-[#002f34] outline-none transition-all duration-200 cursor-pointer md:cursor-text relative z-0"
         [ngClass]="{
           'border-[#002f34]': isOpen(),
           'border-transparent': !isOpen(),

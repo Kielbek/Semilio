@@ -29,7 +29,7 @@ export class UserAds {
 
   onProductDeleted(id: string) {
     if (this.listComponent) {
-      // this.listComponent.removeProductById(id);
+      this.listComponent.removeProductById(id);
     }
 
     this.deleted.emit(id);

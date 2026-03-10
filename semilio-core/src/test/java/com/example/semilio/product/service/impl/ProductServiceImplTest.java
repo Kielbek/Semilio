@@ -10,6 +10,8 @@ import com.example.semilio.dictionary.repository.ColorRepository;
 import com.example.semilio.dictionary.repository.SizeRepository;
 import com.example.semilio.exception.BusinessException;
 import com.example.semilio.exception.ErrorCode;
+import com.example.semilio.favorite.model.Favorite;
+import com.example.semilio.favorite.repository.FavoriteRepository;
 import com.example.semilio.image.model.Image;
 import com.example.semilio.image.service.ImageService;
 import com.example.semilio.product.enums.Status;
@@ -39,21 +41,23 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
 
     @Mock private ProductRepository productRepository;
+    @Mock private FavoriteRepository favoriteRepository;
     @Mock private CategoryRepository categoryRepository;
     @Mock private BrandRepository brandRepository;
     @Mock private ColorRepository colorRepository;
@@ -221,7 +225,7 @@ class ProductServiceImplTest {
                     .isInstanceOf(com.example.semilio.exception.BusinessException.class)
                     .hasFieldOrPropertyWithValue("errorCode", com.example.semilio.exception.ErrorCode.ACCESS_DENIED);
 
-            then(productRepository).should(org.mockito.Mockito.never()).save(any());
+            then(productRepository).should(never()).save(any());
             then(imageService).shouldHaveNoInteractions();
         }
 
@@ -333,8 +337,8 @@ class ProductServiceImplTest {
     class DeleteProductTests {
 
         @Test
-        @DisplayName("Should successfully delete product when user is the owner")
-        void shouldDeleteProductWhenUserIsOwner() {
+        @DisplayName("Should mark product as DELETED and modify slug when user is the owner")
+        void shouldMarkProductAsDeletedWhenUserIsOwner() {
             UUID productId = UUID.randomUUID();
             UUID userId = UUID.randomUUID();
             Authentication principal = mock(Authentication.class);
@@ -344,14 +348,24 @@ class ProductServiceImplTest {
 
             Product existingProduct = new Product();
             existingProduct.setId(productId);
+            existingProduct.setTitle("Klasyczna bluza");
             existingProduct.setSeller(seller);
+            existingProduct.setStatus(Status.ACTIVE);
+            existingProduct.setSlug("klasyczna-bluza");
 
-            given(productRepository.findById(productId)).willReturn(java.util.Optional.of(existingProduct));
+            given(productRepository.findById(productId)).willReturn(Optional.of(existingProduct));
             given(securityService.getCurrentUserId(principal)).willReturn(userId);
 
             productService.deleteProduct(productId, principal);
 
-            then(productRepository).should(times(1)).delete(existingProduct);
+            then(productRepository).should(never()).delete(any(Product.class));
+            then(productRepository).should(times(1)).findById(productId);
+            then(favoriteRepository).should(times(1)).deleteByProductId(productId);
+
+            assertThat(existingProduct.getStatus()).isEqualTo(Status.DELETED);
+            assertThat(existingProduct.getSlug()).contains("-deleted-");
+
+            verifyNoMoreInteractions(productRepository);
         }
 
         @Test
@@ -396,7 +410,6 @@ class ProductServiceImplTest {
                     .hasFieldOrPropertyWithValue("errorCode", com.example.semilio.exception.ErrorCode.PRODUCT_NOT_FOUND);
 
             then(securityService).shouldHaveNoInteractions();
-//            then(productRepository).should(org.mockito.Mockito.never()).delete(any());
         }
     }
 
@@ -476,7 +489,7 @@ class ProductServiceImplTest {
                     .isInstanceOf(com.example.semilio.exception.BusinessException.class)
                     .hasFieldOrPropertyWithValue("errorCode", com.example.semilio.exception.ErrorCode.FORBIDDEN_ACTION);
 
-            then(productRepository).should(org.mockito.Mockito.never()).save(any());
+            then(productRepository).should(never()).save(any());
         }
     }
 
@@ -578,13 +591,13 @@ class ProductServiceImplTest {
             Page<ProductCardResponse> expectedPage = new PageImpl<>(List.of(cardResponse));
 
             given(securityService.getCurrentUserId(principal)).willReturn(currentUserId);
-            given(productRepository.findAllBySeller_Id(currentUserId, pageable)).willReturn(productPage);
+            given(productRepository.findAllBySellerIdAndStatusNot(currentUserId, Status.DELETED, pageable)).willReturn(productPage);
             given(productCardEnricher.enrichPage(productPage, principal, false)).willReturn(expectedPage);
 
             Page<ProductCardResponse> result = productService.getUserProducts(principal, pageable);
 
             assertThat(result).isNotNull().isEqualTo(expectedPage);
-            then(productRepository).should(times(1)).findAllBySeller_Id(currentUserId, pageable);
+            then(productRepository).should(times(1)).findAllBySellerIdAndStatusNot(currentUserId, Status.DELETED, pageable);
         }
 
         @Test

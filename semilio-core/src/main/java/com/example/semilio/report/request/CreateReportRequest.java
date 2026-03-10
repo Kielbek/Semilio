@@ -1,12 +1,17 @@
 package com.example.semilio.report.request;
 
 import com.example.semilio.report.enums.ReportReason;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.util.UUID;
 
 public record CreateReportRequest(
 
-        @NotBlank(message = "Target identifier cannot be blank")
-        String targetId,
+        @NotNull(message = "Target identifier cannot be blank")
+        UUID targetId,
 
         @NotNull(message = "Main report reason is required")
         ReportReason reason,

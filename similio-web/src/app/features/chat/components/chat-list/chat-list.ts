@@ -1,8 +1,9 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {DatePipe, NgClass} from '@angular/common';
-import {Router, RouterLinkActive} from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {IChatList} from '../../../../core/models/chat/i-chat-list';
 import {UserAvatar} from '../../../../shared/user-avatar/user-avatar';
+import {EmptyState} from '../../../products/components/empty-state/empty-state';
 
 @Component({
   selector: 'app-chat-list',
@@ -12,7 +13,9 @@ import {UserAvatar} from '../../../../shared/user-avatar/user-avatar';
     DatePipe,
     RouterLinkActive,
     UserAvatar,
-    NgClass
+    NgClass,
+    EmptyState,
+    RouterLink
   ]
 })
 export class ChatList {

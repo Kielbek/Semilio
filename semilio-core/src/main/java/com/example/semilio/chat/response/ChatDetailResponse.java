@@ -1,6 +1,7 @@
 package com.example.semilio.chat.response;
 
 import com.example.semilio.image.response.ImageResponse;
+import com.example.semilio.product.enums.Status;
 import com.example.semilio.product.response.PriceResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
@@ -16,6 +17,7 @@ public record ChatDetailResponse(
         String productTitle,
         PriceResponse productPrice,
         ImageResponse productImage,
+        Status productStatus,
         UUID recipientId
 ) {
 }

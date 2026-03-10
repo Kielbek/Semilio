@@ -32,9 +32,9 @@ import static jakarta.persistence.GenerationType.UUID;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "products", indexes = {
-        @Index(name = "idx_product_slug", columnList = "slug")
+        @Index(name = "idx_product_slug", columnList = "slug"),
+        @Index(name = "idx_product_status", columnList = "status") // Dodaj indeks na status, wyszukiwarka podziękuje!
 })
-@SQLDelete(sql = "UPDATE products SET deleted = true WHERE id = ?")
 public class Product {
 
     @Id
@@ -86,9 +86,6 @@ public class Product {
     @Embedded
     private ProductStats stats;
 
-    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
-    private boolean deleted = false;
-
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdDate;
@@ -112,5 +109,10 @@ public class Product {
 
     public Image getMainImage() {
         return (images != null && !images.isEmpty()) ? images.getFirst() : null;
+    }
+
+    public void markAsDeleted() {
+        this.status = Status.DELETED;
+        this.slug = this.slug + "-deleted-" + System.currentTimeMillis();
     }
 }

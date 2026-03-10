@@ -89,6 +89,7 @@ error:
   account_already_deactivated: "Konto zostało dezaktywowane."
 
   product_not_found: "Produkt o tym ID nie istnieje."
+  product_already_deleted: "Ten produkt został już usunięty."
   forbidden_action: "Nie masz uprawnień do modyfikacji lub usunięcia tego produktu."
   category_not_found: "Nie znaleziono kategorii."
   category_already_exists_for_user: "Kategoria już istnieje dla tego użytkownika."

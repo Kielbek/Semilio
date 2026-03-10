@@ -11,11 +11,13 @@ import {AppFacade} from './core/facades/app-facade';
 import {GlobalLoader} from './layout/global-loader/global-loader';
 import {UserService} from './core/service/user-service';
 import {delay} from 'rxjs';
+import {CookieConsentService} from './core/service/cookie-consent-service';
+import {CookieBanner} from './shared/cookie-banner/cookie-banner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Header, Footer, RouterOutlet, Auth, Toast, MobileNav, CommonModule, GlobalLoader],
+  imports: [Header, Footer, RouterOutlet, Auth, Toast, MobileNav, CommonModule, GlobalLoader, CookieBanner],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -23,6 +25,7 @@ export class App implements OnInit {
   public facade = inject(AppFacade);
   public layoutService = inject(LayoutService);
   public userService = inject(UserService);
+  public consentService = inject(CookieConsentService);
 
   readonly headerHeightDelayed$ = this.layoutService.headerHeight$.pipe(delay(0));
 

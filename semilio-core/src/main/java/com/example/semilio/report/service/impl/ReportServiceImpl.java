@@ -67,8 +67,10 @@ public class ReportServiceImpl implements ReportService {
                 .build();
 
         try {
+
             Report savedReport = reportRepository.save(report);
-            log.info("Report successfully saved with ID: {}", savedReport.getId());
+
+            log.info("Report successfully saved with ID: {}", savedReport.getId().toString());
 
             Map<String, Object> emailVariables = Map.of(
                     "reportId", savedReport.getId().toString().substring(0, 8),
@@ -85,7 +87,7 @@ public class ReportServiceImpl implements ReportService {
             log.info("Confirmation email sent successfully to {}", savedReport.getReporterEmail());
 
         } catch (Exception e) {
-            log.error("Failed to process email notification for report: {}", report.getTargetId(), e);
+            log.error("Failed to process email notification for report: {}", report.getTargetId().toString(), e);
         }
     }
 }

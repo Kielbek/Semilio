@@ -18,7 +18,6 @@ public class ProductSpecifications {
             List<Predicate> predicates = new ArrayList<>();
 
             predicates.add(cb.equal(root.get("status"), Status.ACTIVE));
-            predicates.add(cb.isFalse(root.get("deleted")));
 
             if (StringUtils.hasText(criteria.query())) {
                 predicates.add(cb.like(cb.lower(root.get("title")),

@@ -24,6 +24,7 @@ public enum ErrorCode {
 
     // --- PRODUCT & CATEGORY ---
     PRODUCT_NOT_FOUND("PRODUCT_NOT_FOUND", "The product with this id does not exist", NOT_FOUND),
+    PRODUCT_ALREADY_DELETED("PRODUCT_ALREADY_DELETED", "This product has already been deleted", CONFLICT),
     FORBIDDEN_ACTION("FORBIDDEN_ACTION", "You do not have permission to modify or delete this product", FORBIDDEN),
     CATEGORY_NOT_FOUND("CATEGORY_NOT_FOUND", "Category not found", NOT_FOUND),
     CATEGORY_ALREADY_EXISTS_FOR_USER("CATEGORY_ALREADY_EXISTS_FOR_USER", "Category already exists for this user", CONFLICT),

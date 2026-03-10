@@ -104,7 +104,6 @@ export class List implements OnInit, AfterViewInit, OnDestroy {
     this.isLastPage = false;
     this.loadData();
 
-    // Po odświeżeniu musimy ponownie podpiąć obserwatora
     setTimeout(() => this.setupObserver(), 100);
   }
 

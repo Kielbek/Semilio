@@ -25,7 +25,7 @@ public class Report {
     private UUID id;
 
     @Column(nullable = false)
-    private String targetId;
+    private UUID targetId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -46,10 +46,10 @@ public class Report {
 
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    private String createdBy;
+    private UUID createdBy;
 
     @LastModifiedBy
     @Column(insertable = false)
-    private String lastModifiedBy;
+    private UUID lastModifiedBy;
 
 }

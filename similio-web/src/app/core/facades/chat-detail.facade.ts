@@ -191,7 +191,7 @@ export class ChatDetailFacade implements OnDestroy {
         productId: this.draftContext.productId,
         productTitle: this.draftContext.productTitle,
         productImage: this.draftContext.productImage,
-        productPrice: this.draftContext.productPrice
+        productPrice: this.draftContext.productPrice,
       };
       this.chatInfoSubject.next(draftChatInfo);
     } else {

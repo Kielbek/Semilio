@@ -1,6 +1,6 @@
 export const environment = {
-  production: true, // Zmień na true na serwerze
+  production: true,
   serverIp: 'semilio.pl',
-  serverUrl: 'https://semilio.pl',
-  apiBase: 'https://semilio.pl/api/v1', // Żądania idą przez Nginx
+  serverUrl: 'http://localhost:8080',
+  apiBase: 'http://localhost:8080/api/v1',
 };

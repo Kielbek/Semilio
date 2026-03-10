@@ -88,6 +88,7 @@ error:
   account_already_deactivated: "Account has been deactivated."
 
   product_not_found: "The product with this id does not exist."
+  product_already_deleted: "This product has already been deleted."
   forbidden_action: "You do not have permission to modify or delete this product."
   category_not_found: "Category not found."
   category_already_exists_for_user: "Category already exists for this user."

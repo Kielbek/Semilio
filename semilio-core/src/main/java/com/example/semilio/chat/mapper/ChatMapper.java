@@ -48,6 +48,7 @@ public class ChatMapper {
                 .productImage((product != null && product.getMainImage() != null)
                         ? imageMapper.imageTOImageResponse(product.getMainImage())
                         : null)
+                .productStatus(product != null ? product.getStatus() : null)
                 .recipientId(isBuyer ? chat.getSellerId() : chat.getBuyerId())
                 .build();
     }

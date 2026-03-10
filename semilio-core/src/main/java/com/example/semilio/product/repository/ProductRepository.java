@@ -19,17 +19,15 @@ public interface ProductRepository extends
         JpaRepository<Product, UUID>,
         JpaSpecificationExecutor<Product>
 {
-
     @EntityGraph(attributePaths = {"size"})
-    Page<Product> findAllBySeller_Id(UUID sellerId, Pageable pageable);
+    Page<Product> findAllBySellerIdAndStatusNot(UUID sellerId, Status status, Pageable pageable);
 
     @EntityGraph(attributePaths = {"size"})
     @Query(value = """
         SELECT p FROM Product p 
         WHERE p.status = 'ACTIVE' 
         ORDER BY function('md5', concat(cast(p.id as string), :seed))
-    """,
-            countQuery = "SELECT count(p) FROM Product p WHERE p.status = 'ACTIVE'")
+    """, countQuery = "SELECT count(p) FROM Product p WHERE p.status = 'ACTIVE'")
     Page<Product> findFeaturedProducts(@Param("seed") String seed, Pageable pageable);
 
     Page<Product> findAllBySellerIdAndStatus(UUID sellerId, Status status, Pageable pageable);

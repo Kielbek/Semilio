@@ -1,5 +1,6 @@
 export enum Status {
   ACTIVE = 'ACTIVE',
   HIDDEN = 'HIDDEN',
-  SOLD = 'SOLD'
+  SOLD = 'SOLD',
+  DELETED = 'DELETED'
 }

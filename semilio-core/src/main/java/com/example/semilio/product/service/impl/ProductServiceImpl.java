@@ -7,6 +7,7 @@ import com.example.semilio.dictionary.repository.ColorRepository;
 import com.example.semilio.dictionary.repository.SizeRepository;
 import com.example.semilio.exception.BusinessException;
 import com.example.semilio.exception.ErrorCode;
+import com.example.semilio.favorite.repository.FavoriteRepository;
 import com.example.semilio.image.model.Image;
 import com.example.semilio.image.service.ImageService;
 import com.example.semilio.product.mapper.ProductMapper;
@@ -44,6 +45,7 @@ import java.util.*;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final FavoriteRepository favoriteRepository;
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
     private final ColorRepository colorRepository;
@@ -158,6 +160,11 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(UUID productId, Authentication principal) {
         var existing = getProduct(productId);
 
+        if (existing.getStatus() == Status.DELETED) {
+            log.info("Product {} is already deleted", productId);
+            throw new BusinessException(ErrorCode.PRODUCT_ALREADY_DELETED);
+        }
+
         UUID currentUserId = securityService.getCurrentUserId(principal);
 
         boolean isOwner = existing.getSeller().getId().equals(currentUserId);
@@ -168,13 +175,8 @@ public class ProductServiceImpl implements ProductService {
             throw new BusinessException(ErrorCode.FORBIDDEN_ACTION);
         }
 
-//        try {
-//            imageService.deleteImages(existing.getImages());
-//        } catch (Exception e) {
-//            log.error("Failed to clean up S3 files for product {}: {}", productId, e.getMessage());
-//        }
-
-        productRepository.delete(existing);
+        favoriteRepository.deleteByProductId(productId);
+        existing.markAsDeleted();
 
         log.info("Product successfully deleted: id={}, byUser={}",
                 productId, currentUserId);
@@ -185,7 +187,7 @@ public class ProductServiceImpl implements ProductService {
         UUID currentUserId = this.securityService.getCurrentUserId(principal);
 
         Page<Product> productsPage = this.productRepository
-                .findAllBySeller_Id(currentUserId, pageable);
+                .findAllBySellerIdAndStatusNot(currentUserId, Status.DELETED, pageable);
 
         return productCardEnricher.enrichPage(productsPage, principal, false);
     }

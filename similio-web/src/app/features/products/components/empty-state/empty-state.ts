@@ -6,7 +6,8 @@ import {
   LucideIconProvider,
   MessageCircle,
   Search,
-  Shirt, Star
+  Shirt,
+  Star
 } from 'lucide-angular';
 
 @Component({
